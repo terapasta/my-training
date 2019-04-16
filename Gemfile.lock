@@ -47,6 +47,8 @@ GEM
     bootsnap (1.4.3)
       msgpack (~> 1.0)
     builder (3.2.3)
+    bulma-rails (0.7.4)
+      sass (~> 3.5)
     byebug (11.0.1)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -136,6 +138,11 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     ruby_dep (1.5.0)
+    sass (3.7.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
@@ -190,6 +197,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
+  bulma-rails
   byebug
   coffee-rails (~> 4.2)
   dotenv-rails

@@ -1,3 +1,7 @@
+= flash[:message]
+h1 タスク一覧
+div
+  = link_to 'タスク作成', new_task_path
 table
   thead
     tr
@@ -16,6 +20,5 @@ table
         td = task.status
         td = task.priority
         td = link_to 'Show', task
-        td = link_to 'Edit'
+        td = link_to 'Edit', edit_task_path(task.id)
         td = link_to 'Destroy'
-        

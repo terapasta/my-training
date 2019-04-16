@@ -1,0 +1,5 @@
+h1 タスク作成
+div
+  = link_to 'タスク一覧', tasks_path
+div
+  = render partial: 'form', locals: { task: @task, btn_name: '作成' }

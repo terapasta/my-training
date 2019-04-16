@@ -5,23 +5,6 @@ module DateHelper
   end
 
   def format_japanese_wday(wday)
-    case wday
-    when 0
-      '日'
-    when 1
-      '月'
-    when 2
-      '火'
-    when 3
-      '水'
-    when 4
-      '木'
-    when 5
-      '金'
-    when 6
-      '土'
-    else
-      '？'
-    end
+    %w(日 月 火 水 木 金 土)[wday]
   end
 end

@@ -1,0 +1,19 @@
+div
+  = form_with model: task do |f|
+    div
+      = f.label :name
+      = f.text_field :name
+    div
+      = f.label :description
+      = f.text_area :description
+    div
+      = f.label :deadline
+      = f.date_field :deadline
+    div
+      = f.label :status
+      = f.select :status, Task.statuses.keys.map {|k| [k, k]}
+    div
+      = f.label :priority
+      = f.select :priority, Task.priorities.keys.map {|k| [k, k]}
+    div
+      = f.submit btn_name

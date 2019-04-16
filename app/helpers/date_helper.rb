@@ -1,6 +1,10 @@
 module DateHelper
 
   def format_date_with_wday(date)
+    date.strftime("%Y/%m/%d(#{format_japanese_wday(date.wday)})")
+  end
+
+  def format_short_date_with_wday(date)
     date.strftime("%m/%d(#{format_japanese_wday(date.wday)})")
   end
 

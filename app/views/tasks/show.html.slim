@@ -1,11 +1,32 @@
-h1 = @task.name
-div
-  div
-    = link_to 'Index', root_path
-  div
-    = link_to 'Edit'
-ul
-  li = @task.id
-  li = format_date_with_wday(@task.deadline)
-  li = @task.status
-  li = @task.priority
+div class="columns is-centered"
+  div class="column is-8-desktop"
+    h1 class="is-size-3"  = @task.name
+    hr
+    div
+      nav class="level"
+        div class="level-left"
+        div class="level-right"
+          div class="level-item"
+            = render partial: 'tasks/shared/links/index'
+          div class="level-item"
+            = render partial: 'tasks/shared/links/edit', locals: { id: @task.id }
+          div class="level-item"
+            = render partial: 'tasks/shared/links/destroy', locals: { id: @task.id }
+      div class="background-card"
+        table class="table is-striped is-fullwidth"
+          tbody class="tbody"
+            tr
+              td ID
+              td = @task.id
+            tr
+              td Deadline
+              td = format_date_with_wday(@task.deadline)
+            tr
+              td Status
+              td = @task.status
+            tr
+              td Priority
+              td = @task.priority
+            tr
+              td Descriptioin
+              td = @task.description

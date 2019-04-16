@@ -1,5 +1,12 @@
-h1 タスク作成
-div
-  = link_to 'タスク一覧', tasks_path
-div
-  = render partial: 'form', locals: { task: @task, btn_name: '作成' }
+div class="columns is-centered"
+  div class="column is-8-desktop"
+    h1 class="is-size-3" タスク作成
+    hr
+    div
+      nav class="level"
+        div class="level-left"
+        div class="level-right"
+          div class="level-item"
+            = link_to 'タスク一覧', tasks_path, class: "button"
+      div class="background-card"
+        = render partial: 'form', locals: { task: @task, btn_name: '作成' }

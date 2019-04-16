@@ -1,0 +1,22 @@
+h1 タスク作成
+div
+  = link_to 'タスク一覧', tasks_path
+div
+  = form_with model: @task do |f|
+    div
+      = f.label :name
+      = f.text_field :name
+    div
+      = f.label :description
+      = f.text_area :description
+    div
+      = f.label :deadline
+      = f.date_field :deadline
+    div
+      = f.label :status
+      = f.select :status, Task.priorities.keys.map {|k| [k, k]}
+    div
+      = f.label :priority
+      = f.select :priority, Task.priorities.keys.map {|k| [k, k]}
+    div
+      = f.submit '作成'

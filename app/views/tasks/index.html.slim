@@ -1,0 +1,21 @@
+table
+  thead
+    tr
+      th ID
+      th Name
+      th Deadline
+      th Status
+      th Priority
+
+  tbody
+    - @tasks.each do |task|
+      tr
+        td = task.id
+        td = task.name
+        td = format_date_with_wday(task.deadline)
+        td = task.status
+        td = task.priority
+        td = link_to 'Show', task
+        td = link_to 'Edit'
+        td = link_to 'Destroy'
+        

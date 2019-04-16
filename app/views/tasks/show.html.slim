@@ -1,0 +1,11 @@
+h1 = @task.name
+div
+  div
+    = link_to 'Index', root_path
+  div
+    = link_to 'Edit'
+ul
+  li = @task.id
+  li = format_date_with_wday(@task.deadline)
+  li = @task.status
+  li = @task.priority

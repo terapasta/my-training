@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def new
     @task = Task.new(status: :waiting, priority: :middle)
@@ -31,6 +31,17 @@ class TasksController < ApplicationController
       redirect_to tasks_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @task.destroy
+      flash[:message] = 'タスクを削除しました！'
+      redirect_to tasks_path
+    else
+      flash[:message] = 'タスクを削除できませんでした'
+      @tasks = Task.all
+      render :index
     end
   end
 

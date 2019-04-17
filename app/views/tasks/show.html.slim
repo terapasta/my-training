@@ -20,6 +20,9 @@ div class="columns is-centered"
               td = t('activerecord.attributes.task.id')
               td = @task.id
             tr
+              td = t('activerecord.attributes.task.name')
+              td = @task.name
+            tr
               td = t('activerecord.attributes.task.deadline')
               td = format_date_with_wday(@task.deadline)
             tr

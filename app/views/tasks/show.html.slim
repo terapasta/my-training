@@ -1,6 +1,6 @@
 div class="columns is-centered"
   div class="column is-8-desktop"
-    h1 class="is-size-3"  = @task.name
+    h1 class="is-size-3" = t('tasks.show.title', task_name: @task.name)
     hr
     div
       nav class="level"
@@ -16,17 +16,17 @@ div class="columns is-centered"
         table class="table is-striped is-fullwidth"
           tbody class="tbody"
             tr
-              td ID
+              td = t('activerecord.attributes.task.id')
               td = @task.id
             tr
-              td Deadline
+              td = t('activerecord.attributes.task.deadline')
               td = format_date_with_wday(@task.deadline)
             tr
-              td Status
-              td = @task.status
+              td = t('activerecord.attributes.task.status')
+              td = @task.status_i18n
             tr
-              td Priority
-              td = @task.priority
+              td = t('activerecord.attributes.task.priority')
+              td = @task.priority_i18n
             tr
-              td Descriptioin
+              td = t('activerecord.attributes.task.description')
               td = @task.description

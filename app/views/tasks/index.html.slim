@@ -1,6 +1,7 @@
 div class="columns is-centered"
   div class="column is-8-desktop"
-    h1 class="is-size-3" タスク一覧
+    = flash[:message]
+    h1 class="is-size-3" = t('tasks.index.title')
     hr
     div
       nav class="level"
@@ -12,11 +13,11 @@ div class="columns is-centered"
         table class="table is-striped is-fullwidth"
           thead class="thead"
             tr
-              th ID
-              th Name
-              th Deadline
-              th Status
-              th Priority
+              th = t('activerecord.attributes.task.id')
+              th = t('activerecord.attributes.task.name')
+              th = t('activerecord.attributes.task.deadline')
+              th = t('activerecord.attributes.task.status')
+              th = t('activerecord.attributes.task.priority')
               th
           tbody class="tbody"
             - @tasks.each do |task|
@@ -24,8 +25,8 @@ div class="columns is-centered"
                   td = task.id
                   td = task.name
                   td = format_short_date_with_wday(task.deadline)
-                  td = task.status
-                  td = task.priority
+                  td = task.status_i18n
+                  td = task.priority_i18n
                   td 
                     = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                     = render partial: 'tasks/shared/links/edit', locals: { id: task.id }

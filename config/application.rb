@@ -30,7 +30,6 @@ module MyTraining
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.generators do |g|
-      # 色々な記述があるので、一番下に追記する
       g.test_framework :rspec,
                        fixtures: false,
                        view_specs: false,
@@ -40,5 +39,7 @@ module MyTraining
                        request_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
+    config.i18n.default_locale = :ja
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**' , '*.{rb, yml}').to_s]
   end
 end

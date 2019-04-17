@@ -38,11 +38,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 
 gem 'pry-rails'
+
 gem 'pry-coolline'
 
 gem 'slim-rails'
 
-gem "bulma-rails"
+gem 'bulma-rails'
+
+gem 'rails-i18n', '~> 5.1'
+
+gem 'enum_help'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

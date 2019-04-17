@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 html
   head
-    title MyTraining
+    title = content_for?(:html_title) ? "#{yield(:html_title)} | MyTraining" : "MyTraining"
     = csrf_meta_tags
     = csp_meta_tag
 
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-
   body
     div class="section"
       div class="container"

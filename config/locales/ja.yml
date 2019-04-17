@@ -1,0 +1,46 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        id: ID
+        name: タスク名
+        description: 詳細
+        deadline: 終了期限
+        status: ステータス
+        priority: 優先度
+  enums:
+    task:
+      status:
+        waiting: 未着手
+        working: 着手
+        completed: 完了
+      priority:
+        low: 低
+        middle: 中
+        high: 高
+        unselected: '-'
+  tasks:
+    new:
+      title: タスク作成
+    index:
+      title: タスク一覧
+    show:
+      title: '%{task_name}'
+    edit:
+      title: タスク編集
+  components:
+    links:
+      tasks:
+        new: タスク作成
+        index: タスク一覧
+        show: 詳細
+        edit: 編集
+        destroy: 削除
+    buttons:
+      create: 作成
+    messages:
+      confirmation:
+        destroy: 本当に削除しますか？
+    

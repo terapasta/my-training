@@ -6,4 +6,6 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true, inclusion: { in: Task.statuses.keys }
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
+
+  scope :default_order, -> { order(created_at: :desc) }
 end

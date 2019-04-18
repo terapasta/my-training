@@ -3,7 +3,7 @@ include DateHelper
 
 RSpec.describe 'Tasks', type: :system do
   let(:task) { FactoryBot.create(:task) }
-  
+
   scenario 'create new task' do
     visit new_task_path
     fill_in I18n.t('activerecord.attributes.task.name'), with: 'nameテスト'
@@ -41,8 +41,15 @@ RSpec.describe 'Tasks', type: :system do
     visit tasks_path
     click_on '削除'
     expect(page.driver.browser.switch_to.alert.text).to eq I18n.t('components.messages.confirmation.destroy')
-    page.driver.browser.switch_to.alert.accept
-    expect(page).to have_content 'タスクを削除しました！'
-    expect(page).to have_no_content task.id
+    expect {
+      page.driver.browser.switch_to.alert.accept
+      expect(page).to have_content 'タスクを削除しました！'
+    }.to change { Task.count }.by(-1)
+  end
+
+  scenario 'show list order by created_at' do
+    5.times { |i| FactoryBot.create(:task, name: "#{i}-name") }
+    visit tasks_path
+    5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
   end
 end

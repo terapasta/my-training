@@ -2,7 +2,8 @@ require 'rails_helper'
 include DateHelper
 
 RSpec.describe 'Tasks', type: :system do
-  
+  let(:task) { FactoryBot.create(:task) }
+
   scenario 'create new task' do
     visit new_task_path
     fill_in I18n.t('activerecord.attributes.task.name'), with: 'nameテスト'
@@ -36,7 +37,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   scenario 'destroy task' do
-    FactoryBot.create(:task)
+    task
     visit tasks_path
     click_on '削除'
     expect(page.driver.browser.switch_to.alert.text).to eq I18n.t('components.messages.confirmation.destroy')

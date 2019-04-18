@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   end
   
   def index
-    @tasks = Task.all
+    @tasks = Task.all.default_order
   end
 
   def show

@@ -27,8 +27,8 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:message] = ' タスクを更新しました！'
-      redirect_to tasks_path
+      flash[:message] = 'タスクを更新しました！'
+      redirect_to @task
     else
       render :edit
     end

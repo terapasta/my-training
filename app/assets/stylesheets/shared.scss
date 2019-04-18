@@ -1,0 +1,21 @@
+@import "colors";
+.card-background {
+  box-shadow: 0px 2px 2px 2px #cfd8dc;
+  border-radius: 5px;
+  padding: 1rem;
+}
+.flash-msg-background {
+  padding: 1rem;
+  border-radius: 5px;
+}
+.flash-msg-background-success {
+  background: $color-success-9;
+}
+.flash-msg-background-error {
+  background: $color-error-9;
+}
+.validation-msg-background {
+  padding: 1rem;
+  border-radius: 5px;
+  background: $color-error-1;
+}

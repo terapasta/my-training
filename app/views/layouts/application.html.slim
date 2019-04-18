@@ -10,5 +10,7 @@ html
   body
     div class="section"
       div class="container"
-        = flash[:message]
+        - if flash[:success] || flash[:error]
+          div class="flash-msg-background #{"flash-msg-background-success" if flash[:success]}#{"flash-msg-background-error" if flash[:error]}"
+            span class="is-size-4 has-text-white" = flash[:success] || flash[:error]
         = yield

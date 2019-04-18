@@ -1,6 +1,6 @@
 - if model.errors.any?
-  div class="alert alert-warning"
+  div class="validation-msg-background"
     ul
       - model.errors.full_messages.each do |message|
         li
-          = message
+          = "・#{message}"

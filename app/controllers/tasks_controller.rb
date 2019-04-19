@@ -8,10 +8,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = 'タスクを作成しました！'
+      flash[:success] = t('messages.flash.success.create')
       redirect_to tasks_path
     else
-      flash.now[:error] = 'タスク作成に失敗しました'
+      flash.now[:error] = t('messages.flash.error.create')
       render :new
     end
   end
@@ -28,20 +28,20 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = 'タスクを更新しました！'
+      flash[:success] = t('messages.flash.success.update')
       redirect_to @task
     else
-      flash.now[:error] = 'タスク更新に失敗しました'
+      flash.now[:error] = t('messages.flash.error.update')
       render :edit
     end
   end
 
   def destroy
     if @task.destroy
-      flash[:success] = 'タスクを削除しました！'
+      flash[:success] = t('messages.flash.success.destroy')
       redirect_to tasks_path
     else
-      flash[:error] = 'タスクを削除できませんでした'
+      flash[:error] = t('messages.flash.error.destroy')
       @tasks = Task.all
       render :index
     end

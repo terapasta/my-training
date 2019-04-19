@@ -30,17 +30,58 @@ ja:
       title: '%{task_name}'
     edit:
       title: タスク編集
-  components:
-    links:
-      tasks:
-        new: タスク作成
-        index: タスク一覧
-        show: 詳細
-        edit: 編集
-        destroy: 削除
-    buttons:
-      create: 作成
-      update: 更新
+  links:
+    tasks:
+      new: タスク作成
+      index: タスク一覧
+      show: 詳細
+      edit: 編集
+      destroy: 削除
+  buttons:
+    create: 作成
+    update: 更新
+  messages:
+    confirmation:
+      destroy: 本当に削除しますか？
+    flash:
+      success:
+        create: タスクを作成しました！
+        update: タスクを更新しました！
+        destroy: タスクを削除しました！
+      error:
+        create: タスクの作成に失敗しました
+        update: タスクの更新に失敗しました
+        destroy: タスクの削除に失敗しました
+  errors:
+    format: "%{attribute}%{message}"
     messages:
-      confirmation:
-        destroy: 本当に削除しますか？
+      contain: 個のエラーがあります
+      accepted: を受諾してください
+      blank: を入力してください
+      present: は入力しないでください
+      confirmation: と%{attribute}の入力が一致しません
+      empty: を入力してください
+      equal_to: は%{count}にしてください
+      even: は偶数にしてください
+      exclusion: は予約されています
+      greater_than: は%{count}より大きい値にしてください
+      greater_than_or_equal_to: は%{count}以上の値にしてください
+      inclusion: は一覧にありません
+      invalid: は不正な値です
+      less_than: は%{count}より小さい値にしてください
+      less_than_or_equal_to: は%{count}以下の値にしてください
+      model_invalid: "バリデーションに失敗しました: %{errors}"
+      not_a_number: は数値で入力してください
+      not_an_integer: は整数で入力してください
+      odd: は奇数にしてください
+      required: を入力してください
+      taken: はすでに存在します
+      too_long: は%{count}文字以内で入力してください
+      too_short: は%{count}文字以上で入力してください
+      wrong_length: は%{count}文字で入力してください
+      other_than: は%{count}以外の値にしてください
+    template:
+      body: 次の項目を確認してください
+      header:
+        one: "%{model}にエラーが発生しました"
+        other: "%{model}に%{count}個のエラーが発生しました"

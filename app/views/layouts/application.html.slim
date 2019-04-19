@@ -10,5 +10,7 @@ html
   body
     div class="section"
       div class="container"
-        = flash[:message]
+        -flash.each do |message_type, message|
+          div class=("flash-msg-background flash-msg-background-#{message_type}")
+            span class="is-size-4 has-text-white" = message
         = yield

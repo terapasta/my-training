@@ -9,5 +9,5 @@ div class="columns is-centered"
         div class="level-right"
           div class="level-item"
           = render 'tasks/shared/links/index'
-      div class="background-card"
-        = render partial: 'form', locals: { task: @task, btn_name: t('components.buttons.create') }
+      div class="card-background"
+        = render partial: 'form', locals: { task: @task, btn_name: t('buttons.update') }

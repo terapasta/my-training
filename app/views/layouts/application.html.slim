@@ -9,9 +9,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = render 'layouts/header'
-    - if flash[:success] || flash[:error]
-      div class="flash-msg-background #{"flash-msg-background-success" if flash[:success]}#{"flash-msg-background-error" if flash[:error]}"
-        span class="is-size-4 has-text-white" = flash[:success] || flash[:error]
+    - flash.each do |message_type, message|
+      div class="flash-msg-background flash-msg-background-#{message_type}"
+        span class="is-size-4 has-text-white" = message
     div class="section"
       div class="container"
         = yield

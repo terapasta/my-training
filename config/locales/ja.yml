@@ -30,20 +30,28 @@ ja:
       title: '%{task_name}'
     edit:
       title: タスク編集
-  components:
-    links:
-      tasks:
-        new: タスク作成
-        index: タスク一覧
-        show: 詳細
-        edit: 編集
-        destroy: 削除
-    buttons:
-      create: 作成
-      update: 更新
-    messages:
-      confirmation:
-        destroy: 本当に削除しますか？
+  links:
+    tasks:
+      new: タスク作成
+      index: タスク一覧
+      show: 詳細
+      edit: 編集
+      destroy: 削除
+  buttons:
+    create: 作成
+    update: 更新
+  messages:
+    confirmation:
+      destroy: 本当に削除しますか？
+    flash:
+      success:
+        create: タスクを作成しました！
+        update: タスクを更新しました！
+        destroy: タスクを削除しました！
+      error:
+        create: タスクの作成に失敗しました
+        update: タスクの更新に失敗しました
+        destroy: タスクの削除に失敗しました
   errors:
     format: "%{attribute}%{message}"
     messages:

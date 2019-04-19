@@ -25,9 +25,10 @@ div class="columns is-centered"
                   td = task.id
                   td = task.name
                   td = format_short_date_with_wday(task.deadline)
-                  td = task.status_i18n
+                  td id="status"
                   td = task.priority_i18n
                   td 
                     = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                     = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
                     = render partial: 'tasks/shared/links/destroy', locals: { id: task.id }
+= javascript_pack_tag 'status'

@@ -15,7 +15,7 @@ RSpec.describe 'Tasks', type: :system do
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
 
       click_on t('buttons.create')
-      expect(page).to have_content 'タスクを作成しました！'
+      expect(page).to have_content t('messages.flash.success.create')
     end
 
     scenario 'fail creating new task' do
@@ -23,7 +23,7 @@ RSpec.describe 'Tasks', type: :system do
 
       click_on t('buttons.create')
 
-      expect(page).to have_content 'タスク作成に失敗しました'
+      expect(page).to have_content t('messages.flash.error.create')
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.name'), message: t('errors.messages.blank'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.deadline'), message: t('errors.messages.blank'))
     end
@@ -47,7 +47,7 @@ RSpec.describe 'Tasks', type: :system do
 
       click_on t('buttons.update')
 
-      expect(page).to have_content 'タスクを更新しました！'
+      expect(page).to have_content t('messages.flash.success.update')
       expect(page).to have_content name
       expect(page).to have_content description
       expect(page).to have_content format_date_with_wday(deadline)
@@ -63,7 +63,7 @@ RSpec.describe 'Tasks', type: :system do
 
       click_on t('buttons.update')
       
-      expect(page).to have_content 'タスク更新に失敗しました'
+      expect(page).to have_content t('messages.flash.error.update')
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.name'), message: t('errors.messages.blank'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.deadline'), message: t('errors.messages.blank'))
     end
@@ -73,11 +73,11 @@ RSpec.describe 'Tasks', type: :system do
     scenario 'succeed in destroy task' do
       task
       visit tasks_path
-      click_on '削除'
+      click_on t('links.tasks.destroy')
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept
-        expect(page).to have_content 'タスクを削除しました！'
+        expect(page).to have_content t('messages.flash.success.destroy')
       }.to change { Task.count }.by(-1)
     end
 

@@ -6,8 +6,5 @@ document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#task-index',
     components: { StatusSelector, PrioritySelector },
-    created() {
-      console.log('aa')
-    }
   })
 })

@@ -1,10 +1,22 @@
 module ApplicationHelper
 
+  def sorted?
+    request.fullpath.include?('direction')
+  end
+
   def get_direction
-    request.fullpath.include?('direction=asc') ? 'desc' : 'asc'
+    if sorted?
+      request.fullpath.include?('direction=asc') ? 'desc' : 'asc'
+    else
+      'desc'
+    end
   end
 
   def get_direction_sign(direction)
-    direction == 'asc' ? '▲' : '▼'
+    if sorted?
+      direction == 'desc' ? '▲' : '▼'
+    else
+      ''
+    end
   end
 end

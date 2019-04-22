@@ -5,7 +5,7 @@ class Tasks::StatusesController < ApplicationController
     if @task.update(status: params[:status])
       render 'update', status: '200', formats: 'json', handlers: 'jbuilder'
     else
-      render 'errors', status: '422', formats: 'json', handlers: 'jbuilder'
+      render 'errors', status: '409', formats: 'json', handlers: 'jbuilder'
     end
   end
 end

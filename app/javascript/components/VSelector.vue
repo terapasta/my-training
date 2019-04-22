@@ -1,33 +1,20 @@
 <template>
   <div>
-    <select v-model="selected">
-      <option v-for="(element) in array" :key="element['value']" :value="element['value']">{{element['name']}}</option>
+    <select :value="selected" @change="onChange">
+      <option v-for="(option) in options" :key="option['value']" :value="option['value']">{{option['name']}}</option>
     </select>
   </div>
 </template>
 <script>
   export default {
     props: { 
-      default: String,
-      array: Array,
-    },
-    data() {
-      return {
-        selected: ''
-      }
-    },
-    watch: {
-      selected() {
-        this.$emit('update', this.selected)
-      }
+      selected: String,
+      options: Array,
     },
     methods: {
-      init() {
-        this.selected = this.default
+      onChange(event) {
+        this.$emit('update', event.target.value)
       }
     },
-    created() {
-      this.init()
-    }
   }
 </script>

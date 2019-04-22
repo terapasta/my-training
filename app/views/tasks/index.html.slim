@@ -1,3 +1,4 @@
+= javascript_pack_tag 'task_index'
 - content_for(:html_title) { t('tasks.index.title') }
 div class="columns is-centered"
   div class="column is-8-desktop"
@@ -19,16 +20,17 @@ div class="columns is-centered"
               th = t('activerecord.attributes.task.status')
               th = t('activerecord.attributes.task.priority')
               th
-          tbody class="tbody"
+          tbody id="task-index" class="tbody"
             - @tasks.each do |task|
                 tr
                   td = task.id
                   td = task.name
                   td = format_short_date_with_wday(task.deadline)
-                  td id="status"
-                  td = task.priority_i18n
+                  td
+                    <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
+                  td
+                    <priority-selector task-id="#{task.id}" task-priority="#{task.priority}"></priority-selector>
                   td 
                     = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                     = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
                     = render partial: 'tasks/shared/links/destroy', locals: { id: task.id }
-= javascript_pack_tag 'status'

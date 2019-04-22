@@ -18,10 +18,6 @@ class TasksController < ApplicationController
   
   def index
     @tasks = Task.all.default_order
-    respond_to do |format|
-      format.html
-      format.json { render json: @tasks }
-    end
   end
 
   def show

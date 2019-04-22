@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-message v-if="message" :message="message" :has-error="hasError"></v-message>
-    <v-selector :selected="taskPriority" :options="options"
+    <v-selector :selected="selected" :options="options"
                 @update="updatePriority"></v-selector>
   </div>
 </template>
@@ -18,6 +18,7 @@
     },
     data() {
       return {
+        selected: '',
         message: '',
         hasError: false,
         options: [
@@ -45,16 +46,27 @@
         axios
         .patch('tasks/' + this.taskId + '/priorities', { priority: priority })
         .then(() => {
+          this.setSelected(priority)
           this.setMessage('更新しました')
         })
         .catch(() => {
           this.hasError = true
           this.setMesssage('更新に失敗しました')
         })
-      }
+      },
+      setSelected(selected) {
+        this.selected = selected
+      },
+      setMessage(msg) {
+        this.message = msg
+      },
     },
-    setMessage(msg) {
-      this.message = msg
+    created() {
+      if(this.taskPriority) {
+        this.setSelected(this.taskPriority)
+      } else {
+        this.setSelected('waiting')
+      }
     }
   }
 </script>

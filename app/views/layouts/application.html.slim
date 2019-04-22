@@ -8,9 +8,10 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
+    = render 'layouts/header'
+    - flash.each do |message_type, message|
+      div class="flash-msg-background flash-msg-background-#{message_type}"
+        span class="is-size-4 has-text-white" = message
     div class="section"
       div class="container"
-        -flash.each do |message_type, message|
-          div class=("flash-msg-background flash-msg-background-#{message_type}")
-            span class="is-size-4 has-text-white" = message
         = yield

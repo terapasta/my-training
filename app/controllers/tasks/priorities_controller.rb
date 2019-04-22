@@ -5,7 +5,7 @@ class Tasks::PrioritiesController < ApplicationController
     if @task.update(priority: params[:priority])
       render 'update', status: '200', formats: 'json', handlers: 'jbuilder'
     else
-      render 'errors', status: '422', formats: 'json', handlers: 'jbuilder'
+      render 'errors', status: '409', formats: 'json', handlers: 'jbuilder'
     end
   end
 end

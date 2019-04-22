@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-message :message="message" :has-error="hasError"></v-message>
-    <v-selector :default="taskPriority" :array="array"
+    <v-message v-if="message" :message="message" :has-error="hasError"></v-message>
+    <v-selector :selected="taskPriority" :options="options"
                 @update="updatePriority"></v-selector>
   </div>
 </template>
@@ -20,7 +20,7 @@
       return {
         message: '',
         hasError: false,
-        array: [
+        options: [
           {
             name: '低',
             value: 'low'

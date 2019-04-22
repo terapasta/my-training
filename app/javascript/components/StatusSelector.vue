@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-message :message="message" :has-error="hasError"></v-message>
-    <v-selector :default="taskStatus" :array="array"
+    <v-message v-if="message" :message="message" :has-error="hasError"></v-message>
+    <v-selector :selected="taskStatus" :options="options"
               @update="updateStatus"></v-selector>
   </div>
 </template>
@@ -20,7 +20,7 @@
       return {
         message: '',
         hasError: false,
-        array: [
+        options: [
           {
             name: '未着手',
             value: 'waiting'
@@ -43,7 +43,7 @@
         .then(() => {
           this.setMessage('更新しました')
         })
-        .catch((error) => {
+        .catch(() => {
           this.hasError = true
           this.setMessage('更新に失敗しました')
         })

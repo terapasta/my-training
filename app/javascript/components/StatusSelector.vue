@@ -35,6 +35,6 @@
         axios
         .patch('tasks/' + this.taskId + '/statuses', { status: status })
       }
-    },
+    }
   }
 </script>

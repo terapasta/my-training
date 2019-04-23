@@ -46,26 +46,20 @@
         axios
         .patch('tasks/' + this.taskId + '/priorities', { priority: priority })
         .then(() => {
-          this.setSelected(priority)
-          this.setMessage('更新しました')
+          this.selected = priority
+          this.message = '更新しました'
         })
         .catch(() => {
           this.hasError = true
-          this.setMesssage('更新に失敗しました')
+          this.message = '更新に失敗しました'
         })
-      },
-      setSelected(selected) {
-        this.selected = selected
-      },
-      setMessage(msg) {
-        this.message = msg
       },
     },
     created() {
       if(this.taskPriority) {
-        this.setSelected(this.taskPriority)
+        this.selected = this.taskPriority
       } else {
-        this.setSelected('waiting')
+        this.selected = 'waiting'
       }
     }
   }

@@ -42,26 +42,20 @@
         axios
         .patch('tasks/' + this.taskId + '/statuses', { status: status })
         .then(() => {
-          this.setSelected(status)
-          this.setMessage('更新しました')
+          this.selected = status
+          this.message = '更新しました'
         })
         .catch(() => {
           this.hasError = true
-          this.setMessage('更新に失敗しました')
+          this.message = '更新に失敗しました'
         })
       },
-      setSelected(selected) {
-        this.selected = selected
-      },
-      setMessage(msg) {
-        this.message = msg
-      }
     },
     created() {
       if(this.taskStatus) {
-        this.setSelected(this.taskStatus)
+        this.selected = this.taskStatus
       } else {
-        this.setSelected('waiting')
+        this.selected = 'waiting'
       }
     }
   }

@@ -30,6 +30,9 @@ ja:
       title: '%{task_name}'
     edit:
       title: タスク編集
+  forms:
+    select:
+      unselected: 未選択
   links:
     tasks:
       new: タスク作成

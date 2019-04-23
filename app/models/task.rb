@@ -10,4 +10,5 @@ class Task < ApplicationRecord
   scope :default_order, -> { order(created_at: :desc) }
   scope :where_like_name, -> (name) { where('name like ?', "%#{name}%") }
   scope :where_eql_status, -> (status) { where(status: status) }
+  scope :where_eql_priority, -> (priority) { where(priority: priority) }
 end

@@ -1,12 +1,12 @@
 module ApplicationHelper
 
   def sorted?
-    request.fullpath.include?('direction')
+    request.query_parameters.include?('direction')
   end
 
   def get_direction
     if sorted?
-      request.fullpath.include?('direction=asc') ? 'desc' : 'asc'
+      request.query_parameters[:direction] == 'asc' ? 'desc' : 'asc'
     else
       'desc'
     end

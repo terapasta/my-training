@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   
   def index
     @search_form = TaskSearchForm.new(search_params)
-    @tasks = @search_form.search.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.task_order(@search_form.search, sort_column, sort_direction)
   end
 
   def show
@@ -54,7 +54,7 @@ class TasksController < ApplicationController
     end
 
     def search_params
-      params.require(:q).permit(:name, :status) if params[:q]
+      params.require(:q).permit(:name, :status, :priority) if params[:q]
     end
 
     def set_task
@@ -66,6 +66,6 @@ class TasksController < ApplicationController
     end
 
     def sort_column
-      Task.column_names.include?(params[:sort]) ? params[:sort] : 'updated_at'
+      Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
     end
 end

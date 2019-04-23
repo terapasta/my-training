@@ -18,7 +18,7 @@ div id="task-index"  class="columns is-centered"
               th = t('activerecord.attributes.task.name')
               th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline')
               th = t('activerecord.attributes.task.status')
-              th = t('activerecord.attributes.task.priority')
+              th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority')
               th
           tbody class="tbody"
             - @tasks.each do |task|
@@ -44,10 +44,12 @@ div id="task-index"  class="columns is-centered"
           div class="field"
             = f.label :status, t('activerecord.attributes.task.status'), class: "label"
             div class="select"
-              = f.select :status, Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}
+              = f.select :status, array_with_blank(t('forms.select.unselected'), 
+              Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]})
           div class="field"
             = f.label :priority, t('activerecord.attributes.task.priority'), class: "label"
             div class="select"
-              = f.select :priority, Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}
+              = f.select :priority, array_with_blank(t('forms.select.unselected'), 
+              Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]})
           div class="field"
             = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.search') }

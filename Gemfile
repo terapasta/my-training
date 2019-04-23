@@ -37,10 +37,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'dotenv-rails'
 
-gem 'pry-rails'
-
-gem 'pry-coolline'
-
 gem 'slim-rails'
 
 gem 'bulma-rails'
@@ -61,6 +57,10 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'rspec_junit_formatter'
+  gem 'pry-rails'
+  gem 'pry-coolline'
+  gem 'pry-byebug'
+  gem 'launchy'
 end
 
 group :development do

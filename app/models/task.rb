@@ -8,4 +8,6 @@ class Task < ApplicationRecord
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
 
   scope :default_order, -> { order(created_at: :desc) }
+  scope :where_like_name, -> (name) { where('name like ?', "%#{name}%") }
+  scope :where_eql_status, -> (status) { where(status: status) }
 end

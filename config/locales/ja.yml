@@ -40,6 +40,7 @@ ja:
   buttons:
     create: 作成
     update: 更新
+    search: 検索
   messages:
     confirmation:
       destroy: 本当に削除しますか？

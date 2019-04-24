@@ -18,7 +18,7 @@ class TasksController < ApplicationController
   
   def index
     @search_form = TaskSearchForm.new(search_params)
-    @tasks = Task.task_order(@search_form.search, sort_column, sort_direction)
+    @tasks = @search_form.search.order("#{sort_column} #{sort_direction}")
   end
 
   def show

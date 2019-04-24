@@ -1,5 +1,6 @@
+= javascript_pack_tag 'task_index'
 - content_for(:html_title) { t('tasks.index.title') }
-div class="columns is-centered"
+div id="task-index"  class="columns is-centered"
   div class="column is-8-desktop"
     h1 class="is-size-3" = t('tasks.index.title')
     hr
@@ -21,13 +22,15 @@ div class="columns is-centered"
               th
           tbody class="tbody"
             - @tasks.each do |task|
-                tr
-                  td = task.id
-                  td = task.name
-                  td = format_short_date_with_wday(task.deadline)
-                  td = task.status_i18n
-                  td = task.priority_i18n
-                  td 
-                    = render partial: 'tasks/shared/links/show', locals: { id: task.id }
-                    = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
-                    = render partial: 'tasks/shared/links/destroy', locals: { id: task.id }
+              tr
+                td = task.id
+                td = task.name
+                td = format_short_date_with_wday(task.deadline)
+                td
+                  <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
+                td
+                  <priority-selector task-id="#{task.id}" task-priority="#{task.priority}"></priority-selector>
+                td 
+                  = render partial: 'tasks/shared/links/show', locals: { id: task.id }
+                  = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
+                  = render partial: 'tasks/shared/links/destroy', locals: { id: task.id }

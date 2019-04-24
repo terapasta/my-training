@@ -34,6 +34,8 @@ div id="task-index"  class="columns is-centered"
                   = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                   = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
                   = render partial: 'tasks/shared/links/destroy', locals: { id: task.id }
+        div data-turbolinks="false"
+          = paginate @tasks
   div class="column is-2-desktop"
     div class="card-background"
       div class="form"

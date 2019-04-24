@@ -5,4 +5,8 @@ module TasksHelper
     link_to "#{get_direction_sign(direction)}#{title}", 
             tasks_path(sort: col_name, direction: direction), data: {"turbolinks" => false}
   end
+
+  def array_with_blank(name, array)
+    array.unshift([name, ''])
+  end
 end

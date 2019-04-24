@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
   
   def index
-    @tasks = Task.all.default_order
+    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -54,5 +54,13 @@ class TasksController < ApplicationController
 
     def set_task
       @task = Task.find_by(id: params[:id])
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+    end
+
+    def sort_column
+      Task.column_names.include?(params[:sort]) ? params[:sort] : 'updated_at'
     end
 end

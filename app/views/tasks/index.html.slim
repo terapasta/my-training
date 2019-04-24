@@ -16,7 +16,7 @@ div id="task-index"  class="columns is-centered"
             tr
               th = t('activerecord.attributes.task.id')
               th = t('activerecord.attributes.task.name')
-              th = t('activerecord.attributes.task.deadline')
+              th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline')
               th = t('activerecord.attributes.task.status')
               th = t('activerecord.attributes.task.priority')
               th

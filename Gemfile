@@ -37,10 +37,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'dotenv-rails'
 
-gem 'pry-rails'
-
-gem 'pry-coolline'
-
 gem 'slim-rails'
 
 gem 'bulma-rails'
@@ -50,6 +46,8 @@ gem 'rails-i18n', '~> 5.1'
 gem 'enum_help'
 
 gem 'webpacker', github: 'rails/webpacker'
+
+gem 'kaminari', '~> 0.17.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,6 +59,10 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'rspec_junit_formatter'
+  gem 'pry-rails'
+  gem 'pry-coolline'
+  gem 'pry-byebug'
+  gem 'launchy'
 end
 
 group :development do

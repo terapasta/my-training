@@ -36,6 +36,9 @@ ja:
       title: '%{task_name}'
     edit:
       title: タスク編集
+  forms:
+    select:
+      unselected: 未選択
   links:
     tasks:
       new: タスク作成
@@ -49,6 +52,7 @@ ja:
   buttons:
     create: 作成
     update: 更新
+    search: 検索
     login: ログイン
   messages:
     confirmation:

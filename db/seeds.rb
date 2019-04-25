@@ -24,5 +24,5 @@ end
     user_id = User.fifth.id
   end
   Task.create(name: "task#{i}", description: "description#{i}description#{i}description#{i}description#{i}", 
-    priority: 10, deadline: Date.today.since(1.week) + i.day, status: 0, user_id: user_id)
+    priority: 'middle', deadline: Date.today.since(1.week) + i.day, status: 'waitnig', user_id: user_id)
 end

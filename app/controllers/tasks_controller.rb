@@ -17,7 +17,8 @@ class TasksController < ApplicationController
   end
   
   def index
-    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.only_related_with_user(current_user.id)
+      .order("#{sort_column} #{sort_direction}")
   end
 
   def show

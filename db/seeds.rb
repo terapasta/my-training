@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 5.times do |i|
-  User.create(name: "ユーザー#{i}", email: "email#{i}@sample.com", password_digest: "password01")
+  User.create(name: "ユーザー#{i}", email: "email#{i}@sample.com", password: "password01")
 end
 
 20.times do |i|

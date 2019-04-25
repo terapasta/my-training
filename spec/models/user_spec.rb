@@ -29,25 +29,25 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors[:email]).to include t('errors.messages.taken')
     end
-    it 'is invalid without password_digest' do
-      user = build(:user, password_digest: nil)
+    it 'is invalid without password' do
+      user = build(:user, password: nil)
       user.valid?
-      expect(user.errors[:password_digest]).to include t('errors.messages.blank')
+      expect(user.errors[:password]).to include t('errors.messages.blank')
     end
     it 'is invalid with shorter than 8 charactors' do
-      user = build(:user, password_digest: 'pass11')
+      user = build(:user, password: 'pass11')
       user.valid?
-      expect(user.errors[:password_digest]).to include t('errors.user.password')
+      expect(user.errors[:password]).to include t('errors.user.password')
     end
     it 'is invalid without number' do
-      user = build(:user, password_digest: 'hogepassword')
+      user = build(:user, password: 'hogepassword')
       user.valid?
-      expect(user.errors[:password_digest]).to include t('errors.user.password')
+      expect(user.errors[:password]).to include t('errors.user.password')
     end
     it 'is invalid without charactor' do
-      user = build(:user, password_digest: '12345678')
+      user = build(:user, password: '12345678')
       user.valid?
-      expect(user.errors[:password_digest]).to include t('errors.user.password')
+      expect(user.errors[:password]).to include t('errors.user.password')
     end
   end
 end

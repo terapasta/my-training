@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_secure_password validations: true
   has_many :tasks, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z/
@@ -11,8 +12,8 @@ class User < ApplicationRecord
               with: VALID_EMAIL_REGEX,
               message: I18n.t('errors.user.email')
                }, allow_blank: true
-  validates :password_digest, presence: true
-  validates :password_digest,
+  validates :password, presence: true
+  validates :password,
             format: {
               with: VALID_PASSWORD_REGEX,
               message: I18n.t('errors.user.password')

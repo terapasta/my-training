@@ -10,4 +10,5 @@ class Task < ApplicationRecord
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
 
   scope :default_order, -> { order(created_at: :desc) }
+  scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 end

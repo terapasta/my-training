@@ -2,7 +2,9 @@ require 'rails_helper'
 include DateHelper
 
 RSpec.describe 'Tasks', type: :system do
-  let(:task) { create(:task) }
+  let(:user) { create(:user) }
+  let(:task) { create(:task, user_id: user.id) }
+  before { login(user) }
 
   feature 'new page' do
     scenario 'succeed in creating new task' do
@@ -15,8 +17,7 @@ RSpec.describe 'Tasks', type: :system do
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
 
       click_on t('buttons.create')
-      # TODO: ログイン機能を追加後に復活させる
-      # expect(page).to have_content t('messages.flash.success.create')
+      expect(page).to have_content t('messages.flash.success.create')
     end
 
     scenario 'fail creating new task' do

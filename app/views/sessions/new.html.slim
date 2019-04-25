@@ -1,10 +1,10 @@
 div class="form"
   = form_with scope: :session, url: login_path, local: true do |f|
     div class="field"
-      = f.label :email, class: "label"
+      = f.label :email, t('activerecord.attributes.user.email'), class: "label"
       = f.email_field :email, class: "input"
     div class="field"
-      = f.label :password, class: "label"
+      = f.label :password, t('activerecord.attributes.user.password'), class: "label"
       = f.password_field :password, class: "input"
     div class="field"
       = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.login') }

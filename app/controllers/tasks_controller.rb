@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
+  PER = 8
+
   def new
     @task = Task.new(status: :waiting, priority: :middle)
   end
@@ -17,7 +19,8 @@ class TasksController < ApplicationController
   end
   
   def index
-    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
+    @search_form = TaskSearchForm.new(search_params)
+    @tasks = Task.task_order(@search_form.search, sort_column, sort_direction).page(params[:page]).per(PER)
   end
 
   def show
@@ -52,6 +55,10 @@ class TasksController < ApplicationController
       params.require(:task).permit(:name, :description, :deadline, :status, :priority, :user_id)
     end
 
+    def search_params
+      params.require(:q).permit(:name, :status, :priority) if params[:q]
+    end
+
     def set_task
       @task = Task.find_by(id: params[:id])
     end
@@ -61,6 +68,6 @@ class TasksController < ApplicationController
     end
 
     def sort_column
-      Task.column_names.include?(params[:sort]) ? params[:sort] : 'updated_at'
+      Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
     end
 end

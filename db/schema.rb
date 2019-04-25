@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 2019_04_24_082657) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
     t.bigint "user_id"
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["priority"], name: "index_tasks_on_priority"
@@ -37,11 +36,6 @@ ActiveRecord::Schema.define(version: 2019_04_24_082657) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-=======
-    t.index ["name"], name: "index_tasks_on_name"
-    t.index ["priority"], name: "index_tasks_on_priority"
-    t.index ["status"], name: "index_tasks_on_status"
->>>>>>> add-pagination
   end
 
 end

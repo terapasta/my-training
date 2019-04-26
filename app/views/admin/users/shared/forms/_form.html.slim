@@ -1,0 +1,7 @@
+.form
+  = form_with model: user, url: admin_users_path, local: true, :builder => CustomFormBuilder do |f|
+    = render partial: 'shared/forms/text_field', locals: { form: f, attr: 'name', label: '' }
+    = render partial: 'shared/forms/email_field', locals: { form: f, attr: 'email', label: '' }
+    - if request.fullpath.include?('admin/users/new')
+      = render partial: 'shared/forms/password_field', locals: { form: f, attr: 'password', label: '' }
+    = render partial: 'shared/forms/submit', locals: { form: f, name: btn_name }

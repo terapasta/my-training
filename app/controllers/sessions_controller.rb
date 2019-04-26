@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_admin
   before_action :set_user, only: [:create]
 
   def new
@@ -10,7 +11,11 @@ class SessionsController < ApplicationController
       login(@user)
       session_params[:remember_me] == '1' ? remember(@user) : forget(@user)
       flash[:success] = t('messages.flash.success.login')
-      redirect_to root_path
+      if @user.admin?
+        redirect_to admin_users_path
+      else
+        redirect_to root_path
+      end
     else
       flash.now[:error] = t('messages.flash.error.login')
       render :new

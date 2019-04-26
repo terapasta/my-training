@@ -17,6 +17,7 @@
               th = t('activerecord.attributes.user.name')
               th = t('activerecord.attributes.user.email')
               th = t('activerecord.attributes.user.tasks')
+              th = t('activerecord.attributes.user.role')
               th = t('activerecord.attributes.user.created_at')
               th
           tbody.tbody
@@ -26,6 +27,7 @@
                 td = user.name
                 td = user.email
                 td = "#{user.tasks.size}個"
+                td = user.role_i18n
                 td = format_datetime(user.created_at)
                 td 
                   = render partial: 'admin/users/shared/links/show', locals: { id: user.id }

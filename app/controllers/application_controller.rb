@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :current_user
   before_action :require_login
+  before_action :require_admin
   helper_method [:login?, :current_user]
 
   def login(user)
@@ -45,6 +46,12 @@ class ApplicationController < ActionController::Base
     unless login?
       flash[:info] = t('messages.flash.info.login')
       redirect_to login_path
+    end
+  end
+
+  def require_admin
+    unless login? && @current_user.admin?
+      redirect_to root_path
     end
   end
 end

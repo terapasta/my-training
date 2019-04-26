@@ -2,6 +2,7 @@
   = form_with model: [:admin, user], local: true, :builder => CustomFormBuilder do |f|
     = render partial: 'shared/forms/text_field', locals: { form: f, attr: 'name', label: '' }
     = render partial: 'shared/forms/email_field', locals: { form: f, attr: 'email', label: '' }
+    = render partial: 'shared/forms/select', locals: { form: f, attr: 'role', list: User.roles.keys.map { |k| [t("enums.user.role.#{k}"), k] }, label: '' }
     - if user.id.blank?
       = render partial: 'shared/forms/password_field', locals: { form: f, attr: 'password', label: '' }
     = render partial: 'shared/forms/submit', locals: { form: f, name: btn_name }

@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  skip_before_action :require_admin
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   PER = 8
@@ -11,10 +12,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
-      flash[:success] = t('messages.flash.success.create')
+      flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else
-      flash.now[:error] = t('messages.flash.error.create')
+      flash.now[:error] = t('messages.flash.error.create', model: t('activerecord.models.task'))
       render :new
     end
   end
@@ -32,21 +33,21 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = t('messages.flash.success.update')
+      flash[:success] = t('messages.flash.success.update', model: t('activerecord.models.task'))
       redirect_to @task
     else
-      flash.now[:error] = t('messages.flash.error.update')
+      flash.now[:error] = t('messages.flash.error.update', model: t('activerecord.models.task'))
       render :edit
     end
   end
 
   def destroy
     if @task.destroy
-      flash[:success] = t('messages.flash.success.destroy')
+      flash[:success] = t('messages.flash.success.destroy', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else
-      flash[:error] = t('messages.flash.error.destroy')
-      @tasks = Task.all
+      flash[:error] = t('messages.flash.error.destroy', model: t('activerecord.models.task'))
+      @tasks = Task.all.page(params[:page]).per(PER)
       render :index
     end
   end

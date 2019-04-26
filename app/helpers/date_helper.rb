@@ -11,4 +11,8 @@ module DateHelper
   def format_japanese_wday(wday)
     %w(日 月 火 水 木 金 土)[wday]
   end
+
+  def format_datetime(datetime)
+    datetime.strftime("%Y/%m/%d %H:%M")
+  end
 end

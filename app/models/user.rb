@@ -13,12 +13,12 @@ class User < ApplicationRecord
               with: VALID_EMAIL_REGEX,
               message: I18n.t('errors.user.email')
                }, allow_blank: true
-  validates :password, presence: true
+  validates :password, presence: true, on: [:create]
   validates :password,
             format: {
               with: VALID_PASSWORD_REGEX,
               message: I18n.t('errors.user.password')
-            }, allow_blank: true
+            }, allow_blank: true, on: [:create]
 
   def self.new_token
     SecureRandom.urlsafe_base64

@@ -8,16 +8,31 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
+    @user = User.new(user_params)
+    if @user.save
+      flash[:success] = t('messages.flash.success.create')
+      redirect_to admin_users_path
+    else
+      flash.now[:error] = t('messages.flash.error.create')
+      render :new
+    end
   end
 
   def index
-    @users = User.all.page(params[:page]).per(PER)
+    @users = User.all.order("created_at desc").page(params[:page]).per(PER)
   end
 
   def show
   end
 
   def update
+    if @user.update(user_params)
+      flash[:success] = t('messages.flash.success.update')
+      redirect_to admin_user_path(@user.id)
+    else
+      flash.now[:error] = t('messages.flash.error.update')
+      render :edit
+    end
   end
 
   def destroy

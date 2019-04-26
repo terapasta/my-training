@@ -1,0 +1,51 @@
+= javascript_pack_tag 'task_index'
+- content_for(:html_title) { t('admin.users.show.title', user_name: @user.name) }
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('admin.users.show.title', user_name: @user.name)
+    hr
+    .
+      nav.level
+        .level-left
+        .level-right
+          .level-item
+            = render partial: 'admin/users/shared/links/index'
+          .level-item
+            = render partial: 'admin/users/shared/links/edit', locals: { id: @user.id }
+          .level-item
+            = render partial: 'admin/users/shared/links/destroy', locals: { id: @user.id }
+      .card-background
+        table.table.is-striped.is-fullwidth
+          tbody.tbody
+            tr
+              td = t('activerecord.attributes.user.id')
+              td = @user.id
+            tr
+              td = t('activerecord.attributes.user.name')
+              td = @user.name
+            tr
+              td = t('activerecord.attributes.user.email')
+              td = @user.email
+            tr
+              td = t('activerecord.attributes.user.created_at')
+              td = format_datetime(@user.created_at)
+    .sub-table
+      h2.is-size-4 = t('admin.users.show.sub_table_title', user_name: @user.name)
+      #task-index.card-background
+        table.table.is-striped.is-fullwidth
+          thead.thead
+            tr
+              th = t('activerecord.attributes.task.id')
+              th = t('activerecord.attributes.task.name')
+              th = t('activerecord.attributes.task.deadline')
+              th = t('activerecord.attributes.task.status')
+              th = t('activerecord.attributes.task.priority')
+              th
+          tbody.tbody
+            - @user.tasks.each do |task|
+              tr
+                td = task.id
+                td = task.name
+                td = format_short_date_with_wday(task.deadline)
+                td = task.status_i18n
+                td = task.priority_i18n

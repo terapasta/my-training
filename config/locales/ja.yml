@@ -46,6 +46,7 @@ ja:
         title: ユーザー一覧
       show:
         title: '%{user_name}'
+        sub_table_title: '%{user_name}のタスク'
       edit:
         title: ユーザー編集
   forms:

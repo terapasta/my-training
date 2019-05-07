@@ -1,4 +1,5 @@
 class Tasks::PrioritiesController < ApplicationController
+  skip_before_action :require_admin
 
   def update
     @task = Task.find_by(id: params[:task_id])

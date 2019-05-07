@@ -4,6 +4,7 @@ include DateHelper
 RSpec.describe 'Tasks', type: :system do
   let(:user) { create(:user) }
   let(:task) { create(:task, user_id: user.id) }
+  before { 3.times { create(:label) } }
   before { login(user) }
 
   feature 'new page' do
@@ -15,6 +16,8 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.deadline'), with: Date.today.since(1.week)
       select t('enums.task.status.waiting'), from: t('activerecord.attributes.task.status')
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
+      check "task_label_ids_#{Label.first.id}"
+      check "task_label_ids_#{Label.second.id}"
 
       click_on t('buttons.create')
       expect(page).to have_content t('messages.flash.success.create', model: t('activerecord.models.task'))
@@ -40,12 +43,16 @@ RSpec.describe 'Tasks', type: :system do
       deadline = Date.today.since(1.week)
       status = t('enums.task.status.working')
       priority = t('enums.task.priority.high')
+      label1 = Label.first
+      label2 = Label.second
 
       fill_in t('activerecord.attributes.task.name'), with: name
       fill_in t('activerecord.attributes.task.description'), with: description
       fill_in t('activerecord.attributes.task.deadline'), with: deadline
       select status, from: t('activerecord.attributes.task.status')
       select priority, from: t('activerecord.attributes.task.priority')
+      check "task_label_ids_#{label1.id}"
+      check "task_label_ids_#{label2.id}"
 
       click_on t('buttons.update')
 
@@ -55,6 +62,8 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content format_date_with_wday(deadline)
       expect(page).to have_content status
       expect(page).to have_content priority
+      expect(page).to have_content label1.name
+      expect(page).to have_content label2.name
     end
 
     scenario 'fail updating task' do

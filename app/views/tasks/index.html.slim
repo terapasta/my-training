@@ -47,18 +47,8 @@
     .card-background
       .form
         = form_with model: @search_form, scope: :q, url: tasks_path, method: :get, local: true do |f|
-          .field
-            = f.label :name, t('activerecord.attributes.task.name'), class: "label"
-            = f.text_field :name, class: "input"
-          .field
-            = f.label :status, t('activerecord.attributes.task.status'), class: "label"
-            .select
-              = f.select :status, array_with_blank(t('forms.select.unselected'), 
-              Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]})
-          .field
-            = f.label :priority, t('activerecord.attributes.task.priority'), class: "label"
-            .select
-              = f.select :priority, array_with_blank(t('forms.select.unselected'), 
-              Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]})
-          .field
-            = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.search') }
+          = render partial: 'shared/forms/text_field', locals: { form: f, attr: 'name', label: t('activerecord.attributes.task.name') }
+          = render partial: 'shared/forms/select', locals: { form: f, attr: 'status', list: array_with_blank(t('forms.select.unselected'), Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}), label: t('activerecord.attributes.task.status') }
+          = render partial: 'shared/forms/select', locals: { form: f, attr: 'priority', list: array_with_blank(t('forms.select.unselected'), Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}), label: t('activerecord.attributes.task.priority') }
+          = render partial: 'shared/forms/collection_check_boxes', locals: { form: f, ids: 'label_ids', list: Label.all, label: t('activerecord.attributes.task.label') }
+          = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.search') }

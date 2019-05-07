@@ -17,5 +17,6 @@ class Task < ApplicationRecord
   scope :where_like_name, -> (name) { where('name like ?', "%#{name}%") }
   scope :where_eql_status, -> (status) { where(status: status) }
   scope :where_eql_priority, -> (priority) { where(priority: priority) }
+  scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 end

@@ -1,8 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
-  PER = 8
-
   def new
     @task = Task.new(status: :waiting, priority: :middle)
   end
@@ -21,7 +19,7 @@ class TasksController < ApplicationController
   
   def index
     @search_form = TaskSearchForm.new(search_params)
-    @tasks = @search_form.search.order("#{sort_column} #{sort_direction}").page(params[:page]).per(PER)
+    @tasks = @search_form.search.order("#{sort_column} #{sort_direction}").page(params[:page])
   end
 
   def show

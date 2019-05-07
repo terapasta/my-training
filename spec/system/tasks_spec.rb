@@ -69,7 +69,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  feature 'index page' do 
+  feature 'index page', js: true do 
     scenario 'succeed in destroy task' do
       task
       visit tasks_path
@@ -81,10 +81,30 @@ RSpec.describe 'Tasks', type: :system do
       }.to change { Task.count }.by(-1)
     end
 
-    scenario 'show list order by created_at' do
+    scenario 'index page orders by created_at' do
       5.times { |i| create(:task, name: "#{i}-name") }
       visit tasks_path
       5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
+    end
+
+    scenario 'index page orders by deadline' do
+      today = Date.today
+      4.times { |i| create(:task, deadline: today + i)}
+      visit tasks_path
+      click_on t('activerecord.attributes.task.deadline')
+      4.times { |i| expect(all('tbody tr')[i]).to have_content format_short_date_with_wday(today + (3 - i)) }
+      click_on t('activerecord.attributes.task.deadline')
+      4.times { |i| expect(all('tbody tr')[i]).to have_content format_short_date_with_wday(today + i) }
+    end
+
+    scenario 'index page orders by priority' do
+      PRIORITY_ORDERS = ['high', 'middle', 'low']
+      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i])}
+      visit tasks_path
+      click_on t('activerecord.attributes.task.priority')
+      3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[i]}") }
+      click_on t('activerecord.attributes.task.priority')
+      3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[2 - i]}") }
     end
   end
 end

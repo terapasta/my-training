@@ -35,4 +35,5 @@ end
 
 Task.first(5).each_with_index do |task, i|
   TaskLabel.create(task_id: task.id, label_id: Label.find_by(name: "label#{i}").id)
+  TaskLabel.create(task_id: task.id, label_id: Label.find_by(name: "label#{i + 1}").id) if i != 4
 end

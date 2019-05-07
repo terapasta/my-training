@@ -84,14 +84,14 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'index page orders by created_at' do
-      5.times { |i| create(:task, name: "#{i}-name") }
+      5.times { |i| create(:task, name: "#{i}-name", user_id: user.id) }
       visit tasks_path
       5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
     end
 
     scenario 'index page orders by deadline' do
       today = Date.today
-      4.times { |i| create(:task, deadline: today + i)}
+      4.times { |i| create(:task, deadline: today + i, user_id: user.id)}
       visit tasks_path
       click_on t('activerecord.attributes.task.deadline')
       4.times { |i| expect(all('tbody tr')[i]).to have_content format_short_date_with_wday(today + (3 - i)) }
@@ -101,7 +101,7 @@ RSpec.describe 'Tasks', type: :system do
 
     scenario 'index page orders by priority' do
       PRIORITY_ORDERS = ['high', 'middle', 'low']
-      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i])}
+      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i], user_id: user.id)}
       visit tasks_path
       click_on t('activerecord.attributes.task.priority')
       3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[i]}") }

@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザー
     attributes:
       task:
         id: ID
@@ -10,6 +11,11 @@ ja:
         deadline: 終了期限
         status: ステータス
         priority: 優先度
+      user:
+        id: ID
+        name: ユーザー名
+        email: メールアドレス
+        password_digest: パスワード
   enums:
     task:
       status:
@@ -57,6 +63,9 @@ ja:
         update: タスクの更新に失敗しました
         destroy: タスクの削除に失敗しました
   errors:
+    user:
+      email: メールアドレスが不正です
+      password: 半角英数字をそれぞれを含む8文字以上で入力してください
     format: "%{attribute}%{message}"
     messages:
       contain: 個のエラーがあります

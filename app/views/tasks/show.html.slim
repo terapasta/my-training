@@ -34,3 +34,11 @@
             tr
               td = t('activerecord.attributes.task.description')
               td = @task.description
+            tr
+              td = t('activerecord.attributes.label.name')
+              td
+                - if @task.labels.present?
+                  - @task.labels.each do |label|
+                    span = "#{label.name} "
+                - else
+                  span -

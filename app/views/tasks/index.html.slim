@@ -19,6 +19,7 @@
               th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline')
               th = t('activerecord.attributes.task.status')
               th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority')
+              th = t('activerecord.attributes.label.name')
               th
           tbody.tbody
             - @tasks.each do |task|
@@ -30,6 +31,12 @@
                   <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
                 td
                   <priority-selector task-id="#{task.id}" task-priority="#{task.priority}"></priority-selector>
+                td
+                  - if task.labels.present?
+                    - task.labels.each do |label|
+                      span.tag.is-info = label.name
+                  - else
+                    span -
                 td 
                   = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                   = render partial: 'tasks/shared/links/edit', locals: { id: task.id }

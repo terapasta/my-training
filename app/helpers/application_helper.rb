@@ -1,7 +1,13 @@
 module ApplicationHelper
 
   def sorted?
-    request.query_parameters.include?('direction')
+    q = request.query_parameters
+    q.include?('direction') && q.include?('sort')
+  end
+
+  def sorted_col?(col_name)
+    q = request.query_parameters
+    q.include?('sort') && q[:sort].include?(col_name)
   end
 
   def get_direction
@@ -12,8 +18,8 @@ module ApplicationHelper
     end
   end
 
-  def get_direction_sign(direction)
-    if sorted?
+  def get_direction_sign(col_name, direction)
+    if sorted? && sorted_col?(col_name)
       direction == 'desc' ? '▲' : '▼'
     else
       ''

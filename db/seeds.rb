@@ -8,5 +8,5 @@
 
 20.times do |i|
   Task.create(name: "task#{i}", description: "description#{i}description#{i}description#{i}description#{i}", 
-    priority: 10, deadline: Date.today.since(1.week) + i.day, status: 0)
+    priority: 'middle', deadline: Date.today.since(1.week) + i.day, status: 'waitnig')
 end

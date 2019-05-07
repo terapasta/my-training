@@ -18,7 +18,7 @@ div id="task-index"  class="columns is-centered"
               th = t('activerecord.attributes.task.name')
               th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline')
               th = t('activerecord.attributes.task.status')
-              th = t('activerecord.attributes.task.priority')
+              th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority')
               th
           tbody class="tbody"
             - @tasks.each do |task|

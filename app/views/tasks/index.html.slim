@@ -50,5 +50,5 @@
           = render partial: 'shared/forms/text_field', locals: { form: f, attr: 'name', label: t('activerecord.attributes.task.name') }
           = render partial: 'shared/forms/select', locals: { form: f, attr: 'status', list: array_with_blank(t('forms.select.unselected'), Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}), label: t('activerecord.attributes.task.status') }
           = render partial: 'shared/forms/select', locals: { form: f, attr: 'priority', list: array_with_blank(t('forms.select.unselected'), Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}), label: t('activerecord.attributes.task.priority') }
-          = render partial: 'shared/forms/collection_check_boxes', locals: { form: f, ids: 'label_ids', list: Label.all, label: t('activerecord.attributes.task.label') }
+          = render partial: 'shared/forms/collection_check_boxes', locals: { form: f, ids: 'label_ids', list: current_user.tasks.map{|task| task.labels}.flatten, label: t('activerecord.attributes.task.label') }
           = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.search') }

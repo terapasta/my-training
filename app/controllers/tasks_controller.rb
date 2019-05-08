@@ -12,6 +12,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
+      @task.create_related_labels(params[:labels])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else
@@ -55,7 +56,7 @@ class TasksController < ApplicationController
   private
     def task_params
       params.require(:task).permit(:name, :description, :deadline, :status, :priority, 
-                                    :user_id, label_ids:[])
+                                    :user_id)
     end
 
     def search_params

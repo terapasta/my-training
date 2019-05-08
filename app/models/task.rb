@@ -3,8 +3,7 @@ class Task < ApplicationRecord
   enum priority: { low: 0, middle: 1, high: 2 }
 
   belongs_to :user
-  has_many :task_labels, dependent: :destroy
-  has_many :labels, through: :task_labels
+  has_many :labels, dependent: :destroy
 
   validates :name, presence: true
   validates :deadline, presence: true
@@ -19,4 +18,13 @@ class Task < ApplicationRecord
   scope :where_eql_priority, -> (priority) { where(priority: priority) }
   scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
+
+  def create_related_labels(labels)
+    labels = params[:labels].split(',')
+    if labels.present?
+      labels.each do |label|
+        self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)
+      end
+    end
+  end
 end

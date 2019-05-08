@@ -5,5 +5,5 @@
     = render partial: 'shared/forms/date_field', locals: { form: f, attr: 'deadline', label: '' }
     = render partial: 'shared/forms/select', locals: { form: f, attr: 'status', list: Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, label: '' } 
     = render partial: 'shared/forms/select', locals: { form: f, attr: 'priority', list: Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, label: '' }
-    = render partial: 'shared/forms/collection_check_boxes', locals: { form: f, ids: 'label_ids', list: Label.all, label: 'label' }
+    = render partial: 'shared/forms/labels_input', locals: { form: f, attr: 'label', default_labels: task.labels.pluck(:name).join(','), label: ''}
     = render partial: 'shared/forms/submit', locals: { form: f, name: btn_name }

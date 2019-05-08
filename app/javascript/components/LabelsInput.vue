@@ -1,5 +1,5 @@
 <template>
-  <tags-input element-id="labels" v-model="labels" class="input"></tags-input>
+  <tags-input element-id="labels" v-model="labels" placeholder="ラベルを追加"></tags-input>
 </template>
 <script>
   import VoerroTagsInput from '@voerro/vue-tagsinput'

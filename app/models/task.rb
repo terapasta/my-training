@@ -19,12 +19,21 @@ class Task < ApplicationRecord
   scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
-  def create_related_labels(labels)
-    labels = params[:labels].split(',')
-    if labels.present?
-      labels.each do |label|
-        self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)
+  def create_labels(new_labels)
+    new_labels = new_labels.split(',')
+    if new_labels.present?
+      new_labels.each do |label|
+        self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)  
       end
     end
+  end
+
+  def delete_labels(new_labels)
+    self.labels.each { |label| label.destroy unless new_labels.include?(label.name) }
+  end
+
+  def update_labels(new_labels)
+    self.create_labels(new_labels)
+    self.delete_labels(new_labels)
   end
 end

@@ -16,8 +16,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.deadline'), with: Date.today.since(1.week)
       select t('enums.task.status.waiting'), from: t('activerecord.attributes.task.status')
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
-      check "task_label_ids_#{Label.first.id}"
-      check "task_label_ids_#{Label.second.id}"
+      fill_in t('activerecord.attributes.task.label'), with: 'labelテスト'
 
       click_on t('buttons.create')
       expect(page).to have_content t('messages.flash.success.create', model: t('activerecord.models.task'))
@@ -51,8 +50,8 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.deadline'), with: deadline
       select status, from: t('activerecord.attributes.task.status')
       select priority, from: t('activerecord.attributes.task.priority')
-      check "task_label_ids_#{label1.id}"
-      check "task_label_ids_#{label2.id}"
+      fill_in t('activerecord.attributes.task.label'), with: label1.name
+      fill_in t('activerecord.attributes.task.label'), with: label2.name
 
       click_on t('buttons.update')
 

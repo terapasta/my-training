@@ -12,7 +12,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
-      @task.create_related_labels(params[:labels])
+      @task.create_labels(params[:labels])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else
@@ -34,6 +34,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      @task.update_labels(params[:labels])
       flash[:success] = t('messages.flash.success.update', model: t('activerecord.models.task'))
       redirect_to @task
     else

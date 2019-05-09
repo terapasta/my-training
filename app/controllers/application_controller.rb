@@ -51,7 +51,12 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     unless login? && @current_user.admin?
-      redirect_to root_path
+      render_404
     end
+  end
+
+  def render_404(e = nil)
+    logger.info "Rendering 404 with exception: #{e.message}" if e
+    render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
   end
 end

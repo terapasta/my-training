@@ -4,11 +4,12 @@
   .column.is-10-desktop
     h1.is-size-3 = t('tasks.index.title')
     hr
-    - @notice_tasks.each do |notice_task|
-      - if is_danger?(notice_task.deadline)
-        <notification-area task-id="#{notice_task.id}" type="danger">【#{notice_task.name}】は今日が終了期限です!!</notification-area>
-      - else
-        <notification-area task-id="#{notice_task.id}" type="warning">【#{notice_task.name}】の終了期限まで残り#{get_diff_from_today(notice_task.deadline)}日です</notification-area>
+    - if @notice_tasks.present?
+      - @notice_tasks.each do |notice_task|
+        - if is_danger?(notice_task.deadline)
+          <notification-area task-id="#{notice_task.id}" type="danger">【#{notice_task.name}】は今日が終了期限です!!</notification-area>
+        - else
+          <notification-area task-id="#{notice_task.id}" type="warning">【#{notice_task.name}】の終了期限まで残り#{get_diff_from_today(notice_task.deadline)}日です</notification-area>
     div
       nav.level
         .level-left

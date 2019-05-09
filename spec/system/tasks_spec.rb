@@ -117,5 +117,16 @@ RSpec.describe 'Tasks', type: :system do
       click_on t('activerecord.attributes.task.priority')
       3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[2 - i]}") }
     end
+
+    scenario 'show notification' do
+      warning_task = create(:task, deadline: Date.tomorrow, user_id: user.id)
+      create(:task, deadline: Date.today, user_id: user.id)
+      visit tasks_path
+      expect(page).to have_content '残り1日です'
+      expect(page).to have_content '今日が終了期限です'
+      click_on "#{warning_task.id}-delete"
+      expect(page).not_to have_content '残り1日です'
+      expect(Task.find(warning_task.id).read_datestamp).to eq Date.today
+    end
   end
 end

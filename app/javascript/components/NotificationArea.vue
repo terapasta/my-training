@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isDeleted" class="notification" :class="styles">
-    <button @click="onClick" class="delete"></button>
+    <button @click="onClick" :id="taskId + '-delete'" class="delete"></button>
     <span><slot/></span>
   </div>
 </template>

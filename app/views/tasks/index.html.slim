@@ -4,6 +4,15 @@
   .column.is-10-desktop
     h1.is-size-3 = t('tasks.index.title')
     hr
+    - @notice_tasks.each do |notice_task|
+      - if is_danger?(notice_task.deadline)
+        .notification.is-danger.has-text-weight-semibold
+          button.delete
+          = "【#{notice_task.name}】は今日が終了期限です!!"
+      - else
+        .notification.is-warning
+          button.delete
+          = "【#{notice_task.name}】の終了期限まで残り#{get_diff_from_today(notice_task.deadline)}日です"
     div
       nav.level
         .level-left

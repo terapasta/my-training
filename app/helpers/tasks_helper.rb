@@ -9,4 +9,8 @@ module TasksHelper
   def array_with_blank(name, array)
     array.unshift([name, ''])
   end
+
+  def is_danger?(deadline)
+    get_diff_from_today(deadline) <= 0
+  end
 end

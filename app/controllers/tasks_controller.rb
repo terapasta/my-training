@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :show_notice_tasks, only: [:index]
 
   def new
     @task = Task.new(status: :waiting, priority: :middle)
@@ -75,5 +76,9 @@ class TasksController < ApplicationController
 
     def sort_column
       Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    end
+
+    def show_notice_tasks
+      @notice_tasks = Task.get_notice_tasks(current_user)
     end
 end

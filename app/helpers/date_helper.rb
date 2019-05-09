@@ -15,4 +15,8 @@ module DateHelper
   def format_datetime(datetime)
     datetime.strftime("%Y/%m/%d %H:%M")
   end
+
+  def get_diff_from_today(date)
+    (date - Date.today).to_i
+  end
 end

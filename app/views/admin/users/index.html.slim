@@ -25,7 +25,7 @@
                 td = user.id
                 td = user.name
                 td = user.email
-                td = "#{user.tasks.size}個"
+                td = "#{user.tasks_count}個"
                 td = format_datetime(user.created_at)
                 td 
                   = render partial: 'admin/users/shared/links/show', locals: { id: user.id }

@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   enum priority: { low: 0, middle: 1, high: 2 }
 
   belongs_to :user
+  counter_culture :user
 
   validates :name, presence: true
   validates :deadline, presence: true

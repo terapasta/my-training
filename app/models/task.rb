@@ -3,14 +3,13 @@ class Task < ApplicationRecord
   enum priority: { low: 0, middle: 1, high: 2 }
 
   belongs_to :user
+  counter_culture :user
   has_many :labels, dependent: :destroy
 
   validates :name, presence: true
   validates :deadline, presence: true
   validates :status, presence: true, inclusion: { in: Task.statuses.keys }
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
-
-  PRIORITY_ORDERS = [1, 2, 3, 10]
 
   scope :default_order, -> { order(created_at: :desc) }
   scope :where_like_name, -> (name) { where('name like ?', "%#{name}%") }

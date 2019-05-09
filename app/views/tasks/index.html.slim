@@ -11,7 +11,7 @@
         - elsif is_warning?(notice_task.deadline)
           <notification-area task-id="#{notice_task.id}" type="warning">#{t('messages.notification.warning', task_name: notice_task.name)}</notification-area>
         - else
-          <notification-area task-id="#{notice_task.id}" type="info">#{t('messages.notification.danger', task_name: notice_task.name, days: get_diff_from_today(notice_task.deadline))}</notification-area>
+          <notification-area task-id="#{notice_task.id}" type="info">#{t('messages.notification.info', task_name: notice_task.name, days: get_diff_from_today(notice_task.deadline))}</notification-area>
     div
       nav.level
         .level-left

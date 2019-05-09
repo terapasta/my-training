@@ -1,0 +1,4 @@
+= form.label label, class: "label"
+= form.collection_check_boxes(ids, list, :id, :name) do |b|
+  .checkbox
+    = b.label { b.check_box + " " +  b.text }

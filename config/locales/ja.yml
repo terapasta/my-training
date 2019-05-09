@@ -3,6 +3,7 @@ ja:
     models:
       task: タスク
       user: ユーザー
+      label: ラベル
     attributes:
       task:
         id: ID
@@ -11,6 +12,7 @@ ja:
         deadline: 終了期限
         status: ステータス
         priority: 優先度
+        label: ラベル
       user:
         id: ID
         name: ユーザー名
@@ -19,6 +21,9 @@ ja:
         tasks: タスク数
         role: 権限
         created_at: 作成日時
+      label:
+        id: ID
+        name: ラベル
   enums:
     task:
       status:

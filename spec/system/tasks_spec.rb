@@ -123,11 +123,11 @@ RSpec.describe 'Tasks', type: :system do
       warning_task = create(:task, deadline: Date.today, user_id: user.id)
       danger_task = create(:task, deadline: Date.yesterday, user_id: user.id)
       visit tasks_path
-      expect(page).to have_content t('messages.notification.danger', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
+      expect(page).to have_content t('messages.notification.info', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
       expect(page).to have_content t('messages.notification.warning', task_name: warning_task.name)
       expect(page).to have_content t('messages.notification.danger', task_name: danger_task.name)
       click_on "#{info_task.id}-delete"
-      expect(page).not_to have_content t('messages.notification.danger', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
+      expect(page).not_to have_content t('messages.notification.info', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
       expect(Task.find(info_task.id).read_datestamp).to eq Date.today
     end
   end

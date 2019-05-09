@@ -34,7 +34,7 @@
                 td
                   - if task.labels.present?
                     - task.labels.each do |label|
-                      span.tag.is-info = label.name
+                      span.tags-input-badge.tags-input-badge-pill.tags-input-badge-selected-default.is-info = label.name
                   - else
                     span -
                 td 

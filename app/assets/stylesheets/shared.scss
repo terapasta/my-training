@@ -29,24 +29,6 @@
   margin-top: 1rem;
   margin-bottom: 0rem;
 }
-.tag {
-  margin: 0.1rem;
-}
 .checkbox {
   margin: 0.5rem;
-}
-.tags-input-badge {
-  padding: 0.3rem;
-  margin: 0.1rem;
-  border-radius: 5px;
-  color: white;
-  background: $color-info-9;
-}
-.tags-input-wrapper-default {
-  input[type="text"] {
-    outline: 0px;
-    border: 0px;
-    border-bottom: medium solid $color-info-9;
-    line-height: 200%;
-  }
 }

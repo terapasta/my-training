@@ -1,14 +1,6 @@
-div class="form"
+.form
   = form_with scope: :session, url: login_path, local: true do |f|
-    div class="field"
-      = f.label :email, t('activerecord.attributes.user.email'), class: "label"
-      = f.email_field :email, class: "input"
-    div class="field"
-      = f.label :password, t('activerecord.attributes.user.password'), class: "label"
-      = f.password_field :password, class: "input"
-    div class="field"
-      = f.label :remember_me, class: "checkbox"
-        = f.check_box :remember_me
-        span = t('forms.checkbox.remember_me')
-    div class="field"
-      = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.login') }
+    = render partial: 'shared/forms/email_field', locals: { form: f, attr: 'email', label: t('activerecord.attributes.user.email') }
+    = render partial: 'shared/forms/password_field', locals: { form: f, attr: 'password', label: t('activerecord.attributes.user.password') }
+    = render partial: 'shared/forms/checkbox', locals: { form: f, attr: 'remember_me', label: t('forms.checkbox.remember_me') }
+    = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.login') }

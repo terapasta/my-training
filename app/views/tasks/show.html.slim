@@ -1,21 +1,21 @@
 - content_for(:html_title) { t('tasks.show.title', task_name: @task.name) }
-div class="columns is-centered"
-  div class="column is-8-desktop"
-    h1 class="is-size-3" = t('tasks.show.title', task_name: @task.name)
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('tasks.show.title', task_name: @task.name)
     hr
-    div
-      nav class="level"
-        div class="level-left"
-        div class="level-right"
-          div class="level-item"
+    .
+      nav.level
+        .level-left
+        .level-right
+          .level-item
             = render partial: 'tasks/shared/links/index'
-          div class="level-item"
+          .level-item
             = render partial: 'tasks/shared/links/edit', locals: { id: @task.id }
-          div class="level-item"
+          .level-item
             = render partial: 'tasks/shared/links/destroy', locals: { id: @task.id }
-      div class="card-background"
-        table class="table is-striped is-fullwidth"
-          tbody class="tbody"
+      .card-background
+        table.table.is-striped.is-fullwidth
+          tbody.tbody
             tr
               td = t('activerecord.attributes.task.id')
               td = @task.id

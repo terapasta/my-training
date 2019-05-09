@@ -1,13 +1,13 @@
 - content_for(:html_title) { t('tasks.new.title') }
-div class="columns is-centered"
-  div class="column is-8-desktop"
-    h1 class="is-size-3" = t('tasks.new.title')
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('tasks.new.title')
     hr
-    div
-      nav class="level"
-        div class="level-left"
-        div class="level-right"
-          div class="level-item"
+    .
+      nav.level
+        .level-left
+        .level-right
+          .level-item
             = render partial: 'tasks/shared/links/index'
-      div class="card-background"
+      .card-background
         = render partial: 'form', locals: { task: @task, btn_name: t('buttons.create') }

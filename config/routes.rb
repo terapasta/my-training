@@ -9,4 +9,8 @@ Rails.application.routes.draw do
     patch 'statuses', to: 'tasks/statuses#update'
     patch 'priorities', to: 'tasks/priorities#update'
   end
+
+  namespace :admin do
+    resources :users
+  end
 end

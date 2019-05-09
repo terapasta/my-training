@@ -15,6 +15,14 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
     super + error(attribute)
   end
 
+  def email_field(attribute, options = {})
+    super + error(attribute)
+  end
+
+  def password_field(attribute, options = {})
+    super + error(attribute)
+  end
+
   def date_field(attribute, options = {})
     super + error(attribute)
   end

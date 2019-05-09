@@ -16,6 +16,8 @@ ja:
         name: ユーザー名
         email: メールアドレス
         password: パスワード
+        tasks: タスク数
+        created_at: 作成日時
   enums:
     task:
       status:
@@ -36,6 +38,17 @@ ja:
       title: '%{task_name}'
     edit:
       title: タスク編集
+  admin:
+    users:
+      new:
+        title: ユーザー作成
+      index:
+        title: ユーザー一覧
+      show:
+        title: '%{user_name}'
+        sub_table_title: '%{user_name}のタスク'
+      edit:
+        title: ユーザー編集
   forms:
     select:
       unselected: 未選択
@@ -45,6 +58,12 @@ ja:
     tasks:
       new: タスク作成
       index: タスク一覧
+      show: 詳細
+      edit: 編集
+      destroy: 削除
+    users:
+      new: ユーザー作成
+      index: ユーザー一覧
       show: 詳細
       edit: 編集
       destroy: 削除

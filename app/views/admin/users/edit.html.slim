@@ -1,0 +1,13 @@
+- content_for(:html_title) { t('admin.users.edit.title') }
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('admin.users.edit.title')
+    hr
+    .
+      nav.level
+        .level-left
+        .level-right
+          .level-item
+          = render 'admin/users/shared/links/index'
+      .card-background
+        = render partial: 'admin/users/shared/forms/form', locals: { user: @user, btn_name: t('buttons.update') }

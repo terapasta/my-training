@@ -1,0 +1,35 @@
+- content_for(:html_title) { t('admin.users.index.title') }
+#task-index.columns.is-centered
+  .column.is-10-desktop
+    h1.is-size-3 = t('admin.users.index.title')
+    hr
+    div
+      nav.level
+        .level-left
+        .level-right
+          .level-item
+            = render 'admin/users/shared/links/new'
+      .card-background
+        table.table.is-striped.is-fullwidth
+          thead.thead
+            tr
+              th = t('activerecord.attributes.user.id')
+              th = t('activerecord.attributes.user.name')
+              th = t('activerecord.attributes.user.email')
+              th = t('activerecord.attributes.user.tasks')
+              th = t('activerecord.attributes.user.created_at')
+              th
+          tbody.tbody
+            - @users.each do |user|
+              tr
+                td = user.id
+                td = user.name
+                td = user.email
+                td = "#{user.tasks_count}個"
+                td = format_datetime(user.created_at)
+                td 
+                  = render partial: 'admin/users/shared/links/show', locals: { id: user.id }
+                  = render partial: 'admin/users/shared/links/edit', locals: { id: user.id }
+                  = render partial: 'admin/users/shared/links/destroy', locals: { id: user.id }
+        div data-turbolinks="false"
+          = paginate @users

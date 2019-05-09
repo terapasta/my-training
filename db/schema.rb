@@ -46,10 +46,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_024737) do
     t.datetime "updated_at", null: false
     t.string "remember_digest"
     t.integer "role", default: 0, null: false
-<<<<<<< HEAD
-=======
     t.integer "tasks_count", default: 0, null: false
->>>>>>> add-admin-page
   end
 
   add_foreign_key "labels", "tasks"

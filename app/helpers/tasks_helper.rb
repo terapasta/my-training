@@ -11,6 +11,15 @@ module TasksHelper
   end
 
   def is_danger?(deadline)
-    get_diff_from_today(deadline) <= 0
+    get_diff_from_today(deadline) < 0
+  end
+
+  def is_warning?(deadline)
+    get_diff_from_today(deadline) == 0
+  end
+
+  def is_info?(deadline)
+    diff = get_diff_from_today(deadline)
+    0 < diff && diff <= 3
   end
 end

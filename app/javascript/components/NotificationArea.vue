@@ -19,14 +19,12 @@
       }
     },
     computed: {
-      isDanger() {
-        return this.type == 'danger'
-      },
       styles() {
         return {
-        'is-warning': !this.isDanger,
-        'is-danger': this.isDanger,
-        'has-text-weight-semibold': this.isDanger
+        'is-warning': this.type == 'warning',
+        'is-danger': this.type == 'danger',
+        'is-info': this.type == 'info',
+        'has-text-weight-semibold': this.type == 'danger'
         }
       }
     },

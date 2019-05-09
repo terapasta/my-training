@@ -119,14 +119,16 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'show notification' do
-      warning_task = create(:task, deadline: Date.tomorrow, user_id: user.id)
-      create(:task, deadline: Date.today, user_id: user.id)
+      info_task = create(:task, deadline: Date.tomorrow, user_id: user.id)
+      warning_task = create(:task, deadline: Date.today, user_id: user.id)
+      danger_task = create(:task, deadline: Date.yesterday, user_id: user.id)
       visit tasks_path
-      expect(page).to have_content '残り1日です'
-      expect(page).to have_content '今日が終了期限です'
-      click_on "#{warning_task.id}-delete"
-      expect(page).not_to have_content '残り1日です'
-      expect(Task.find(warning_task.id).read_datestamp).to eq Date.today
+      expect(page).to have_content t('messages.notification.danger', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
+      expect(page).to have_content t('messages.notification.warning', task_name: warning_task.name)
+      expect(page).to have_content t('messages.notification.danger', task_name: danger_task.name)
+      click_on "#{info_task.id}-delete"
+      expect(page).not_to have_content t('messages.notification.danger', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
+      expect(Task.find(info_task.id).read_datestamp).to eq Date.today
     end
   end
 end

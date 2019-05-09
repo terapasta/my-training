@@ -103,6 +103,10 @@ ja:
         update: '%{model}の更新に失敗しました'
         destroy: '%{model}の削除に失敗しました'
         login: ログインに失敗しました
+    notification:
+      info: '%【{task_name}】の終了期限まで残り%{days}日です'
+      warning: '【%{task_name}】は今日が終了期限です!!'
+      danger: '【%{task_name}】のが終了期限が過ぎています!!'
   errors:
     user:
       email: メールアドレスが不正です

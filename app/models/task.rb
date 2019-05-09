@@ -20,9 +20,8 @@ class Task < ApplicationRecord
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
   def create_labels(new_labels)
-    new_labels = new_labels.split(',')
     if new_labels.present?
-      new_labels.each do |label|
+      new_labels.split(',').each do |label|
         self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)  
       end
     end

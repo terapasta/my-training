@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :remember_token
+
+  enum role: { normal: 0, admin: 1 }
+
   has_secure_password validations: true
   has_many :tasks, dependent: :destroy
 
@@ -19,6 +22,9 @@ class User < ApplicationRecord
               with: VALID_PASSWORD_REGEX,
               message: I18n.t('errors.user.password')
             }, allow_blank: true, on: [:create]
+  validates :role, presence: true, inclusion: { in: User.roles.keys }
+
+  scope :only_admin, -> { where(role: :admin) }
 
   def self.new_token
     SecureRandom.urlsafe_base64
@@ -40,5 +46,9 @@ class User < ApplicationRecord
 
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def last_admin?
+    self.admin? && User.only_admin.size <= 1
   end
 end

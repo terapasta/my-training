@@ -27,6 +27,9 @@
               td = t('activerecord.attributes.user.email')
               td = @user.email
             tr
+              td = t('activerecord.attributes.user.role')
+              td = @user.role_i18n
+            tr
               td = t('activerecord.attributes.user.created_at')
               td = format_datetime(@user.created_at)
     .sub-table

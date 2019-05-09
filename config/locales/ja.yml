@@ -17,6 +17,7 @@ ja:
         email: メールアドレス
         password: パスワード
         tasks: タスク数
+        role: 権限
         created_at: 作成日時
   enums:
     task:
@@ -29,6 +30,10 @@ ja:
         middle: 中
         high: 高
         unselected: '-'
+    user:
+      role:
+        normal: 一般ユーザー
+        admin: 管理ユーザー
   tasks:
     new:
       title: タスク作成
@@ -83,15 +88,15 @@ ja:
       info: 
         login: ログインしてください
       success:
-        create: タスクを作成しました！
-        update: タスクを更新しました！
-        destroy: タスクを削除しました！
+        create: '%{model}を作成しました！'
+        update: '%{model}タスクを更新しました！'
+        destroy: '%{model}を削除しました！'
         login: ログインしました！
         logout: ログアウトしました!
       error:
-        create: タスクの作成に失敗しました
-        update: タスクの更新に失敗しました
-        destroy: タスクの削除に失敗しました
+        create: '%{model}の作成に失敗しました'
+        update: '%{model}の更新に失敗しました'
+        destroy: '%{model}の削除に失敗しました'
         login: ログインに失敗しました
   errors:
     user:

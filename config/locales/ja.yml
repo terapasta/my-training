@@ -39,6 +39,8 @@ ja:
   forms:
     select:
       unselected: 未選択
+    checkbox:
+      remember_me: ログイン情報を記録する
   links:
     tasks:
       new: タスク作成

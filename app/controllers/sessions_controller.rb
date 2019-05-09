@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   def create
     if @user && @user.authenticate(session_params[:password])
       login(@user)
+      session_params[:remember_me] == '1' ? remember(@user) : forget(@user)
       flash[:success] = t('messages.flash.success.login')
       redirect_to root_path
     else
@@ -17,7 +18,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    logout
+    logout if login?
     flash[:success] = t('messages.flash.success.logout')
     redirect_to login_path
   end
@@ -28,6 +29,6 @@ class SessionsController < ApplicationController
     end
 
     def session_params
-      params.require(:session).permit(:email, :password)
+      params.require(:session).permit(:email, :password, :remember_me)
     end
 end

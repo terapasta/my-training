@@ -15,7 +15,7 @@ ja:
         id: ID
         name: ユーザー名
         email: メールアドレス
-        password_digest: パスワード
+        password: パスワード
   enums:
     task:
       status:
@@ -46,22 +46,32 @@ ja:
       show: 詳細
       edit: 編集
       destroy: 削除
+    sessions:
+      new: ログイン
+      destroy: ログアウト
   buttons:
     create: 作成
     update: 更新
     search: 検索
+    login: ログイン
   messages:
     confirmation:
       destroy: 本当に削除しますか？
+      logout: 本当にログアウトしますか？
     flash:
+      info: 
+        login: ログインしてください
       success:
         create: タスクを作成しました！
         update: タスクを更新しました！
         destroy: タスクを削除しました！
+        login: ログインしました！
+        logout: ログアウトしました!
       error:
         create: タスクの作成に失敗しました
         update: タスクの更新に失敗しました
         destroy: タスクの削除に失敗しました
+        login: ログインに失敗しました
   errors:
     user:
       email: メールアドレスが不正です

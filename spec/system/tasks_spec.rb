@@ -2,7 +2,9 @@ require 'rails_helper'
 include DateHelper
 
 RSpec.describe 'Tasks', type: :system do
-  let(:task) { create(:task) }
+  let(:user) { create(:user) }
+  let(:task) { create(:task, user_id: user.id) }
+  before { login(user) }
 
   feature 'new page' do
     scenario 'succeed in creating new task' do
@@ -15,8 +17,7 @@ RSpec.describe 'Tasks', type: :system do
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
 
       click_on t('buttons.create')
-      # TODO: ログイン機能を追加後に復活させる
-      # expect(page).to have_content t('messages.flash.success.create')
+      expect(page).to have_content t('messages.flash.success.create')
     end
 
     scenario 'fail creating new task' do
@@ -83,14 +84,14 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'index page orders by created_at' do
-      5.times { |i| create(:task, name: "#{i}-name") }
+      5.times { |i| create(:task, name: "#{i}-name", user_id: user.id) }
       visit tasks_path
       5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
     end
 
     scenario 'index page orders by deadline' do
       today = Date.today
-      4.times { |i| create(:task, deadline: today + i)}
+      4.times { |i| create(:task, deadline: today + i, user_id: user.id)}
       visit tasks_path
       click_on t('activerecord.attributes.task.deadline')
       4.times { |i| expect(all('tbody tr')[i]).to have_content format_short_date_with_wday(today + (3 - i)) }
@@ -100,7 +101,7 @@ RSpec.describe 'Tasks', type: :system do
 
     scenario 'index page orders by priority' do
       PRIORITY_ORDERS = ['high', 'middle', 'low']
-      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i])}
+      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i], user_id: user.id)}
       visit tasks_path
       click_on t('activerecord.attributes.task.priority')
       3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[i]}") }

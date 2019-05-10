@@ -1,0 +1,40 @@
+nav.level
+  .level-left
+  .level-right
+    .level-item
+      - if controller_name == 'tasks'
+        - if action_name == 'new'
+          .level-item
+            = render 'tasks/shared/links/index'
+        - if action_name == 'edit'
+          .level-item
+            = render 'tasks/shared/links/index'
+        - if action_name == 'show'
+          .level-item
+            = render 'tasks/shared/links/index'
+          .level-item
+            = render 'tasks/shared/links/edit', id: id
+          .level-item
+            = render 'tasks/shared/links/destroy', id: id
+        - if action_name == 'index'
+          .level-item
+            = render 'tasks/shared/links/new'
+          .level-item
+            = render 'groups/shared/links/new'
+      - if controller_name == 'users'
+        - if action_name == 'new'
+          .level-item
+            = render 'admin/users/shared/links/index'
+        - if action_name == 'edit'
+          .level-item
+            = render 'admin/users/shared/links/index'
+        - if action_name == 'show'
+          .level-item
+            = render 'admin/users/shared/links/index'
+          .level-item
+            = render 'admin/users/shared/links/edit', id: id
+          .level-item
+            = render 'admin/users/shared/links/destroy', id: id
+        - if action_name == 'index'
+          .level-item
+            = render 'admin/users/shared/links/new'

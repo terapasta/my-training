@@ -4,11 +4,7 @@
     h1.is-size-3 = t('admin.users.index.title')
     hr
     div
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render 'admin/users/shared/links/new'
+      = render 'shared/links_area', id: ''
       .card-background
         table.table.is-striped.is-fullwidth
           thead.thead

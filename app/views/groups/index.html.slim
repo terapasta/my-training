@@ -1,0 +1,27 @@
+- content_for(:html_title) { t('groups.index.title') }
+#task-index.columns.is-centered
+  .column.is-10-desktop
+    h1.is-size-3 = t('groups.index.title')
+    hr
+    div
+      = render 'shared/links_area', id: ''
+      .card-background
+        table.table.is-striped.is-fullwidth
+          thead.thead
+            tr
+              th = t('activerecord.attributes.group.id')
+              th = t('activerecord.attributes.group.name')
+              th = t('activerecord.attributes.group.created_at')
+              th
+          tbody.tbody
+            - @groups.each do |group|
+              tr
+                td = group.id
+                td = group.name
+                td = format_datetime(group.created_at)
+                td 
+                  = render partial: 'groups/shared/links/show', locals: { id: group.id }
+                  = render partial: 'groups/shared/links/edit', locals: { id: group.id }
+                  = render partial: 'groups/shared/links/destroy', locals: { id: group.id }
+        div data-turbolinks="false"
+          = paginate @groups

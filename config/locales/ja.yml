@@ -28,6 +28,7 @@ ja:
       group:
         id: ID
         name: グループ名
+        created_at: 作成日時
   enums:
     task:
       status:

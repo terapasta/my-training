@@ -1,0 +1,16 @@
+- content_for(:html_title) { t('groups.show.title', group_name: @group.name) }
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('groups.show.title', group_name: @group.name)
+    hr
+    div
+      = render 'shared/links_area', id: @group.id
+      .card-background
+        table.table.is-striped.is-fullwidth
+          tbody.tbody
+            tr
+              td = t('activerecord.attributes.group.id')
+              td = @group.id
+            tr
+              td = t('activerecord.attributes.group.name')
+              td = @group.name

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     patch 'read_datestamps', to: 'tasks/read_datestamps#update'
   end
 
+  resources :groups
+
   namespace :admin do
     resources :users
   end

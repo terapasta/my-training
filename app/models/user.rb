@@ -33,7 +33,7 @@ class User < ApplicationRecord
   def self.encrypt(token)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine::DEFAULT_COST
-    BCrypt::Password.create(stirng, cost: cost)
+    BCrypt::Password.create(token, cost: cost)
   end
 
   def remember

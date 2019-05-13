@@ -6,12 +6,8 @@
     hr
     - if @notice_tasks.present?
       - @notice_tasks.each do |notice_task|
-        - if is_danger?(notice_task.deadline)
-          <notification-area task-id="#{notice_task.id}" type="danger">#{t('messages.notification.danger', task_name: notice_task.name)}</notification-area>
-        - elsif is_warning?(notice_task.deadline)
-          <notification-area task-id="#{notice_task.id}" type="warning">#{t('messages.notification.warning', task_name: notice_task.name)}</notification-area>
-        - else
-          <notification-area task-id="#{notice_task.id}" type="info">#{t('messages.notification.info', task_name: notice_task.name, days: get_diff_from_today(notice_task.deadline))}</notification-area>
+        - type = get_notice_type(notice_task.deadline)
+        <notification-area task-id="#{notice_task.id}" type="#{type}">#{get_notice_message(notice_task.name, type, get_diff_from_today(notice_task.deadline))}</notification-area>
     div
       = render 'shared/links_area', id: ''
       .card-background
@@ -28,7 +24,8 @@
               th
           tbody.tbody
             - @tasks.each do |task|
-              tr class="#{'has-background-danger' if is_danger?(task.deadline)} #{'has-background-warning' if is_warning?(task.deadline)} #{'has-background-info' if is_info?(task.deadline)}"
+              - type = get_notice_type(task.deadline)
+              tr class="has-background-#{type}"
                 td = task.id
                 td = task.name
                 td = format_short_date_with_wday(task.deadline)

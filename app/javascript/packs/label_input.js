@@ -1,9 +1,9 @@
 import Vue from 'vue/dist/vue.esm'
-import LabelsInput from '../components/LabelsInput'
+import TagsInput from '../components/TagsInput'
 
 document.addEventListener('DOMContentLoaded', () => {
   new Vue({
     el: '#task-form',
-    components: { LabelsInput },
+    components: { TagsInput },
   })
 })

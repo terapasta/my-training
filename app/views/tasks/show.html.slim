@@ -34,3 +34,8 @@
                     span = "#{label.name} "
                 - else
                   span -
+            tr
+              td = t('activerecord.models.group')
+              td
+                - if @task.group.present?
+                  = link_to @task.group.name, group_path(@task.group.id), data: { "turbolinks" => false }

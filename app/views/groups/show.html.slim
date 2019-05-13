@@ -19,3 +19,9 @@
               td
                 - @group.users.each do |user|
                   = "#{user.name}(#{user.email}) "
+            tr
+              td = t('activerecord.attributes.group.tasks')
+              td
+                - @group.tasks.each_with_index do |task, i|
+                  = "#{', ' unless i == 0}"
+                  = link_to task.name, task_path(task.id)

@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   belongs_to :user
   counter_culture :user
+  belongs_to :group, optional: true
   has_many :labels, dependent: :destroy
 
   validates :name, presence: true

@@ -24,6 +24,7 @@
               th = t('activerecord.attributes.task.status')
               th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority')
               th = t('activerecord.attributes.label.name')
+              th = t('activerecord.attributes.task.group_id')
               th
           tbody.tbody
             - @tasks.each do |task|
@@ -39,6 +40,11 @@
                   - if task.labels.present?
                     - task.labels.each do |label|
                       span.tags-input-badge.tags-input-badge-pill.tags-input-badge-selected-default.is-info = label.name
+                  - else
+                    span -
+                td
+                  - if task.group.present?
+                    = link_to task.group.name, group_path(task.group.id), data: { "turbolinks" => false }
                   - else
                     span -
                 td 

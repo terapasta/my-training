@@ -63,7 +63,7 @@ class TasksController < ApplicationController
     end
 
     def search_params
-      params.require(:q).permit(:name, :status, :priority, tag_ids:[]).merge(user_id: current_user.id) if params[:q]
+      params.require(:q).permit(:name, :status, :priority, label_ids:[]).merge(user_id: current_user.id) if params[:q]
     end
 
     def set_task

@@ -37,6 +37,11 @@ class User < ApplicationRecord
     Digest::SHA256.hexdigest(token.to_s)
   end
 
+  def self.get_ids_by_emails(emails)
+    emails = emails.map { |email| User.find_by(email: email)&.id }
+    emails.include?(nil) ? false : emails.compact
+  end
+
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.encrypt(remember_token))

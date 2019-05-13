@@ -1,5 +1,5 @@
 .form
   = form_with model: group, local: true, :builder => CustomFormBuilder do |f|
     = render partial: 'shared/forms/text_field', locals: { form: f, attr: 'name', label: '' }
-    = render partial: 'shared/forms/labels_input', locals: { form: f, attr: 'user', default_labels: nil, label: '' }
+    = render partial: 'shared/forms/tags_input', locals: { form: f, attr: 'users', default_tags: @emails, placeholder: 'ユーザーを追加', label: '' }
     = render partial: 'shared/forms/submit', locals: { form: f, name: btn_name }

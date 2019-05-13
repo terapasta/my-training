@@ -14,3 +14,8 @@
             tr
               td = t('activerecord.attributes.group.name')
               td = @group.name
+            tr
+              td = t('activerecord.attributes.group.users')
+              td
+                - @group.users.each do |user|
+                  = "#{user.name}(#{user.email}) "

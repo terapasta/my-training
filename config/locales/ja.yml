@@ -28,6 +28,7 @@ ja:
       group:
         id: ID
         name: グループ名
+        users: グループメンバー
         created_at: 作成日時
   enums:
     task:
@@ -123,6 +124,7 @@ ja:
         update: '%{model}の更新に失敗しました'
         destroy: '%{model}の削除に失敗しました'
         login: ログインに失敗しました
+        invalid: '無効な%{attr}が含まれています'
     notification:
       info: '【%{task_name}】の終了期限まで残り%{days}日です'
       warning: '【%{task_name}】は今日が終了期限です!!'

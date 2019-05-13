@@ -24,6 +24,7 @@ nav.level
           = render "#{prefix}/shared/links/new"
         - if model == 'tasks'
           .level-item
-            = render 'groups/shared/links/new'
-          .level-item
             = render 'groups/shared/links/index'
+        - if model == 'groups'
+          .level-item
+            = render 'tasks/shared/links/index'

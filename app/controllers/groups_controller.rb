@@ -8,13 +8,18 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    if @group.save
+    emails = params[:tags].split(',').push(current_user.email)
+    if (user_ids = User.get_ids_by_emails(emails)).present? && @group.save
       # TODO: トランザクション使ったほうがよい？
-      UserGroup.create(user_id: current_user.id, group_id: @group.id)
+      user_ids.each { |user_id| UserGroup.create(group_id: @group.id, user_id: user_id) }
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.group'))
       redirect_to groups_path
     else
-      flash.now[:error] = t('messages.flash.error.create', model: t('activerecord.models.group'))
+      @emails = params[:tags]
+      flash.now[:error] = <<-EOS
+        #{t('messages.flash.error.create', model: t('activerecord.models.group'))}
+        #{t('messages.flash.error.invalid', attr: t('activerecord.attributes.user.email')) if @group.errors.blank?}
+      EOS
       render :new
     end
   end
@@ -27,6 +32,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @emails = @group.users.pluck(:email).join(',')
   end
 
   def update

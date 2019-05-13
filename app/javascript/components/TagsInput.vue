@@ -1,11 +1,11 @@
 <template>
-  <tags-input element-id="tags" v-model="tags" placeholder="ラベルを追加"></tags-input>
+  <tags-input element-id="tags" v-model="tags" :placeholder="placeholder"></tags-input>
 </template>
 <script>
   import VoerroTagsInput from '@voerro/vue-tagsinput'
 
   export default {
-    props: ['defaultTags'],
+    props: ['defaultTags', 'placeholder'],
     components: { 'tags-input': VoerroTagsInput },
     data() {
       return {

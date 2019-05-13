@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   skip_before_action :require_admin
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  before_action :set_emails, only: [:create, :show, :edit, :update, :destroy]
+  before_action :set_emails, only: [:create, :update, :destroy]
 
   def new
     @group = Group.new
@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if (user_ids = User.get_ids_by_emails(@emails)).present? && @group.save
       # TODO: トランザクション使ったほうがよい？
-      UserGroup.create_user_groups(group_id, user_ids)
+      UserGroup.create_user_groups(@group.id, user_ids)
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.group'))
       redirect_to groups_path
     else
@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @emails = @group.users.pluck(:email).join(',')
+    @emails = @group.users.pluck(:email).join(',') if @group.users.present?
   end
 
   def update

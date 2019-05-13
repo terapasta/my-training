@@ -38,8 +38,10 @@ class User < ApplicationRecord
   end
 
   def self.get_ids_by_emails(emails)
-    emails = emails.map { |email| User.find_by(email: email)&.id }
-    emails.include?(nil) ? false : emails.compact
+    # if emails.present?
+      emails = emails&.map { |email| User.find_by(email: email)&.id }
+      emails&.include?(nil) ? false : emails&.compact
+    # end
   end
 
   def remember

@@ -34,4 +34,30 @@ class Task < ApplicationRecord
     self.create_labels(new_labels)
     self.delete_labels(new_labels)
   end
+
+  def is_passed_deadline?
+    deadline < Date.today
+  end
+
+  def is_deadline_in_3_days?
+    (deadline - Date.today).to_i <= 3
+  end
+
+  def has_notice?
+    read_datestamp != Date.today && (is_passed_deadline? || is_deadline_in_3_days?)
+  end
+
+  def self.get_notice_tasks(user)
+    if (tasks = Task.extract_not_completed(user.tasks)).present?
+      Task.extract_has_notice(tasks)
+    end
+  end
+
+  def self.extract_not_completed(tasks)
+    tasks.map { |task| task unless task.completed? }.compact
+  end
+
+  def self.extract_has_notice(tasks)
+    tasks.map { |task| task if task.has_notice? }.compact
+  end
 end

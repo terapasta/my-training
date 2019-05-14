@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :tasks do
     patch 'statuses', to: 'tasks/statuses#update'
     patch 'priorities', to: 'tasks/priorities#update'
+    patch 'read_datestamps', to: 'tasks/read_datestamps#update'
   end
 
   namespace :admin do

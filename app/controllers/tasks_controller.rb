@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :show_notice_tasks, only: [:index]
 
   def new
     @task = Task.new(status: :waiting, priority: :middle)
@@ -19,12 +20,8 @@ class TasksController < ApplicationController
   end
   
   def index
-    if search_params
-      @search_form = TaskSearchForm.new(search_params)
-      tasks = @search_form.search
-    else
-      tasks = current_user.tasks
-    end
+    @search_form = TaskSearchForm.new(search_params)
+    tasks = @search_form.search
     @tasks = tasks.order("#{sort_column} #{sort_direction}").page(params[:page])
   end
 
@@ -62,7 +59,11 @@ class TasksController < ApplicationController
     end
 
     def search_params
-      params.require(:q).permit(:name, :status, :priority, label_ids:[]).merge(user_id: current_user.id) if params[:q]
+      if params[:q]
+        params.require(:q).permit(:name, :status, :priority, label_ids:[]).merge(user_id: current_user.id)
+      else
+        { user_id: current_user.id }
+      end
     end
 
     def set_task
@@ -75,5 +76,9 @@ class TasksController < ApplicationController
 
     def sort_column
       Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    end
+
+    def show_notice_tasks
+      @notice_tasks = Task.get_notice_tasks(current_user)
     end
 end

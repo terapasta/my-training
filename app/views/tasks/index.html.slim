@@ -4,6 +4,10 @@
   .column.is-10-desktop
     h1.is-size-3 = t('tasks.index.title')
     hr
+    - if @notice_tasks.present?
+      - @notice_tasks.each do |notice_task|
+        - type = get_notice_type(notice_task.deadline)
+        <notification-area task-id="#{notice_task.id}" type="#{type}">#{get_notice_message(notice_task.name, type, get_diff_from_today(notice_task.deadline))}</notification-area>
     div
       nav.level
         .level-left
@@ -23,7 +27,8 @@
               th
           tbody.tbody
             - @tasks.each do |task|
-              tr
+              - type = get_notice_type(task.deadline)
+              tr class="has-background-#{type}"
                 td = task.id
                 td = task.name
                 td = format_short_date_with_wday(task.deadline)

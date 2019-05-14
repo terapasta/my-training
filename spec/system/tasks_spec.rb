@@ -84,7 +84,7 @@ RSpec.describe 'Tasks', type: :system do
     scenario 'succeed in destroying task' do
       task
       visit tasks_path
-      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[1]/td[7]/a[@class='button button-shape'][3]").click
+      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[1]/td[8]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept

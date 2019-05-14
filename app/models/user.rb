@@ -31,7 +31,9 @@ class User < ApplicationRecord
   end
 
   def self.encrypt(token)
-    Digest::SHA256.hexdigest(token.to_s)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine::DEFAULT_COST
+    BCrypt::Password.create(token, cost: cost)
   end
 
   def remember

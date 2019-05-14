@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   has_secure_password validations: true
 
-  has_many :tasks, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
+  has_many :user_tasks, dependent: :destroy
+  has_many :tasks, through: :user_tasks
 
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z/
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
@@ -38,10 +39,8 @@ class User < ApplicationRecord
   end
 
   def self.get_ids_by_emails(emails)
-    # if emails.present?
       emails = emails&.map { |email| User.find_by(email: email)&.id }
       emails&.include?(nil) ? false : emails&.compact
-    # end
   end
 
   def remember

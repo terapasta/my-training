@@ -8,8 +8,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.new(task_params)
-    if @task.save
+    @task = Task.new(task_params)
+    if @task.create_with_user(current_user.id)
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
@@ -67,7 +67,7 @@ class TasksController < ApplicationController
     end
 
     def set_task
-      @task = current_user.tasks.find_by(id: params[:id])
+      @task = current_user.tasks.joins(:group).find_by(id: params[:id])
     end
 
     def sort_direction
@@ -81,4 +81,5 @@ class TasksController < ApplicationController
     def show_notice_tasks
       @notice_tasks = Task.get_notice_tasks(current_user)
     end
+
 end

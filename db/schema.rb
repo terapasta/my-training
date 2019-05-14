@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_13_051555) do
+ActiveRecord::Schema.define(version: 2019_05_14_033645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,14 +37,12 @@ ActiveRecord::Schema.define(version: 2019_05_13_051555) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.date "read_datestamp"
     t.bigint "group_id"
     t.index ["group_id"], name: "index_tasks_on_group_id"
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["priority"], name: "index_tasks_on_priority"
     t.index ["status"], name: "index_tasks_on_status"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "user_groups", force: :cascade do |t|
@@ -54,6 +52,19 @@ ActiveRecord::Schema.define(version: 2019_05_13_051555) do
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_user_groups_on_group_id"
     t.index ["user_id"], name: "index_user_groups_on_user_id"
+  end
+
+  create_table "user_tasks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "task_id"
+    t.integer "task_status"
+    t.integer "priority"
+    t.integer "task_role"
+    t.date "scheduled_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_user_tasks_on_task_id"
+    t.index ["user_id"], name: "index_user_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,4 +81,6 @@ ActiveRecord::Schema.define(version: 2019_05_13_051555) do
   add_foreign_key "labels", "tasks"
   add_foreign_key "user_groups", "groups"
   add_foreign_key "user_groups", "users"
+  add_foreign_key "user_tasks", "tasks"
+  add_foreign_key "user_tasks", "users"
 end

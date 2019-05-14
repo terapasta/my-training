@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if (user_ids = User.get_ids_by_emails(@emails)).present? && @group.save
       # TODO: トランザクション使ったほうがよい？
-      UserGroup.create_user_groups(@group.id, user_ids)
+      UserGroup.create_user_groups(@group, user_ids)
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.group'))
       redirect_to groups_path
     else

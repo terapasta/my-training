@@ -4,11 +4,16 @@ RSpec.describe TaskSearchForm, type: :model do
 
   describe 'search' do
     let(:user) { create(:user) }
+    let(:group) { create(:group) }
     let(:params) { { user_id: user.id } }
     before do
-      create(:task, name: 'task-1', status: 'waiting', priority: 'high', user_id: user.id)
-      create(:task, name: 'task-2', status: 'working', priority: 'middle', user_id: user.id)
-      create(:task, name: 'task-22', status: 'completed', priority: 'low', user_id: user.id)
+      create(:user_group, user_id: user.id, group_id: group.id)
+      task_1 = create(:task, name: 'task-1', status: 'waiting', priority: 'high', group_id: group.id)
+      task_1.user_tasks.create(user_id: user.id)
+      task_2 = create(:task, name: 'task-2', status: 'working', priority: 'middle', group_id: group.id)
+      task_2.user_tasks.create(user_id: user.id)
+      task_3 = create(:task, name: 'task-22', status: 'completed', priority: 'low', group_id: group.id)
+      task_3.user_tasks.create(user_id: user.id)
     end
     describe 'with name' do
       context 'perfect match' do

@@ -2,18 +2,18 @@ class Task < ApplicationRecord
   enum status: { waiting: 0, working: 1, completed: 2 }
   enum priority: { low: 0, middle: 1, high: 2 }
 
-  belongs_to :user
-  counter_culture :user
-  belongs_to :group, optional: true
+  belongs_to :group
   has_many :labels, dependent: :destroy
+  has_many :user_tasks, dependent: :destroy
+  has_many :users, through: :user_tasks
 
   validates :name, presence: true
   validates :deadline, presence: true
-  validates :status, presence: true, inclusion: { in: Task.statuses.keys }
-  validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
+  # validates :status, presence: true, inclusion: { in: Task.statuses.keys }
+  # validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
 
   scope :default_order, -> { order(created_at: :desc) }
-  scope :where_like_name, -> (name) { where('name like ?', "%#{name}%") }
+  scope :where_like_name, -> (name) { where('tasks.name like ?', "%#{name}%") }
   scope :where_eql_status, -> (status) { where(status: status) }
   scope :where_eql_priority, -> (priority) { where(priority: priority) }
   scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
@@ -49,6 +49,18 @@ class Task < ApplicationRecord
     read_datestamp != Date.today && (is_passed_deadline? || is_deadline_in_3_days?)
   end
 
+  def create_with_user(debtee_id)
+    Task.transaction do
+      self.save!
+      self.user_tasks.create!(user_id: debtee_id)
+      user_ids = remove_debtee(self.group.users.ids, debtee_id)
+      user_ids.each { |user_id| self.user_tasks.create!(user_id: user_id, task_role: 'debtor') }
+    end
+    true
+    rescue
+    false
+  end
+
   def self.get_notice_tasks(user)
     if (tasks = Task.extract_not_completed(user.tasks)).present?
       Task.extract_has_notice(tasks)
@@ -62,4 +74,10 @@ class Task < ApplicationRecord
   def self.extract_has_notice(tasks)
     tasks.map { |task| task if task.has_notice? }.compact
   end
+
+  private
+    def remove_debtee(user_ids, debtee_id)
+      user_ids.delete(debtee_id)
+      user_ids
+    end
 end

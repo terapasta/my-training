@@ -2,8 +2,8 @@ class UserGroup < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
-  def self.create_user_groups(group_id, new_user_ids)
-    new_user_ids.each { |user_id| self.create(group_id: group_id, user_id: user_id) }
+  def self.create_user_groups(group, new_user_ids)
+    new_user_ids.each { |user_id| self.create(group_id: group.id, user_id: user_id) unless group.user_groups.pluck(:user_id).include?(user_id) }
   end
 
   def self.delete_user_groups(group, new_user_ids)
@@ -11,7 +11,7 @@ class UserGroup < ApplicationRecord
   end
 
   def self.update_user_groups(group, new_user_ids)
-    self.create_user_groups(group.id, new_user_ids)
+    self.create_user_groups(group, new_user_ids)
     self.delete_user_groups(group, new_user_ids)
   end
 end

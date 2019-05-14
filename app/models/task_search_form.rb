@@ -4,7 +4,7 @@ class TaskSearchForm
   attr_accessor :user_id, :name, :status, :priority, :label_ids, :group_id
 
   def search
-    rel = User.includes(tasks: :labels).find_by(id: user_id).tasks
+    rel = User.includes(tasks: :labels).find_by(id: user_id).tasks.joins(:group)
     rel = rel.where_like_name(self.name) if self.name.present?
     rel = rel.where_eql_status(self.status) if self.status.present?
     rel = rel.where_eql_priority(self.priority) if self.priority.present?

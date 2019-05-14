@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :user_group do
+  factory :user_task do
     association :user
-    association :group
+    association :task
   end
 end

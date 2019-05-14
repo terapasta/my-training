@@ -4,11 +4,16 @@ include DateHelper
 RSpec.describe 'Tasks', type: :system do
   LABEL_INPUT_XPATH = "//div[@class='tags-input-wrapper-default tags-input']/input[1]"
   let(:user) { create(:user) }
-  let(:task) { create(:task, user_id: user.id) }
   before { login(user) }
 
   feature 'new page' do
-    before { 3.times { create(:label) } }
+    before do
+      @group = create(:group)
+      @group.user_groups.create(user_id: user.id )
+      @task = create(:task, group_id: @group.id)
+      @task.user_tasks.create(user_id: user.id)
+      3.times { create(:label) }
+    end
     scenario 'succeed in creating new task' do
       visit new_task_path
 
@@ -19,6 +24,7 @@ RSpec.describe 'Tasks', type: :system do
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
       find(:xpath, LABEL_INPUT_XPATH).set('labelテスト')
       find(:xpath, LABEL_INPUT_XPATH).native.send_key(:return)
+      select @group.name, from: t('activerecord.models.group')
 
       click_on t('buttons.create')
       expect(page).to have_content t('messages.flash.success.create', model: t('activerecord.models.task'))
@@ -36,9 +42,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   feature 'edit page' do
-    before { 3.times { create(:label) } }
+    before do
+      @group = create(:group)
+      @group.user_groups.create(user_id: user.id )
+      @task = create(:task, group_id: @group.id)
+      @task.user_tasks.create(user_id: user.id)
+      3.times { create(:label) }
+    end
     scenario 'succeed in updating task' do
-      visit edit_task_path(task.id)
+      visit edit_task_path(@task.id)
 
       name = 'name更新テスト'
       description = 'description更新テスト'
@@ -67,7 +79,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'fail updating task' do
-      visit edit_task_path(task.id)
+      visit edit_task_path(@task.id)
 
       fill_in t('activerecord.attributes.task.name'), with: nil
       fill_in t('activerecord.attributes.task.deadline'), with: nil
@@ -81,8 +93,14 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   feature 'index page', js: true do 
+    before do
+      @group = create(:group)
+      @group.user_groups.create(user_id: user.id )
+    end
     scenario 'succeed in destroying task' do
-      task
+      task = create(:task, group_id: @group.id)
+      task.user_tasks.create(user_id: user.id)
+      3.times { create(:label) }
       visit tasks_path
       find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[1]/td[8]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
@@ -93,14 +111,20 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'index page orders by created_at' do
-      5.times { |i| create(:task, name: "#{i}-name", user_id: user.id) }
+      5.times do |i| 
+        task = create(:task, name: "#{i}-name", group_id: @group.id)
+        task.user_tasks.create(user_id: user.id)
+      end
       visit tasks_path
       5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
     end
 
     scenario 'index page orders by deadline' do
       today = Date.today
-      4.times { |i| create(:task, deadline: today + i, user_id: user.id)}
+      4.times do |i| 
+        task = create(:task, deadline: today + i, group_id: @group.id)
+        task.user_tasks.create(user_id: user.id)
+      end
       visit tasks_path
       click_on t('activerecord.attributes.task.deadline')
       4.times { |i| expect(all('tbody tr')[i]).to have_content format_short_date_with_wday(today + (3 - i)) }
@@ -110,7 +134,10 @@ RSpec.describe 'Tasks', type: :system do
 
     scenario 'index page orders by priority' do
       PRIORITY_ORDERS = ['high', 'middle', 'low']
-      3.times { |i| create(:task, priority: PRIORITY_ORDERS[i], user_id: user.id)}
+      3.times do |i| 
+        task = create(:task, priority: PRIORITY_ORDERS[i], group_id: @group.id)
+        task.user_tasks.create(user_id: user.id)
+      end
       visit tasks_path
       click_on t('activerecord.attributes.task.priority')
       3.times { |i| expect(all('tbody tr')[i]).to have_content t("enums.task.priority.#{PRIORITY_ORDERS[i]}") }
@@ -119,10 +146,12 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'show notification' do
-      info_task = create(:task, deadline: Date.tomorrow, user_id: user.id)
-      warning_task = create(:task, deadline: Date.today, user_id: user.id)
-      danger_task = create(:task, deadline: Date.yesterday, user_id: user.id)
-      visit tasks_path
+      info_task = create(:task, deadline: Date.tomorrow, group_id: @group.id)
+      info_task.user_tasks.create(user_id: user.id)
+      warning_task = create(:task, deadline: Date.today, group_id: @group.id)
+      warning_task.user_tasks.create(user_id: user.id)
+      danger_task = create(:task, deadline: Date.yesterday, group_id: @group.id)
+      danger_task.user_tasks.create(user_id: user.id)
       expect(page).to have_content t('messages.notification.info', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
       expect(page).to have_content t('messages.notification.warning', task_name: warning_task.name)
       expect(page).to have_content t('messages.notification.danger', task_name: danger_task.name)

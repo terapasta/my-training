@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @group.tasks.new(task_params)
     if @task.create_with_user(current_user.id)
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))

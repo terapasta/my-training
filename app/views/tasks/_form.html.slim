@@ -6,5 +6,4 @@
     = render 'shared/forms/select', form: f, attr: 'status', list: Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, label: '' 
     = render 'shared/forms/select', form: f, attr: 'priority', list: Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, label: ''
     = render 'shared/forms/tags_input', form: f, attr: 'label', default_tags: task.labels.pluck(:name).join(','), placeholder: 'ラベルを追加', label: ''
-    = render 'shared/forms/select', form: f, attr: 'group_id', list: current_user.groups.map { |g| [g.name, g.id] }, label: '' 
     = render 'shared/forms/submit', form: f, name: btn_name

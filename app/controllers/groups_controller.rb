@@ -10,7 +10,6 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     if (user_ids = User.get_ids_by_emails(@emails)).present? && @group.save
-      # TODO: トランザクション使ったほうがよい？
       UserGroup.create_user_groups(@group, user_ids)
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.group'))
       redirect_to groups_path
@@ -42,7 +41,10 @@ class GroupsController < ApplicationController
       redirect_to @group
     else
       @emails = @emails&.join(',')
-      flash.now[:error] = t('messages.flash.error.update', model: t('activerecord.models.group'))
+      flash.now[:error] =<<-EOS
+        #{t('messages.flash.error.update', model: t('activerecord.models.group'))}
+        #{t('messages.flash.error.invalid', attr: t('activerecord.attributes.user.email')) if @group.errors.blank?}
+      EOS
       render :edit
     end
   end

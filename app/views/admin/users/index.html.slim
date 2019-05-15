@@ -4,7 +4,7 @@
     h1.is-size-3 = t('admin.users.index.title')
     hr
     div
-      = render 'shared/links_area', id: ''
+      = render 'shared/links_area'
       .card-background
         table.table.is-striped.is-fullwidth
           thead.thead
@@ -25,8 +25,8 @@
                 td = "#{user.tasks_count}個"
                 td = format_datetime(user.created_at)
                 td 
-                  = render partial: 'admin/users/shared/links/show', locals: { id: user.id }
-                  = render partial: 'admin/users/shared/links/edit', locals: { id: user.id }
-                  = render partial: 'admin/users/shared/links/destroy', locals: { id: user.id }
+                  = render 'admin/users/shared/links/show', user_id: user.id
+                  = render 'admin/users/shared/links/edit', user_id: user.id
+                  = render 'admin/users/shared/links/destroy', user_id: user.id
         div data-turbolinks="false"
           = paginate @users

@@ -1,1 +1,1 @@
-= render partial: 'shared/links/delete_button', locals: { name: t('links.users.destroy'), message: t('messages.confirmation.destroy'), path: admin_user_path(id) }
+= render 'shared/links/delete_button', name: t('links.users.destroy'), message: t('messages.confirmation.destroy'), path: admin_user_path(user_id) 

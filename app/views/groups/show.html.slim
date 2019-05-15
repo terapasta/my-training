@@ -4,7 +4,7 @@
     h1.is-size-3 = t('groups.show.title', group_name: @group.name)
     hr
     div
-      = render 'shared/links_area', id: @group.id
+      = render 'shared/links_area', group_id: @group.id
       .card-background
         table.table.is-striped.is-fullwidth
           tbody.tbody
@@ -24,4 +24,4 @@
               td
                 - @group.tasks.each_with_index do |task, i|
                   = "#{', ' unless i == 0}"
-                  = link_to task.name, task_path(task.id)
+                  = link_to task.name, group_task_path(group_id: @group.id, id: task.id)

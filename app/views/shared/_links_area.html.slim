@@ -5,26 +5,26 @@ nav.level
       - model = 'tasks' if controller_name == 'tasks'
       - model = 'users' if controller_name == 'users'
       - model = 'groups' if controller_name == 'groups'
+      - task_id ||= ''
+      - user_id ||= ''
+      - group_id ||= ''
       - prefix = "#{'admin/' if model == 'users'}#{model}"
-      - if action_name == 'new'
+      - if action_name == 'new' || action_name == 'create'
         .level-item
-          = render "#{prefix}/shared/links/index"
-      - if action_name == 'edit'
+          = render "#{prefix}/shared/links/index", group_id: group_id
+      - if action_name == 'edit' || action_name == 'update'
         .level-item
-          = render "#{prefix}/shared/links/index"
+          = render "#{prefix}/shared/links/index", group_id: group_id
       - if action_name == 'show'
         .level-item
-          = render "#{prefix}/shared/links/index"
+          = render "#{prefix}/shared/links/index", group_id: group_id
         .level-item
-          = render "#{prefix}/shared/links/edit", id: id
+          = render "#{prefix}/shared/links/edit", group_id: group_id, task_id: task_id, user_id: user_id
         .level-item
-          = render "#{prefix}/shared/links/destroy", id: id
+          = render "#{prefix}/shared/links/destroy", group_id: group_id, task_id: task_id, user_id: user_id
       - if action_name == 'index'
         .level-item
-          = render "#{prefix}/shared/links/new"
+          = render "#{prefix}/shared/links/new", group_id: group_id, task_id: task_id
         - if model == 'tasks'
           .level-item
             = render 'groups/shared/links/index'
-        - if model == 'groups'
-          .level-item
-            = render 'tasks/shared/links/index'

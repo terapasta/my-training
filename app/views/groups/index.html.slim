@@ -4,7 +4,7 @@
     h1.is-size-3 = t('groups.index.title')
     hr
     div
-      = render 'shared/links_area', id: ''
+      = render 'shared/links_area'
       .card-background
         table.table.is-striped.is-fullwidth
           thead.thead
@@ -20,8 +20,8 @@
                 td = group.name
                 td = format_datetime(group.created_at)
                 td 
-                  = render partial: 'groups/shared/links/show', locals: { id: group.id }
-                  = render partial: 'groups/shared/links/edit', locals: { id: group.id }
-                  = render partial: 'groups/shared/links/destroy', locals: { id: group.id }
+                  = render 'groups/shared/links/show', group_id: group.id
+                  = render 'groups/shared/links/edit', group_id: group.id
+                  = render 'groups/shared/links/destroy', group_id: group.id
         div data-turbolinks="false"
           = paginate @groups

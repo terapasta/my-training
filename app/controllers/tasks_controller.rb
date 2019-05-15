@@ -1,10 +1,11 @@
 class TasksController < ApplicationController
   skip_before_action :require_admin
+  before_action :set_group
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :show_notice_tasks, only: [:index]
 
   def new
-    @task = Task.new(status: :waiting, priority: :middle)
+    @task = @group.tasks.new(status: :waiting, priority: :middle)
   end
 
   def create
@@ -12,7 +13,7 @@ class TasksController < ApplicationController
     if @task.create_with_user(current_user.id)
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
-      redirect_to tasks_path
+      redirect_to group_tasks_path(@group.id)
     else
       flash.now[:error] = t('messages.flash.error.create', model: t('activerecord.models.task'))
       render :new
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       @task.update_labels(params[:tags])
       flash[:success] = t('messages.flash.success.update', model: t('activerecord.models.task'))
-      redirect_to @task
+      redirect_to group_task_path(group_id: @group.id, id: @task.id)
     else
       flash.now[:error] = t('messages.flash.error.update', model: t('activerecord.models.task'))
       render :edit
@@ -45,7 +46,7 @@ class TasksController < ApplicationController
   def destroy
     if @task.destroy
       flash[:success] = t('messages.flash.success.destroy', model: t('activerecord.models.task'))
-      redirect_to tasks_path
+      redirect_to group_tasks_path(@group.id)
     else
       flash[:error] = t('messages.flash.error.destroy')
       @tasks = current_user.tasks
@@ -64,6 +65,10 @@ class TasksController < ApplicationController
       else
         { user_id: current_user.id }
       end
+    end
+
+    def set_group
+      @group = current_user.groups.find_by(id: params[:group_id])
     end
 
     def set_task

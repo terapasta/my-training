@@ -4,6 +4,6 @@
     h1.is-size-3 = t('tasks.new.title')
     hr
     div
-      = render 'shared/links_area', id: ''
+      = render 'shared/links_area', group_id: @group.id
       .card-background
-        = render partial: 'form', locals: { task: @task, btn_name: t('buttons.create') }
+        = render 'form', task: @task, btn_name: t('buttons.create'), group_id: @group.id

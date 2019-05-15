@@ -1,1 +1,1 @@
-= render partial: 'shared/links/button', locals: { name: t('links.tasks.show'), path: task_path(id) }
+= render 'shared/links/button', name: t('links.tasks.show'), path: group_task_path(group_id: group_id, id: task_id)

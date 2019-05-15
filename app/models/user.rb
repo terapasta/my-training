@@ -4,7 +4,10 @@ class User < ApplicationRecord
   enum role: { normal: 0, admin: 1 }
 
   has_secure_password validations: true
+
   has_many :tasks, dependent: :destroy
+  has_many :user_groups, dependent: :destroy
+  has_many :groups, through: :user_groups
 
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z/
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
@@ -34,6 +37,13 @@ class User < ApplicationRecord
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine::DEFAULT_COST
     BCrypt::Password.create(token, cost: cost)
+  end
+
+  def self.get_ids_by_emails(emails)
+    # if emails.present?
+      emails = emails&.map { |email| User.find_by(email: email)&.id }
+      emails&.include?(nil) ? false : emails&.compact
+    # end
   end
 
   def remember

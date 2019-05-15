@@ -1,0 +1,9 @@
+- content_for(:html_title) { t('groups.edit.title') }
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('groups.edit.title')
+    hr
+    div
+      = render 'shared/links_area', id: @group&.id
+      .card-background
+        = render partial: 'form', locals: { group: @group, btn_name: t('buttons.update') }

@@ -313,7 +313,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   sassc-rails
-  selenium-webdriver
+  selenium-webdriver (= 3.141.0)
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)

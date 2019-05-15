@@ -4,16 +4,8 @@
   .column.is-8-desktop
     h1.is-size-3 = t('admin.users.show.title', user_name: @user.name)
     hr
-    .
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render partial: 'admin/users/shared/links/index'
-          .level-item
-            = render partial: 'admin/users/shared/links/edit', locals: { id: @user.id }
-          .level-item
-            = render partial: 'admin/users/shared/links/destroy', locals: { id: @user.id }
+    div
+      = render 'shared/links_area', id: @user.id
       .card-background
         table.table.is-striped.is-fullwidth
           tbody.tbody

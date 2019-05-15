@@ -1,0 +1,30 @@
+nav.level
+  .level-left
+  .level-right
+    .level-item
+      - model = 'tasks' if controller_name == 'tasks'
+      - model = 'users' if controller_name == 'users'
+      - model = 'groups' if controller_name == 'groups'
+      - prefix = "#{'admin/' if model == 'users'}#{model}"
+      - if action_name == 'new'
+        .level-item
+          = render "#{prefix}/shared/links/index"
+      - if action_name == 'edit'
+        .level-item
+          = render "#{prefix}/shared/links/index"
+      - if action_name == 'show'
+        .level-item
+          = render "#{prefix}/shared/links/index"
+        .level-item
+          = render "#{prefix}/shared/links/edit", id: id
+        .level-item
+          = render "#{prefix}/shared/links/destroy", id: id
+      - if action_name == 'index'
+        .level-item
+          = render "#{prefix}/shared/links/new"
+        - if model == 'tasks'
+          .level-item
+            = render 'groups/shared/links/index'
+        - if model == 'groups'
+          .level-item
+            = render 'tasks/shared/links/index'

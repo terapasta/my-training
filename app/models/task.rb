@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   belongs_to :user
   counter_culture :user
+  belongs_to :group, optional: true
   has_many :labels, dependent: :destroy
 
   validates :name, presence: true
@@ -16,6 +17,7 @@ class Task < ApplicationRecord
   scope :where_eql_status, -> (status) { where(status: status) }
   scope :where_eql_priority, -> (priority) { where(priority: priority) }
   scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
+  scope :where_eql_group_id, -> (group_id) { joins(:group).merge(Group.where(id: group_id)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
   def create_labels(new_labels)

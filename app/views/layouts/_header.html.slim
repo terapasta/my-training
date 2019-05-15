@@ -1,6 +1,6 @@
 nav.navbar.header-background
   .navbar-brand
-    = link_to 'Toritateくん', root_path, class: 'navbar-item is-size-3 has-text-weight-semibold'
+    = link_to 'Toritateくん', root_path, class: 'navbar-item is-size-3 has-text-weight-semibold', data: { "turbolinks" => false }
   .navbar-end
     .navbar-item
       - if login?

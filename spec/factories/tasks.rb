@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :task do
     association :user
+    association :group
     sequence(:name) { |n| "task#{n}" }
     description { '説明説明説明説明説明' }
     deadline { Date.today.since(1.week) }

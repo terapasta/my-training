@@ -58,7 +58,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '3.141.0'
   gem 'webdrivers'
   gem 'rspec_junit_formatter'
   gem 'pry-rails'

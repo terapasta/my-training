@@ -3,16 +3,8 @@
   .column.is-8-desktop
     h1.is-size-3 = t('tasks.show.title', task_name: @task.name)
     hr
-    .
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render partial: 'tasks/shared/links/index'
-          .level-item
-            = render partial: 'tasks/shared/links/edit', locals: { id: @task.id }
-          .level-item
-            = render partial: 'tasks/shared/links/destroy', locals: { id: @task.id }
+    div
+      = render 'shared/links_area', id: @task.id
       .card-background
         table.table.is-striped.is-fullwidth
           tbody.tbody
@@ -42,3 +34,8 @@
                     span = "#{label.name} "
                 - else
                   span -
+            tr
+              td = t('activerecord.models.group')
+              td
+                - if @task.group.present?
+                  = link_to @task.group.name, group_path(@task.group.id), data: { "turbolinks" => false }

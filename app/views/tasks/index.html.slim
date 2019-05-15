@@ -9,11 +9,7 @@
         - type = get_notice_type(notice_task.deadline)
         <notification-area task-id="#{notice_task.id}" type="#{type}">#{get_notice_message(notice_task.name, type, get_diff_from_today(notice_task.deadline))}</notification-area>
     div
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render 'tasks/shared/links/new'
+      = render 'shared/links_area', id: ''
       .card-background
         table.table.is-striped.is-fullwidth
           thead.thead
@@ -24,6 +20,7 @@
               th = t('activerecord.attributes.task.status')
               th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority')
               th = t('activerecord.attributes.label.name')
+              th = t('activerecord.attributes.task.group_id')
               th
           tbody.tbody
             - @tasks.each do |task|
@@ -42,6 +39,11 @@
                       span.tags-input-badge.tags-input-badge-pill.tags-input-badge-selected-default.is-info = label.name
                   - else
                     span -
+                td
+                  - if task.group.present?
+                    = link_to task.group.name, group_path(task.group.id), data: { "turbolinks" => false }
+                  - else
+                    span -
                 td 
                   = render partial: 'tasks/shared/links/show', locals: { id: task.id }
                   = render partial: 'tasks/shared/links/edit', locals: { id: task.id }
@@ -56,4 +58,5 @@
           = render partial: 'shared/forms/select', locals: { form: f, attr: 'status', list: array_with_blank(t('forms.select.unselected'), Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}), label: t('activerecord.attributes.task.status') }
           = render partial: 'shared/forms/select', locals: { form: f, attr: 'priority', list: array_with_blank(t('forms.select.unselected'), Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}), label: t('activerecord.attributes.task.priority') }
           = render partial: 'shared/forms/collection_check_boxes', locals: { form: f, ids: 'label_ids', list: current_user.tasks.map{|task| task.labels}.flatten, label: t('activerecord.attributes.task.label') }
+          = render partial: 'shared/forms/select', locals: { form: f, attr: 'group_id', list: current_user.groups.map { |g| [g.name, g.id] }.unshift(["未選択", ""]), label: t('activerecord.models.group') } 
           = render partial: 'shared/forms/submit', locals: { form: f, name: t('buttons.search') }

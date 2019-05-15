@@ -3,11 +3,7 @@
   .column.is-8-desktop
     h1.is-size-3 = t('admin.users.new.title')
     hr
-    .
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render partial: 'admin/users/shared/links/index'
+    div
+      = render 'shared/links_area', id: @user.id
       .card-background
         = render partial: 'admin/users/shared/forms/form', locals: { user: @user, btn_name: t('buttons.create') }

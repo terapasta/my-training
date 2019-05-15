@@ -10,7 +10,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.new(task_params)
     if @task.save
-      @task.create_labels(params[:labels])
+      @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      @task.update_labels(params[:labels])
+      @task.update_labels(params[:tags])
       flash[:success] = t('messages.flash.success.update', model: t('activerecord.models.task'))
       redirect_to @task
     else
@@ -55,12 +55,12 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status, :priority)
+      params.require(:task).permit(:name, :description, :deadline, :status, :priority, :group_id)
     end
 
     def search_params
       if params[:q]
-        params.require(:q).permit(:name, :status, :priority, label_ids:[]).merge(user_id: current_user.id)
+        params.require(:q).permit(:name, :status, :priority, :group_id, label_ids:[]).merge(user_id: current_user.id)
       else
         { user_id: current_user.id }
       end

@@ -3,11 +3,7 @@
   .column.is-8-desktop
     h1.is-size-3 = t('tasks.new.title')
     hr
-    .
-      nav.level
-        .level-left
-        .level-right
-          .level-item
-            = render partial: 'tasks/shared/links/index'
+    div
+      = render 'shared/links_area', id: ''
       .card-background
         = render partial: 'form', locals: { task: @task, btn_name: t('buttons.create') }

@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_group
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_debtee, only: [:edit, :upate, :destroy]
   before_action :show_notice_tasks, only: [:index]
 
   def new
@@ -87,4 +88,11 @@ class TasksController < ApplicationController
       @notice_tasks = Task.get_notice_tasks(current_user)
     end
 
+    def require_debtee
+      @task ||= set_task
+      @group ||= set_group
+      if @task.user_tasks.find_by(user_id: current_user.id).task_role != 'debtee'
+        redirect_to group_tasks_path(group_id: @group.id)
+      end
+    end
 end

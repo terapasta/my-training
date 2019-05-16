@@ -22,9 +22,9 @@ nav.level
         .level-item
           = render "#{prefix}/shared/links/index", group_id: group_id
         .level-item
-          = render "#{prefix}/shared/links/edit", group_id: group_id, task_id: task_id, user_id: user_id
+          = render "#{prefix}/shared/links/edit", group_id: group_id, task_id: task_id, user_id: user_id if model == 'tasks' && current_user.is_debtee?(task_id)
         .level-item
-          = render "#{prefix}/shared/links/destroy", group_id: group_id, task_id: task_id, user_id: user_id
+          = render "#{prefix}/shared/links/destroy", group_id: group_id, task_id: task_id, user_id: user_id if model == 'tasks' && current_user.is_debtee?(task_id)
       - if action_name == 'index'
         .level-item
           = render "#{prefix}/shared/links/new", group_id: group_id, task_id: task_id

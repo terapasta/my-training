@@ -2,14 +2,15 @@ class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_group
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_debtee, only: [:edit, :upate, :destroy]
   before_action :show_notice_tasks, only: [:index]
 
   def new
-    @task = @group.tasks.new(status: :waiting, priority: :middle)
+    @task = @group.tasks.build(status: :waiting, priority: :middle)
   end
 
   def create
-    @task = @group.tasks.new(task_params)
+    @task = @group.tasks.build(task_params)
     if @task.create_with_user(current_user.id)
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
@@ -87,4 +88,11 @@ class TasksController < ApplicationController
       @notice_tasks = Task.get_notice_tasks(current_user)
     end
 
+    def require_debtee
+      @task ||= set_task
+      @group ||= set_group
+      if @task.user_tasks.find_by(user_id: current_user.id).task_role != 'debtee'
+        redirect_to group_tasks_path(group_id: @group.id)
+      end
+    end
 end

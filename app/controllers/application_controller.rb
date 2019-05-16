@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :current_user
   before_action :require_login
   before_action :require_admin
-  helper_method [:login?, :current_user]
+  helper_method [:login?, :current_user, :is_debtee?]
 
   def login(user)
     session[:user_id] = user.id
@@ -59,4 +59,9 @@ class ApplicationController < ActionController::Base
     logger.info "Rendering 404 with exception: #{e.message}" if e
     render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
   end
+
+  private
+    def is_debtee?(user, task_id)
+      user.user_tasks.find_by(task_id: task_id).task_role == 'debtee'
+    end
 end

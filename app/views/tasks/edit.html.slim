@@ -6,4 +6,4 @@
     div
       = render 'shared/links_area', group_id: @group.id, task_id: @task.id
       .card-background
-        = render 'form', task: @task, btn_name: t('buttons.update'), group_id: @task.group.id
+        = render 'form', task: @task, group: @task.group, btn_name: t('buttons.update')

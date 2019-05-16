@@ -16,6 +16,9 @@ nav.level
         .level-item
           = render "#{prefix}/shared/links/index", group_id: group_id
       - if action_name == 'show'
+        - if model == 'groups'
+          .level-item
+            = render "tasks/shared/links/index", group_id: group_id
         .level-item
           = render "#{prefix}/shared/links/index", group_id: group_id
         .level-item

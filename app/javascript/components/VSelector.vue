@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="select">
     <select :value="selected" @change="onChange">
       <option v-for="(option) in options" :key="option['value']" :value="option['value']">{{option['name']}}</option>
     </select>

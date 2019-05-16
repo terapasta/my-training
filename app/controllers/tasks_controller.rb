@@ -23,7 +23,7 @@ class TasksController < ApplicationController
   def index
     @search_form = TaskSearchForm.new(search_params)
     tasks = @search_form.search
-    @tasks = tasks.order("#{sort_column} #{sort_direction}").page(params[:page])
+    @tasks = tasks.order("tasks.#{sort_column} #{sort_direction}").page(params[:page])
   end
 
   def show
@@ -56,12 +56,12 @@ class TasksController < ApplicationController
 
   private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status, :priority, :group_id)
+      params.require(:task).permit(:name, :description, :deadline, :status, :priority, :group_id, :debtor_id)
     end
 
     def search_params
       if params[:q]
-        params.require(:q).permit(:name, :status, :priority, :group_id, label_ids:[]).merge(user_id: current_user.id)
+        params.require(:q).permit(:name, :status, :priority, :group_id, :task_role, label_ids:[]).merge(user_id: current_user.id)
       else
         { user_id: current_user.id }
       end

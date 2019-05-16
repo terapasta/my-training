@@ -1,4 +1,7 @@
 class Task < ApplicationRecord
+
+  attr_accessor :debtor_id
+
   enum status: { waiting: 0, working: 1, completed: 2 }
   enum priority: { low: 0, middle: 1, high: 2 }
 
@@ -9,8 +12,8 @@ class Task < ApplicationRecord
 
   validates :name, presence: true
   validates :deadline, presence: true
-  # validates :status, presence: true, inclusion: { in: Task.statuses.keys }
-  # validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
+  validates :status, presence: true, inclusion: { in: Task.statuses.keys }
+  validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
 
   scope :default_order, -> { order(created_at: :desc) }
   scope :where_like_name, -> (name) { where('tasks.name like ?', "%#{name}%") }
@@ -18,6 +21,7 @@ class Task < ApplicationRecord
   scope :where_eql_priority, -> (priority) { where(priority: priority) }
   scope :where_eql_label_ids, -> (label_ids) { joins(:labels).merge(Label.where(id: label_ids)) }
   scope :where_eql_group_id, -> (group_id) { joins(:group).merge(Group.where(id: group_id)) }
+  scope :where_eql_task_role, -> (task_role) { joins(:user_tasks).merge(UserTask.where(task_role: task_role)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
   def create_labels(new_labels)
@@ -52,13 +56,16 @@ class Task < ApplicationRecord
   def create_with_user(debtee_id)
     Task.transaction do
       self.save!
-      self.user_tasks.create!(user_id: debtee_id)
-      user_ids = remove_debtee(self.group.users.ids, debtee_id)
-      user_ids.each { |user_id| self.user_tasks.create!(user_id: user_id, task_role: 'debtor') }
+      self.user_tasks.create!(user_id: debtee_id, task_role: 'debtee')
+      self.user_tasks.create!(user_id: self.debtor_id, task_role: 'debtor')
     end
     true
     rescue
     false
+  end
+
+  def find_user_by_task_role(task_role)
+    self.user_tasks&.find_by(task_role: task_role)&.user
   end
 
   def self.get_notice_tasks(user)

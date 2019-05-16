@@ -4,12 +4,14 @@ include DateHelper
 RSpec.describe 'Tasks', type: :system do
   LABEL_INPUT_XPATH = "//div[@class='tags-input-wrapper-default tags-input']/input[1]"
   let(:user) { create(:user) }
+  let(:member) { create(:user) }
   before { login(user) }
 
   feature 'new page' do
     before do
       @group = create(:group)
       @group.user_groups.create(user_id: user.id )
+      @group.user_groups.create(user_id: member.id)
       @task = create(:task, group_id: @group.id)
       @task.user_tasks.create(user_id: user.id)
       3.times { create(:label) }
@@ -22,9 +24,9 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.deadline'), with: Date.today.since(1.week)
       select t('enums.task.status.waiting'), from: t('activerecord.attributes.task.status')
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
+      select member.name, from: t('activerecord.attributes.task.debtor_id')
       find(:xpath, LABEL_INPUT_XPATH).set('labelテスト')
       find(:xpath, LABEL_INPUT_XPATH).native.send_key(:return)
-      select @group.name, from: t('activerecord.models.group')
 
       click_on t('buttons.create')
       expect(page).to have_content t('messages.flash.success.create', model: t('activerecord.models.task'))
@@ -44,9 +46,11 @@ RSpec.describe 'Tasks', type: :system do
   feature 'edit page' do
     before do
       @group = create(:group)
-      @group.user_groups.create(user_id: user.id )
+      @group.user_groups.create(user_id: user.id)
+      @group.user_groups.create(user_id: member.id)
       @task = create(:task, group_id: @group.id)
-      @task.user_tasks.create(user_id: user.id)
+      @task.user_tasks.create(user_id: user.id, task_role: 'debtee')
+      @task.user_tasks.create(user_id: member.id, task_role: 'debtor')
       3.times { create(:label) }
     end
     scenario 'succeed in updating task' do
@@ -57,6 +61,7 @@ RSpec.describe 'Tasks', type: :system do
       deadline = Date.today.since(1.week)
       status = t('enums.task.status.working')
       priority = t('enums.task.priority.high')
+      debtor_name = member.name
       label1 = Label.first
 
       fill_in t('activerecord.attributes.task.name'), with: name
@@ -64,6 +69,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.deadline'), with: deadline
       select status, from: t('activerecord.attributes.task.status')
       select priority, from: t('activerecord.attributes.task.priority')
+      select debtor_name, from: t('activerecord.attributes.task.debtor_id')
       find(:xpath, LABEL_INPUT_XPATH).set(label1.name)
       find(:xpath, LABEL_INPUT_XPATH).native.send_key(:return)
 
@@ -75,6 +81,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content format_date_with_wday(deadline)
       expect(page).to have_content status
       expect(page).to have_content priority
+      expect(page).to have_content debtor_name
       expect(page).to have_content label1.name
     end
 
@@ -102,7 +109,7 @@ RSpec.describe 'Tasks', type: :system do
       task.user_tasks.create(user_id: user.id)
       3.times { create(:label) }
       visit group_tasks_path(@group.id)
-      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[1]/td[8]/a[@class='button button-shape'][3]").click
+      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[@class='has-background-'][1]/td[9]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept

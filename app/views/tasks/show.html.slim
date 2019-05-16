@@ -27,6 +27,12 @@
               td = t('activerecord.attributes.task.description')
               td = @task.description
             tr
+              td = t('activerecord.attributes.task.debtee')
+              td = @task.find_user_by_task_role('debtee').name
+            tr
+              td = t('activerecord.attributes.task.debtor')
+              td = @task.find_user_by_task_role('debtor').name
+            tr
               td = t('activerecord.attributes.label.name')
               td
                 - if @task.labels.present?

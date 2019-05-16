@@ -60,4 +60,8 @@ class User < ApplicationRecord
   def last_admin?
     self.admin? && User.only_admin.size <= 1
   end
+
+  def is_debtee?(task_id)
+    self.user_tasks.find_by(task_id: task_id).task_role == 'debtee'
+  end
 end

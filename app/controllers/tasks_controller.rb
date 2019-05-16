@@ -5,11 +5,11 @@ class TasksController < ApplicationController
   before_action :show_notice_tasks, only: [:index]
 
   def new
-    @task = @group.tasks.new(status: :waiting, priority: :middle)
+    @task = @group.tasks.build(status: :waiting, priority: :middle)
   end
 
   def create
-    @task = @group.tasks.new(task_params)
+    @task = @group.tasks.build(task_params)
     if @task.create_with_user(current_user.id)
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))

@@ -106,7 +106,7 @@ RSpec.describe 'Tasks', type: :system do
     end
     scenario 'succeed in destroying task' do
       task = create(:task, group_id: @group.id)
-      task.user_tasks.create(user_id: user.id)
+      task.user_tasks.create(user_id: user.id, task_role: 'debtee')
       3.times { create(:label) }
       visit group_tasks_path(@group.id)
       find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[@class='has-background-'][1]/td[9]/a[@class='button button-shape'][3]").click

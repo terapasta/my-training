@@ -51,6 +51,14 @@ gem 'kaminari', '~> 0.17.0'
 
 gem 'counter_culture'
 
+gem 'carrierwave'
+
+gem 'rmagick'
+
+gem 'fog-aws'
+
+gem 'font-awesome-sass', '~> 5.8.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -45,3 +45,10 @@
               td
                 - if @task.group.present?
                   = link_to @task.group.name, group_path(@task.group.id), data: { "turbolinks" => false }
+            tr
+              td 添付ファイル
+              td
+                - if @task.image?
+                  = image_tag @task.image.thumb.url
+                - else
+                  span -

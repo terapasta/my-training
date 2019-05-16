@@ -18,6 +18,7 @@ ja:
         debtor_id: 借り手
         debtor: 借り手
         debtee: 貸し手
+        image: 添付画像
       user:
         id: ID
         name: ユーザー名
@@ -90,6 +91,8 @@ ja:
       unselected: 未選択
     checkbox:
       remember_me: ログイン情報を記録する
+    file:
+      select_image: 画像を選択してください
   links:
     tasks:
       new: タスク作成

@@ -4,8 +4,16 @@ nav.navbar.header-background
   .navbar-end
     .navbar-item
       - if login?
-        = render partial: 'shared/links/delete_button', locals: { name: t('links.sessions.destroy'), message: t('messages.confirmation.logout'), path: logout_path }
+        = render 'shared/links/delete_button', name: t('links.sessions.destroy'), message: t('messages.confirmation.logout'), path: logout_path
       - else
         - if !(controller.controller_name == 'sessions')
-          = render partial: 'shared/links/button', locals: { name: t('links.sessions.new'), path: login_path }
+          = render 'shared/links/button', name: t('links.sessions.new'), path: login_path
+    - if current_user.present?
+      .navbar-item
+        = link_to users_mypage_path, class: "button button-shape"
+          - if current_user.image.present?
+            = image_tag current_user.image.url
+          - else
+            = image_tag '/images/user-solid.svg'
+          span マイページ
 .header-padding

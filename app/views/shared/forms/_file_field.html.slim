@@ -1,0 +1,10 @@
+.field
+  = render 'shared/forms/label', form: form, attr: attr, label: label
+  - if image.present?
+    = image_tag image.thumb.url
+  .file
+    span.file-cta
+      span.file-icon
+        i.fas.fa-upload
+      span.file-label = t('forms.file.select_image')
+    = form.file_field attr, class: "file-input"

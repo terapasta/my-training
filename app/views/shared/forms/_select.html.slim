@@ -1,4 +1,4 @@
 .field
-  = render partial: 'shared/forms/label', locals: { form: form, attr: attr, label: label }
+  = render 'shared/forms/label', form: form, attr: attr, label: label
   .select
     = form.select attr, list

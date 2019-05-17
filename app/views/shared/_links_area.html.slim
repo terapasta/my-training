@@ -2,29 +2,31 @@ nav.level
   .level-left
   .level-right
     .level-item
-      - model = 'tasks' if controller_name == 'tasks'
-      - model = 'users' if controller_name == 'users'
-      - model = 'groups' if controller_name == 'groups'
-      - prefix = "#{'admin/' if model == 'users'}#{model}"
-      - if action_name == 'new'
+      - task_id ||= ''
+      - user_id ||= ''
+      - group_id ||= ''
+      - prefix = create_prefix
+      - if is_action_name?('new', 'create')
         .level-item
-          = render "#{prefix}/shared/links/index"
-      - if action_name == 'edit'
+          = get_link(prefix, 'index', group_id: group_id)
+      - if is_action_name?('edit', 'update')
         .level-item
-          = render "#{prefix}/shared/links/index"
-      - if action_name == 'show'
-        .level-item
-          = render "#{prefix}/shared/links/index"
-        .level-item
-          = render "#{prefix}/shared/links/edit", id: id
-        .level-item
-          = render "#{prefix}/shared/links/destroy", id: id
-      - if action_name == 'index'
-        .level-item
-          = render "#{prefix}/shared/links/new"
-        - if model == 'tasks'
+          = get_link(prefix, 'index', group_id: group_id)
+      - if is_action_name?('show')
+        - if is_controller_name?('groups')
           .level-item
-            = render 'groups/shared/links/index'
-        - if model == 'groups'
+            = get_link('tasks', 'index', group_id: group_id)
+        .level-item
+          = get_link(prefix, 'index', group_id: group_id)
+        .level-item
+          - if show_task_item?(current_user, task_id)
+            = get_link(prefix, 'edit', group_id: group_id, task_id: task_id, user_id: user_id)
+        .level-item
+          - if show_task_item?(current_user, task_id)
+            = get_link(prefix, 'destroy', group_id: group_id, task_id: task_id, user_id: user_id)
+      - if is_action_name?('index')
+        .level-item
+          = get_link(prefix, 'new', group_id: group_id, task_id: task_id)
+        - if is_controller_name?('tasks')
           .level-item
-            = render 'tasks/shared/links/index'
+            = get_link('groups', 'index')

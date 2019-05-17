@@ -15,16 +15,16 @@ RSpec.describe Task, type: :model do
       expect(task.errors[:deadline]).to include t('errors.messages.blank')
     end
 
-    it 'is invalid without status' do
-      task = build(:task, status: nil)
-      task.valid?
-      expect(task.errors[:status]).to include t('errors.messages.blank')
-    end
+    # it 'is invalid without status' do
+    #   task = build(:task, status: nil)
+    #   task.valid?
+    #   expect(task.errors[:status]).to include t('errors.messages.blank')
+    # end
 
-    it 'is invalid without priority' do
-      task = build(:task, priority: nil)
-      task.valid?
-      expect(task.errors[:priority]).to include t('errors.messages.blank')
-    end
+    # it 'is invalid without priority' do
+    #   task = build(:task, priority: nil)
+    #   task.valid?
+    #   expect(task.errors[:priority]).to include t('errors.messages.blank')
+    # end
   end
 end

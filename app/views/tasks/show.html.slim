@@ -4,7 +4,7 @@
     h1.is-size-3 = t('tasks.show.title', task_name: @task.name)
     hr
     div
-      = render 'shared/links_area', id: @task.id
+      = render 'shared/links_area', group_id: @group.id, task_id: @task.id
       .card-background
         table.table.is-striped.is-fullwidth
           tbody.tbody
@@ -27,6 +27,12 @@
               td = t('activerecord.attributes.task.description')
               td = @task.description
             tr
+              td = t('activerecord.attributes.task.debtee')
+              td = @task.find_user_by_task_role('debtee').name
+            tr
+              td = t('activerecord.attributes.task.debtor')
+              td = @task.find_user_by_task_role('debtor').name
+            tr
               td = t('activerecord.attributes.label.name')
               td
                 - if @task.labels.present?
@@ -39,3 +45,10 @@
               td
                 - if @task.group.present?
                   = link_to @task.group.name, group_path(@task.group.id), data: { "turbolinks" => false }
+            tr
+              td 添付ファイル
+              td
+                - if @task.image?
+                  = image_tag @task.image.thumb.url
+                - else
+                  span -

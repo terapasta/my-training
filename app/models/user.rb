@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   has_secure_password validations: true
 
-  has_many :tasks, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
+  has_many :user_tasks, dependent: :destroy
+  has_many :tasks, through: :user_tasks
 
   VALID_EMAIL_REGEX = /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z/
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}+\z/i
@@ -29,6 +30,8 @@ class User < ApplicationRecord
 
   scope :only_admin, -> { where(role: :admin) }
 
+  mount_uploader :image, ImageUploader
+
   def self.new_token
     SecureRandom.urlsafe_base64
   end
@@ -40,10 +43,8 @@ class User < ApplicationRecord
   end
 
   def self.get_ids_by_emails(emails)
-    # if emails.present?
       emails = emails&.map { |email| User.find_by(email: email)&.id }
       emails&.include?(nil) ? false : emails&.compact
-    # end
   end
 
   def remember
@@ -62,5 +63,13 @@ class User < ApplicationRecord
 
   def last_admin?
     self.admin? && User.only_admin.size <= 1
+  end
+
+  def is_debtee?(task_id)
+    self.user_tasks.find_by(task_id: task_id).task_role == 'debtee'
+  end
+
+  def count_tasks_by_role(counting_role)
+    self.user_tasks.pluck(:task_role).count { |role| role == counting_role }
   end
 end

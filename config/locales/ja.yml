@@ -15,6 +15,10 @@ ja:
         priority: 優先度
         label: ラベル
         group_id: グループ
+        debtor_id: 借り手
+        debtor: 借り手
+        debtee: 貸し手
+        image: 添付画像
       user:
         id: ID
         name: ユーザー名
@@ -23,6 +27,7 @@ ja:
         tasks: タスク数
         role: 権限
         created_at: 作成日時
+        image: プロフィール画像
       label:
         id: ID
         name: ラベル
@@ -32,6 +37,8 @@ ja:
         users: グループメンバー
         tasks: タスク
         created_at: 作成日時
+      user_task:
+        task_role: 貸借
   enums:
     task:
       status:
@@ -47,11 +54,15 @@ ja:
       role:
         normal: 一般ユーザー
         admin: 管理ユーザー
+    user_task:
+      task_role:
+        debtee: 貸し
+        debtor: 借り
   tasks:
     new:
       title: タスク作成
     index:
-      title: タスク一覧
+      title: '【%{group_name}】のタスク一覧'
     show:
       title: '%{task_name}'
     edit:
@@ -65,6 +76,13 @@ ja:
       title: '%{group_name}'
     edit:
       title: グループ編集
+  users:
+    show:
+      title: マイページ
+      debtee_tasks: 貸しタスク
+      debtor_tasks: 借りタスク
+    edit:
+      title: マイページ編集
   admin:
     users:
       new:
@@ -81,6 +99,8 @@ ja:
       unselected: 未選択
     checkbox:
       remember_me: ログイン情報を記録する
+    file:
+      select_image: 画像を選択してください
   links:
     tasks:
       new: タスク作成

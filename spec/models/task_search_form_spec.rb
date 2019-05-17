@@ -4,11 +4,16 @@ RSpec.describe TaskSearchForm, type: :model do
 
   describe 'search' do
     let(:user) { create(:user) }
+    let(:group) { create(:group) }
     let(:params) { { user_id: user.id } }
     before do
-      create(:task, name: 'task-1', status: 'waiting', priority: 'high', user_id: user.id)
-      create(:task, name: 'task-2', status: 'working', priority: 'middle', user_id: user.id)
-      create(:task, name: 'task-22', status: 'completed', priority: 'low', user_id: user.id)
+      create(:user_group, user_id: user.id, group_id: group.id)
+      task_1 = create(:task, name: 'task-1', status: 'waiting', priority: 'high', group_id: group.id)
+      task_1.user_tasks.create(user_id: user.id, task_role: 'debtee')
+      task_2 = create(:task, name: 'task-2', status: 'working', priority: 'middle', group_id: group.id)
+      task_2.user_tasks.create(user_id: user.id, task_role: 'debtor')
+      task_3 = create(:task, name: 'task-22', status: 'completed', priority: 'low', group_id: group.id)
+      task_3.user_tasks.create(user_id: user.id, task_role: 'debtor')
     end
     describe 'with name' do
       context 'perfect match' do
@@ -56,6 +61,20 @@ RSpec.describe TaskSearchForm, type: :model do
       it 'gets zero' do
         params = { user_id: user.id, name: 'task', status: 'waiting', priority: 'middle' }
         expect(TaskSearchForm.new(params).search.size).to eq 0
+      end
+    end
+    describe 'with task_role' do
+      it 'gets one' do
+        params = { user_id: user.id, task_role: 'debtee' }
+        expect(TaskSearchForm.new(params).search.size).to eq 1
+      end
+      it 'gets two' do 
+        params = { user_id: user.id, task_role: 'debtor' }
+        expect(TaskSearchForm.new(params).search.size).to eq 2
+      end
+      it 'gets three' do 
+        params = { user_id: user.id, task_role: '' }
+        expect(TaskSearchForm.new(params).search.size).to eq 3
       end
     end
   end

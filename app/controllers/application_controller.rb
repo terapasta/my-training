@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :current_user
   before_action :require_login
   before_action :require_admin
-  helper_method [:login?, :current_user, :is_debtee?]
+  helper_method [:login?, :current_user]
 
   def login(user)
     session[:user_id] = user.id

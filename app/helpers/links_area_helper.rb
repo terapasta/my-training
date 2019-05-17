@@ -20,7 +20,7 @@ module LinksAreaHelper
   end
 
   def show_task_item?(user, task_id)
-    is_controller_name?('tasks') && user.is_debtee?(task_id)
+    is_controller_name?('tasks') && user.user_task_debtee?(task_id)
   end
 
   def get_link(prefix, action, group_id: group_id, task_id: task_id, user_id: user_id)

@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path
     else
       flash[:error] = t('messages.flash.error.destroy', model: t('activerecord.models.user'))
-      @users = User.all.page(params[:page]).per(PER)
+      @users = User.all.page(params[:page])
       render :index
     end
   end

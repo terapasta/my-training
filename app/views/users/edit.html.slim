@@ -17,11 +17,13 @@
               table
                 tbody
                   tr
-                    td = t('activerecord.attributes.user.name')
-                    td = f.text_field :name, class: "input"
+                    .field
+                      td = f.label t('activerecord.attributes.user.name')
+                      td = f.text_field :name, class: "input"
                   tr
-                    td = t('activerecord.attributes.user.email')
-                    td = f.email_field :email, class: "input"
+                    .field
+                      td = f.label t('activerecord.attributes.user.email')
+                      td = f.email_field :email, class: "input"
                   tr
                     td = t('users.show.debtee_tasks')
                     td = "#{@user.count_tasks_by_role('debtee')}個"

@@ -29,10 +29,10 @@ RSpec.describe 'Users', type: :system do
       visit users_edit_path(user.id)
 
       name = 'name更新テスト'
-      email = 'email更新テスト'
+      email = 'test@sample.com'
 
-      fill_in t('activerecord.attributes.user.name'), with: name
-      fill_in t('activerecord.attributes.user.email'), with: email
+      find(:xpath, "//table/tbody/tr[1]/td[2]/input[@id='user_name']").set(name)
+      find(:xpath, "//table/tbody/tr[2]/td[2]/input[@id='user_email']").set(email)
 
       click_on t('buttons.update')
 

@@ -56,14 +56,10 @@ class Task < ApplicationRecord
   end
 
   def create_with_user(debtee_id)
-    Task.transaction do
-      self.save!
-      self.user_tasks.create!(user_id: debtee_id, task_role: 'debtee')
-      self.user_tasks.create!(user_id: self.debtor_id, task_role: 'debtor')
-    end
-    true
-    rescue
-    false
+
+    self.user_tasks.build(user_id: debtee_id, task_role: 'debtee')
+    self.user_tasks.build(user_id: self.debtor_id, task_role: 'debtor')
+    self.save!
   end
 
   def find_user_by_task_role(task_role)

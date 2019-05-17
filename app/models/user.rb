@@ -30,6 +30,8 @@ class User < ApplicationRecord
 
   scope :only_admin, -> { where(role: :admin) }
 
+  mount_uploader :image, ImageUploader
+
   def self.new_token
     SecureRandom.urlsafe_base64
   end
@@ -63,5 +65,9 @@ class User < ApplicationRecord
 
   def is_debtee?(task_id)
     self.user_tasks.find_by(task_id: task_id).task_role == 'debtee'
+  end
+
+  def count_tasks_by_role(counting_role)
+    self.user_tasks.pluck(:task_role).count { |role| role == counting_role }
   end
 end

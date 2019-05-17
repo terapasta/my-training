@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'users/mypage', to: 'users#show'
+  get 'users/edit', to: 'users#edit'
+  patch 'users/edit', to: 'users#update'
+    
+
   namespace :admin do
     resources :users
   end

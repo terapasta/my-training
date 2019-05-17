@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_group
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :require_debtee, only: [:edit, :upate, :destroy]
+  before_action :require_debtee, only: [:edit, :update, :destroy]
   before_action :show_notice_tasks, only: [:index]
 
   def new

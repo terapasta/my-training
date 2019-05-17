@@ -1,8 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  PER = 10
-
   def new
     @user = User.new
   end
@@ -19,7 +17,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.order("created_at desc").page(params[:page]).per(PER)
+    @users = User.all.order("created_at desc").page(params[:page])
   end
 
   def show

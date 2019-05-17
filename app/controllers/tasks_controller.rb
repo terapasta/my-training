@@ -8,9 +8,10 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.new(task_params)
-    if @task.save
-      @task.create_labels(params[:tags])
+    @task = @group.tasks.build(task_params)
+    if @task.create_with_user(current_user.id, task_params[:debtor_id])
+      labels_array = params[:tags].split(',')
+      @task.create_labels(labels_array) if labels_array.present?
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to tasks_path
     else

@@ -21,10 +21,8 @@ class Task < ApplicationRecord
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
   def create_labels(new_labels)
-    if new_labels.present?
-      new_labels.split(',').each do |label|
-        self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)  
-      end
+    new_labels.each do |label|
+      self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)  
     end
   end
 
@@ -47,6 +45,12 @@ class Task < ApplicationRecord
 
   def has_notice?
     read_datestamp != Date.today && (is_passed_deadline? || is_deadline_in_3_days?)
+  end
+
+  def create_with_user(debtee_id, debtor_id)
+    self.user_tasks.build(user_id: debtee_id, task_role: 'debtee')
+    self.user_tasks.build(user_id: debtor_id, task_role: 'debtor')
+    self.save
   end
 
   def self.get_notice_tasks(user)

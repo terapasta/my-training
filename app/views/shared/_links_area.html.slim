@@ -6,14 +6,14 @@ nav.level
       - user_id ||= ''
       - group_id ||= ''
       - prefix = create_prefix
-      - if is_action_name?('new', 'create')
+      - if render_from_this_action?('new', 'create')
         .level-item
           = get_link(prefix, 'index', group_id: group_id)
-      - if is_action_name?('edit', 'update')
+      - if render_from_this_action?('edit', 'update')
         .level-item
           = get_link(prefix, 'index', group_id: group_id)
-      - if is_action_name?('show')
-        - if is_controller_name?('groups')
+      - if render_from_this_action?('show')
+        - if render_from_this_controller?('groups')
           .level-item
             = get_link('tasks', 'index', group_id: group_id)
         .level-item
@@ -24,9 +24,9 @@ nav.level
         .level-item
           - if show_task_item?(current_user, task_id)
             = get_link(prefix, 'destroy', group_id: group_id, task_id: task_id, user_id: user_id)
-      - if is_action_name?('index')
+      - if render_from_this_action?('index')
         .level-item
           = get_link(prefix, 'new', group_id: group_id, task_id: task_id)
-        - if is_controller_name?('tasks')
+        - if render_from_this_controller?('tasks')
           .level-item
             = get_link('groups', 'index')

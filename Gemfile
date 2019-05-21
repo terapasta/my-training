@@ -73,6 +73,7 @@ group :development, :test do
   gem 'pry-coolline'
   gem 'pry-byebug'
   gem 'launchy'
+  gem 'email_spec'
 end
 
 group :development do

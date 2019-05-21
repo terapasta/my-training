@@ -4,9 +4,10 @@ class TaskMailer < ApplicationMailer
   def remind_task(user, task)
     @user = user
     @task = task
+
     mail(
       from: 'toritate@example.com',
-      to:   user.email,
+      to:   @user.email,
       subject: "【#{@task.name}】を確認してください！！"
     )
   end

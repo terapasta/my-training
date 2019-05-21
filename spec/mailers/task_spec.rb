@@ -20,11 +20,11 @@ RSpec.describe TaskMailer, type: :mailer do
       expect(email.subject).to eq "【#{task.name}】を確認してください！！"
     end
 
-    it "renders the receiver email" do
+    it 'renders the receiver email' do
       expect(email.to).to eq [debtor.email]
     end
 
-    it "renders the sender email" do
+    it 'renders the sender email' do
       expect(email.from).to eq ["toritate@example.com"]
     end
   end

@@ -47,7 +47,7 @@ class Task < ApplicationRecord
   end
 
   def is_deadline_in_3_days?
-    (deadline - Date.today).to_i <= 3
+    diff_from_today <= 3
   end
 
   def has_notice?
@@ -64,6 +64,14 @@ class Task < ApplicationRecord
     self.user_tasks&.find_by(task_role: task_role)&.user
   end
 
+  def diff_from_today
+    (deadline - Date.today).to_i
+  end
+
+  def get_debtee
+    self.user_tasks.find_by(task_role: 'debtee').user
+  end
+
   def self.get_notice_tasks(user)
     tasks = Task.extract_not_completed(user.tasks)
     if tasks.present?
@@ -77,6 +85,14 @@ class Task < ApplicationRecord
 
   def self.extract_has_notice(tasks)
     tasks.map { |task| task if task.has_notice? }.compact
+  end
+
+  def self.remind_tasks_deadline
+    today = Date.today
+    user_tasks = UserTask.where(task_role: 'debtor').joins(:task).merge(Task.where.not(status: 'completed').where(deadline: today..today.since(3.days)))
+    user_tasks.each do |user_task|
+      TaskMailer.remind_task(user_task.user, user_task.task).deliver_now
+    end
   end
 
   private

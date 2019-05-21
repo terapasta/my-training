@@ -3,7 +3,9 @@ class UserGroup < ApplicationRecord
   belongs_to :group
 
   def self.create_user_groups(group, new_user_ids)
-    new_user_ids.each { |user_id| self.create(group_id: group.id, user_id: user_id) unless group.user_groups.pluck(:user_id).include?(user_id) }
+    new_user_ids.each do |user_id| 
+      group.user_groups.find_or_create_by(user_id: user_id)
+    end
   end
 
   def self.delete_user_groups(group, new_user_ids)

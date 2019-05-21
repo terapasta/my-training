@@ -5,12 +5,12 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new
-    @emails_array = current_user.email
+    @emails = [ current_user.email ]
   end
 
   def create
     @group = Group.new(group_params)
-    user_ids = User.get_ids_by_emails(@emails_array)
+    user_ids = User.get_ids_by_emails(@emails)
     if user_ids.blank?
       flash.now[:error] = t('messages.flash.error.invalid', attr: t('activerecord.attributes.user.email'))
       return render :new
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    user_ids = User.get_ids_by_emails(@emails_array)
+    user_ids = User.get_ids_by_emails(@emails)
     if user_ids.blank?
       t('messages.flash.error.invalid', attr: t('activerecord.attributes.user.email')) if @group.errors.blank?
       return render :edit
@@ -71,20 +71,12 @@ class GroupsController < ApplicationController
       @group = current_user.groups.find_by(id: params[:id])
     end
 
-    def set_emails_array
+    def set_emails
       if params[:tags].blank?
-        @emails_array = @group.users.pluck(:email)
+        @emails = @group.users.pluck(:email)
       else
-        @emails_array = [ current_user.email ].concat(params[:tags].split(',')).uniq
+        @emails = [ current_user.email ].concat(params[:tags].split(',')).uniq
       end
     end
 
-    def set_emails_str
-      @emails_str = @emails_array.join(',')
-    end
-
-    def set_emails
-      set_emails_array
-      set_emails_str
-    end
 end

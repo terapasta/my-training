@@ -8,4 +8,12 @@ nav.navbar.header-background
       - else
         - if !(controller.controller_name == 'sessions')
           = render 'shared/links/button', name: t('links.sessions.new'), path: login_path
+    - if current_user.present?
+      .navbar-item
+        = link_to users_mypage_path, class: "button button-shape"
+          - if current_user.image.present?
+            = image_tag current_user.image.url
+          - else
+            = image_tag '/images/user-solid.svg'
+          span マイページ
 .header-padding

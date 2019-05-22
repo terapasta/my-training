@@ -55,15 +55,10 @@ class Task < ApplicationRecord
     read_datestamp != Date.today && (is_passed_deadline? || is_deadline_in_3_days?)
   end
 
-  def create_with_user(debtee_id)
-    Task.transaction do
-      self.save!
-      self.user_tasks.create!(user_id: debtee_id, task_role: 'debtee')
-      self.user_tasks.create!(user_id: self.debtor_id, task_role: 'debtor')
-    end
-    true
-    rescue
-    false
+  def create_with_user(debtee_id, debtor_id)
+    self.user_tasks.build(user_id: debtee_id, task_role: 'debtee')
+    self.user_tasks.build(user_id: debtor_id, task_role: 'debtor')
+    self.save
   end
 
   def find_user_by_task_role(task_role)

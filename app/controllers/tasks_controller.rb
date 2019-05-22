@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   skip_before_action :require_admin
   before_action :set_group
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :require_debtee, only: [:edit, :upate, :destroy]
+  before_action :require_debtee, only: [:edit, :update, :destroy]
   before_action :show_notice_tasks, only: [:index]
 
   def new
@@ -11,7 +11,7 @@ class TasksController < ApplicationController
 
   def create
     @task = @group.tasks.build(task_params)
-    if @task.create_with_user(current_user.id)
+    if @task.create_with_user(current_user.id, task_params[:debtor_id])
       @task.create_labels(params[:tags])
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to group_tasks_path(@group.id)

@@ -27,6 +27,7 @@ ja:
         tasks: タスク数
         role: 権限
         created_at: 作成日時
+        image: プロフィール画像
       label:
         id: ID
         name: ラベル
@@ -75,6 +76,13 @@ ja:
       title: '%{group_name}'
     edit:
       title: グループ編集
+  users:
+    show:
+      title: マイページ
+      debtee_tasks: 貸しタスク
+      debtor_tasks: 借りタスク
+    edit:
+      title: マイページ編集
   admin:
     users:
       new:

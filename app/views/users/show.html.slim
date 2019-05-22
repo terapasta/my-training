@@ -1,0 +1,34 @@
+- content_for(:html_title) { t('users.show.title', user_name: current_user.name) }
+.columns.is-centered
+  .column.is-8-desktop
+    h1.is-size-3 = t('users.show.title', user_name: current_user.name)
+    hr
+      .card
+        .card-image
+          figure.image.is-4by3
+            - if @user.image.present?
+              = image_tag @user.image.url
+            - else
+              = image_tag '/images/user-solid.svg'
+        .card-content
+          .media
+            .media-content
+              p.title.is-4
+                = @user.name
+          .content
+            table
+              tbody
+                tr
+                  td = t('activerecord.attributes.user.name')
+                  td = @user.name
+                tr
+                  td = t('activerecord.attributes.user.email')
+                  td = @user.email 
+                tr
+                  td = t('users.show.debtee_tasks')
+                  td = "#{@user.count_tasks_by_role('debtee')}個"
+                tr
+                  td = t('users.show.debtor_tasks')
+                  td = "#{@user.count_tasks_by_role('debtor')}個"
+        footer.card-footer
+          = link_to t('links.users.edit'), users_edit_path, class: 'card-footer-item has-background-white-ter has-text-black'

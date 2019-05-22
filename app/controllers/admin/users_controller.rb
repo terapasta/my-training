@@ -1,8 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  PER = 10
-
   def new
     @user = User.new
   end
@@ -19,7 +17,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def index
-    @users = User.all.order("created_at desc").page(params[:page]).per(PER)
+    @users = User.all.order("created_at desc").page(params[:page])
   end
 
   def show
@@ -41,7 +39,7 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path
     else
       flash[:error] = t('messages.flash.error.destroy', model: t('activerecord.models.user'))
-      @users = User.all.page(params[:page]).per(PER)
+      @users = User.all.page(params[:page])
       render :index
     end
   end

@@ -9,7 +9,8 @@ class UserGroup < ApplicationRecord
   end
 
   def self.delete_user_groups(group, new_user_ids)
-    group.user_groups.each { |user_group| user_group.destroy unless new_user_ids.include?(user_group.user_id) }
+    delete_user_ids = group.user_groups.map(&:user_id) - new_user_ids
+    group.user_groups.where(user_id: delete_user_ids).destroy_all
   end
 
   def self.update_user_groups(group, new_user_ids)

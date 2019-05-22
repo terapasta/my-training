@@ -91,16 +91,16 @@ RSpec.describe 'Users', type: :system do
       }.to change { User.count }.by(-1)
     end
 
-    scenario 'succeed in destroying user with tasks' do
+    scenario 'succeed in destroying user with user_tasks' do
       user_sample = create(:user)
-      create(:task, user_id: user_sample.id)
+      create(:user_task, user_id: user_sample.id)
       visit admin_users_path
       click_on t('links.users.destroy'), match: :first
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content t('messages.flash.success.destroy', model: t('activerecord.models.user'))
-      }.to change { Task.count }.by(-1)
+      }.to change { UserTask.count }.by(-1)
     end
 
     scenario 'fail destroying user if user is last admin' do

@@ -4,6 +4,6 @@
     h1.is-size-3 = t('admin.users.new.title')
     hr
     div
-      = render 'shared/links_area', id: @user.id
+      = render 'shared/links_area', user_id: @user.id
       .card-background
-        = render partial: 'admin/users/shared/forms/form', locals: { user: @user, btn_name: t('buttons.create') }
+        = render 'admin/users/shared/forms/form', user: @user, btn_name: t('buttons.create') 

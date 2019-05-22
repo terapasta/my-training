@@ -15,6 +15,9 @@ ja:
         priority: 優先度
         label: ラベル
         group_id: グループ
+        debtor_id: 借り手
+        debtor: 借り手
+        debtee: 貸し手
       user:
         id: ID
         name: ユーザー名
@@ -32,6 +35,8 @@ ja:
         users: グループメンバー
         tasks: タスク
         created_at: 作成日時
+      user_task:
+        task_role: 貸借
   enums:
     task:
       status:
@@ -47,11 +52,15 @@ ja:
       role:
         normal: 一般ユーザー
         admin: 管理ユーザー
+    user_task:
+      task_role:
+        debtee: 貸し
+        debtor: 借り
   tasks:
     new:
       title: タスク作成
     index:
-      title: タスク一覧
+      title: '【%{group_name}】のタスク一覧'
     show:
       title: '%{task_name}'
     edit:

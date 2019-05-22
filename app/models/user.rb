@@ -41,8 +41,7 @@ class User < ApplicationRecord
   end
 
   def self.get_ids_by_emails(emails)
-      emails = emails&.map { |email| User.find_by(email: email)&.id }
-      emails&.include?(nil) ? false : emails&.compact
+    User.where(email: emails).pluck(:id)
   end
 
   def remember
@@ -63,7 +62,7 @@ class User < ApplicationRecord
     self.admin? && User.only_admin.size <= 1
   end
 
-  def is_debtee?(task_id)
+  def user_task_debtee?(task_id)
     self.user_tasks.find_by(task_id: task_id).task_role == 'debtee'
   end
 

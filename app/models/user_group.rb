@@ -3,11 +3,14 @@ class UserGroup < ApplicationRecord
   belongs_to :group
 
   def self.create_user_groups(group, new_user_ids)
-    new_user_ids.each { |user_id| self.create(group_id: group.id, user_id: user_id) unless group.user_groups.pluck(:user_id).include?(user_id) }
+    new_user_ids.each do |user_id| 
+      group.user_groups.find_or_create_by(user_id: user_id)
+    end
   end
 
   def self.delete_user_groups(group, new_user_ids)
-    group.user_groups.each { |user_group| user_group.destroy unless new_user_ids.include?(user_group.user_id) }
+    delete_user_ids = group.user_groups.map(&:user_id) - new_user_ids
+    group.user_groups.where(user_id: delete_user_ids).destroy_all
   end
 
   def self.update_user_groups(group, new_user_ids)

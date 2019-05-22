@@ -24,6 +24,8 @@ class Task < ApplicationRecord
   scope :where_eql_task_role, -> (task_role) { joins(:user_tasks).merge(UserTask.where(task_role: task_role)) }
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
+  mount_uploader :image, ImageUploader
+
   def create_labels(new_labels)
     if new_labels.present?
       new_labels.split(',').each do |label|

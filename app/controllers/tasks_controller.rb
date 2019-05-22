@@ -12,7 +12,8 @@ class TasksController < ApplicationController
   def create
     @task = @group.tasks.build(task_params)
     if @task.create_with_user(current_user.id, task_params[:debtor_id])
-      @task.create_labels(params[:tags])
+      labels_array = params[:tags].split(',')
+      @task.create_labels(labels_array) if labels_array.present?
       flash[:success] = t('messages.flash.success.create', model: t('activerecord.models.task'))
       redirect_to group_tasks_path(@group.id)
     else
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      @task.update_labels(params[:tags])
+      @task.update_labels(params[:tags].split(','))
       flash[:success] = t('messages.flash.success.update', model: t('activerecord.models.task'))
       redirect_to group_task_path(group_id: @group.id, id: @task.id)
     else
@@ -89,9 +90,7 @@ class TasksController < ApplicationController
     end
 
     def require_debtee
-      @task ||= set_task
-      @group ||= set_group
-      if @task.user_tasks.find_by(user_id: current_user.id).task_role != 'debtee'
+      unless @task.user_tasks.find_by(user_id: current_user.id).debtee?
         redirect_to group_tasks_path(group_id: @group.id)
       end
     end

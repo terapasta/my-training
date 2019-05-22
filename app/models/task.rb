@@ -27,15 +27,14 @@ class Task < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   def create_labels(new_labels)
-    if new_labels.present?
-      new_labels.split(',').each do |label|
-        self.labels.create(name: label) unless self.labels.pluck(:name).include?(label)  
-      end
+    new_labels.each do |label|
+      self.labels.find_or_create_by(name: label)
     end
   end
 
   def delete_labels(new_labels)
-    self.labels.each { |label| label.destroy unless new_labels.include?(label.name) }
+    delete_labels = self.labels.map(&:name) - new_labels
+    self.labels.where(name: delete_labels).destroy_all
   end
 
   def update_labels(new_labels)
@@ -62,11 +61,12 @@ class Task < ApplicationRecord
   end
 
   def find_user_by_task_role(task_role)
-    self.user_tasks&.find_by(task_role: task_role)&.user
+    self.user_tasks.find_by(task_role: task_role).user
   end
 
   def self.get_notice_tasks(user)
-    if (tasks = Task.extract_not_completed(user.tasks)).present?
+    tasks = Task.extract_not_completed(user.tasks)
+    if tasks.present?
       Task.extract_has_notice(tasks)
     end
   end

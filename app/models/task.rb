@@ -61,7 +61,7 @@ class Task < ApplicationRecord
   end
 
   def find_user_by_task_role(task_role)
-    self.user_tasks&.find_by(task_role: task_role)&.user
+    self.user_tasks.find_by(task_role: task_role).user
   end
 
   def diff_from_today

@@ -1,4 +1,5 @@
-.form
+= javascript_pack_tag 'form_helper'
+#form-area.form
   = form_with model: group, local: true, :builder => CustomFormBuilder do |f|
     = render 'shared/forms/text_field', form: f, attr: 'name', label: '' 
     = render 'shared/forms/tags_input', form: f, attr: 'users', default_tags: @emails_str, placeholder: 'ユーザーを追加', label: '' 

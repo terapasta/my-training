@@ -12,10 +12,11 @@
  *
  *= require_tree .
  *= require_self
+ *= require simple_calendar
  */
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import "bulma";
 @import "shared";
 @import "header";
-@import "vue_tagsinput"
+@import "vue_tagsinput";

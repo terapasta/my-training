@@ -26,6 +26,10 @@ class Task < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
+  def start_time
+    self.deadline
+  end
+
   def create_labels(new_labels)
     new_labels.each do |label|
       self.labels.find_or_create_by(name: label)

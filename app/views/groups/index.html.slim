@@ -4,6 +4,14 @@
     h1.is-size-3 = t('groups.index.title')
     hr
     div
+      = month_calendar events: @tasks do |date, tasks|
+        p 
+          = date
+        p 
+          ul 
+            - tasks.each do |task|
+              li = link_to task.name, group_task_path(group_id: task.group.id, id: task.id)
+    div
       = render 'shared/links_area'
       .card-background
         table.table.is-striped.is-fullwidth

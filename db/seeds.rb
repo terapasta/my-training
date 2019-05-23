@@ -34,7 +34,7 @@ end
   end
   group = user.groups.first
   task = Task.create(name: "task#{i}", description: "description#{i}description#{i}description#{i}description#{i}", 
-    priority: 'middle', deadline: Date.today.since(1.week) + i.day, status: 'waiting', group_id: group.id)
+    priority: 'middle', deadline: Time.zone.today.since(1.week) + i.day, status: 'waiting', group_id: group.id)
   group.users.each do |g_user|
     task_role = (g_user == user) ? 'debtee' : 'debtor'
     g_user.user_tasks.create(task_id: task.id, task_role: task_role)

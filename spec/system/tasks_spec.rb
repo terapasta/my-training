@@ -21,7 +21,7 @@ RSpec.describe 'Tasks', type: :system do
 
       fill_in t('activerecord.attributes.task.name'), with: 'nameテスト'
       fill_in t('activerecord.attributes.task.description'), with: 'descriptionテスト'
-      fill_in t('activerecord.attributes.task.deadline'), with: Date.today.since(1.week)
+      fill_in t('activerecord.attributes.task.deadline'), with: Time.zone.today.since(1.week)
       fill_in t('activerecord.attributes.task.amount'), with: 2000
       select t('enums.task.status.waiting'), from: t('activerecord.attributes.task.status')
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
@@ -59,7 +59,7 @@ RSpec.describe 'Tasks', type: :system do
 
       name = 'name更新テスト'
       description = 'description更新テスト'
-      deadline = Date.today.since(1.week)
+      deadline = Time.zone.today.since(1.week)
       amount = 2000
       status = t('enums.task.status.working')
       priority = t('enums.task.priority.high')
@@ -133,7 +133,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'index page orders by deadline' do
-      today = Date.today
+      today = Time.zone.today
       4.times do |i| 
         task = create(:task, deadline: today + i, group_id: @group.id)
         task.user_tasks.create(user_id: user.id)
@@ -159,11 +159,11 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'show notification' do
-      info_task = create(:task, deadline: Date.tomorrow, group_id: @group.id)
+      info_task = create(:task, deadline: Time.zone.tomorrow, group_id: @group.id)
       info_task.user_tasks.create(user_id: user.id)
-      warning_task = create(:task, deadline: Date.today, group_id: @group.id)
+      warning_task = create(:task, deadline: Time.zone.today, group_id: @group.id)
       warning_task.user_tasks.create(user_id: user.id)
-      danger_task = create(:task, deadline: Date.yesterday, group_id: @group.id)
+      danger_task = create(:task, deadline: Time.zone.yesterday, group_id: @group.id)
       danger_task.user_tasks.create(user_id: user.id)
       visit group_tasks_path(@group.id)
       expect(page).to have_content t('messages.notification.info', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
@@ -171,7 +171,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content t('messages.notification.danger', task_name: danger_task.name)
       click_on "#{info_task.id}-delete"
       expect(page).not_to have_content t('messages.notification.info', task_name: info_task.name, days: get_diff_from_today(info_task.deadline))
-      expect(Task.find(info_task.id).read_datestamp).to eq Date.today
+      expect(Task.find(info_task.id).read_datestamp).to eq Time.zone.today
     end
   end
 end

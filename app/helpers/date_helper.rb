@@ -17,6 +17,6 @@ module DateHelper
   end
 
   def get_diff_from_today(date)
-    (date - Date.today).to_i
+    (date - Time.zone.today).to_i
   end
 end

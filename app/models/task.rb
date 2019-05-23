@@ -48,7 +48,7 @@ class Task < ApplicationRecord
   end
 
   def is_passed_deadline?
-    deadline < Date.today
+    deadline < Time.zone.today
   end
 
   def is_deadline_in_3_days?
@@ -56,7 +56,7 @@ class Task < ApplicationRecord
   end
 
   def has_notice?
-    read_datestamp != Date.today && (is_passed_deadline? || is_deadline_in_3_days?)
+    read_datestamp != Time.zone.today && (is_passed_deadline? || is_deadline_in_3_days?)
   end
 
   def create_with_user(debtee_id, debtor_id)
@@ -70,7 +70,7 @@ class Task < ApplicationRecord
   end
 
   def diff_from_today
-    (deadline - Date.today).to_i
+    (deadline - Time.zone.today).to_i
   end
 
   def get_debtee
@@ -93,7 +93,7 @@ class Task < ApplicationRecord
   end
 
   def self.remind_tasks_deadline
-    today = Date.today
+    today = Time.zone.today
     user_tasks = UserTask.where(task_role: 'debtor').joins(:task).merge(Task.where.not(status: 'completed').where(deadline: today..today.since(3.days)))
     user_tasks.each do |user_task|
       TaskMailer.remind_task(user_task.user, user_task.task).deliver_now

@@ -72,6 +72,7 @@ ja:
       title: グループ作成
     index:
       title: グループ一覧
+      calendar: 借りタスクカレンダー
     show:
       title: '%{group_name}'
     edit:

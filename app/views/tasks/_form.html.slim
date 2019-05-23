@@ -2,10 +2,11 @@
 #form-area.form
   = form_with model: task, url: "#{task.id ? group_task_path(group_id: group.id, id: task.id) : group_tasks_path(group_id: group.id)}", local: true, :builder => CustomFormBuilder do |f|
     = render 'shared/forms/text_field', form: f, attr: 'name', label: ''
-    = render 'shared/forms/text_area', form: f, attr: 'description', label: ''
     = render 'shared/forms/date_field', form: f, attr: 'deadline', label: ''
+    = render 'shared/forms/text_field', form: f, attr: 'amount', label: ''
     = render 'shared/forms/select', form: f, attr: 'status', list: Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, label: '' 
     = render 'shared/forms/select', form: f, attr: 'priority', list: Task.priorities.keys.map { |k| [t("enums.task.priority.#{k}"), k] }, label: ''
+    = render 'shared/forms/text_area', form: f, attr: 'description', label: ''
     = render 'shared/forms/select', form: f, attr: 'debtor_id', list: group.users.map { |u| [u.name, u.id] unless u.id == current_user.id }.compact, label: ''
     = render 'shared/forms/tags_input', form: f, attr: 'label', default_tags: task.labels.pluck(:name).join(','), placeholder: 'ラベルを追加', label: ''
     = render 'shared/forms/file_field', form: f, attr: 'image', image: task&.image, label: ''

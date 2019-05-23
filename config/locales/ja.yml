@@ -19,6 +19,7 @@ ja:
         debtor: 借り手
         debtee: 貸し手
         image: 添付画像
+        amount: 金額
       user:
         id: ID
         name: ユーザー名

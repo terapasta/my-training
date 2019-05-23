@@ -22,6 +22,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.name'), with: 'nameテスト'
       fill_in t('activerecord.attributes.task.description'), with: 'descriptionテスト'
       fill_in t('activerecord.attributes.task.deadline'), with: Date.today.since(1.week)
+      fill_in t('activerecord.attributes.task.amount'), with: 2000
       select t('enums.task.status.waiting'), from: t('activerecord.attributes.task.status')
       select t('enums.task.priority.middle'), from: t('activerecord.attributes.task.priority')
       select member.name, from: t('activerecord.attributes.task.debtor_id')
@@ -59,6 +60,7 @@ RSpec.describe 'Tasks', type: :system do
       name = 'name更新テスト'
       description = 'description更新テスト'
       deadline = Date.today.since(1.week)
+      amount = 2000
       status = t('enums.task.status.working')
       priority = t('enums.task.priority.high')
       debtor_name = member.name
@@ -67,6 +69,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in t('activerecord.attributes.task.name'), with: name
       fill_in t('activerecord.attributes.task.description'), with: description
       fill_in t('activerecord.attributes.task.deadline'), with: deadline
+      fill_in t('activerecord.attributes.task.amount'), with: amount
       select status, from: t('activerecord.attributes.task.status')
       select priority, from: t('activerecord.attributes.task.priority')
       select debtor_name, from: t('activerecord.attributes.task.debtor_id')
@@ -79,6 +82,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content name
       expect(page).to have_content description
       expect(page).to have_content format_date_with_wday(deadline)
+      expect(page).to have_content amount.to_s(:delimited)
       expect(page).to have_content status
       expect(page).to have_content priority
       expect(page).to have_content debtor_name
@@ -90,12 +94,14 @@ RSpec.describe 'Tasks', type: :system do
 
       fill_in t('activerecord.attributes.task.name'), with: nil
       fill_in t('activerecord.attributes.task.deadline'), with: nil
+      fill_in t('activerecord.attributes.task.amount'), with: 0
 
       click_on t('buttons.update')
       
       expect(page).to have_content t('messages.flash.error.update', model: t('activerecord.models.task'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.name'), message: t('errors.messages.blank'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.deadline'), message: t('errors.messages.blank'))
+      expect(page).to have_content t('errors.messages.greater_than', count: 1)
     end
   end
 
@@ -109,7 +115,7 @@ RSpec.describe 'Tasks', type: :system do
       task.user_tasks.create(user_id: user.id, task_role: 'debtee')
       3.times { create(:label) }
       visit group_tasks_path(@group.id)
-      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[@class='has-background-'][1]/td[9]/a[@class='button button-shape'][3]").click
+      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[@class='has-background-'][1]/td[10]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept

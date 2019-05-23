@@ -18,6 +18,9 @@
               td = t('activerecord.attributes.task.deadline')
               td = format_date_with_wday(@task.deadline)
             tr
+              td = t('activerecord.attributes.task.amount')
+              td = "#{@task.amount.to_s(:delimited)}円"
+            tr
               td = t('activerecord.attributes.task.status')
               td = @task.status_i18n
             tr

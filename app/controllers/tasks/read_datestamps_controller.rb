@@ -3,7 +3,7 @@ class Tasks::ReadDatestampsController < ApplicationController
 
   def update
     @task = current_user.tasks.find_by(id: params[:task_id])
-    if @task.update(read_datestamp: Date.today)
+    if @task.update(read_datestamp: Time.zone.today)
       render 'update', status: '200', formats: 'json', handlers: 'jbuilder'
     else
       render 'errors', status: '409', formats: 'json', handlers: 'jbuilder'

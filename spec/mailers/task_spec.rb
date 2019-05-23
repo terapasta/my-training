@@ -4,7 +4,7 @@ RSpec.describe TaskMailer, type: :mailer do
   describe "task_mailer" do
     let(:debtee) { create(:user) }
     let(:debtor) { create(:user) }
-    let(:task) { create(:task, deadline: Date.today) }
+    let(:task) { create(:task, deadline: Time.zone.today) }
     before do 
       debtee.user_tasks.create(task_id: task.id, task_role: 'debtee')
       debtor.user_tasks.create(task_id: task.id, task_role: 'debtor')

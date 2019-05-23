@@ -73,6 +73,7 @@ group :development, :test do
   gem 'pry-coolline'
   gem 'pry-byebug'
   gem 'launchy'
+  gem 'email_spec'
 end
 
 group :development do
@@ -83,6 +84,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'bullet'
+  gem 'letter_opener'
 end
 
 

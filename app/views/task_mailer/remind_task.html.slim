@@ -1,0 +1,18 @@
+p
+  = "#{@user.name}さん"
+p
+  = create_remind_message(@task)
+p
+table
+  tr
+    td = t('activerecord.attributes.task.name')
+    td = @task.name
+  tr
+    td = t('activerecord.attributes.task.deadline')
+    td = @task.deadline
+  tr
+    td = t('activerecord.attributes.task.debtee')
+    td = @task.get_debtee.name
+  tr
+    td = t('activerecord.attributes.task.description')
+    td = @task.description

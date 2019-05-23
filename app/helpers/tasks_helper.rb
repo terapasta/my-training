@@ -33,4 +33,15 @@ module TasksHelper
     diff = get_diff_from_today(deadline)
     0 < diff && diff <= 3
   end
+
+  def create_remind_message(task)
+    diff = task.diff_from_today
+    if diff < 0
+      "「#{task.name}」は#{diff.abs}日、期限が過ぎたタスクがあります!!"
+    elsif diff == 0
+      "「#{task.name}」は今日が期限です！"
+    else
+      "「#{task.name}」の期限まであと#{diff}日です"
+    end
+  end
 end

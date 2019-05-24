@@ -1,5 +1,6 @@
+= javascript_pack_tag 'group_index'
 - content_for(:html_title) { t('groups.index.title') }
-#task-index.columns.is-centered
+#group-index.columns.is-centered
   .column.is-10-desktop
     h1.is-size-3 = t('groups.index.title')
     hr
@@ -14,8 +15,16 @@
                 = date.day
               p 
                 ul 
-                  - tasks.each do |task|
-                    li = link_to "#{task.amount.to_s(:delimited)}円", task_path(id: task.id)
+                  - 2.times do |i|
+                    - if tasks.size > i
+                      li = link_to "#{tasks[i].amount.to_s(:delimited)}円", task_path(id: tasks[i].id)
+                  - if tasks.size > 2
+                    <v-toggle>
+                      <slot>
+                        - 2.upto(tasks.size - 1) do |i|
+                          li = link_to "#{tasks[i].amount.to_s(:delimited)}円", task_path(id: tasks[i].id)
+                      </slot>
+                    </v-toggle>
     div
       = render 'shared/links_area'
       .card-background

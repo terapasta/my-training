@@ -101,7 +101,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content t('messages.flash.error.update', model: t('activerecord.models.task'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.name'), message: t('errors.messages.blank'))
       expect(page).to have_content t('errors.format', attribute: t('activerecord.attributes.task.deadline'), message: t('errors.messages.blank'))
-      expect(page).to have_content t('errors.messages.greater_than', count: 1)
+      expect(page).to have_content t('errors.messages.greater_than', count: 0)
     end
   end
 

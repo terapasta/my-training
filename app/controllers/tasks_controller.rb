@@ -25,7 +25,12 @@ class TasksController < ApplicationController
   def index
     @search_form = TaskSearchForm.new(search_params)
     tasks = @search_form.search
-    @tasks = tasks.order("tasks.#{sort_column} #{sort_direction}").page(params[:page])
+    if sorted?
+      tasks = tasks.order("tasks.#{params[:sort]} #{params[:direction]}")
+    else
+      tasks = tasks.rank(:row_order)
+    end
+    @tasks = tasks.page(params[:page])
   end
 
   def show
@@ -56,9 +61,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def sort
+    task = current_user.tasks.find(params[:task_id])
+    task.update(task_params)
+    render body: nil
+  end
+
   private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status, :priority, :group_id, :debtor_id, :image, :amount)
+      params.require(:task).permit(:name, :description, :deadline, :status, :priority, 
+        :group_id, :debtor_id, :image, :amount, :row_order_position)
     end
 
     def search_params
@@ -77,12 +89,16 @@ class TasksController < ApplicationController
       @task = current_user.tasks.joins(:group).find_by(id: params[:id])
     end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+    def sorted?
+      correct_direction? && correct_column?
     end
 
-    def sort_column
-      Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    def correct_direction?
+      %w[asc desc].include?(params[:direction])
+    end
+
+    def correct_column?
+      Task.column_names.include?(params[:sort])
     end
 
     def show_notice_tasks

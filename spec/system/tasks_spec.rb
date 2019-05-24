@@ -115,21 +115,12 @@ RSpec.describe 'Tasks', type: :system do
       task.user_tasks.create(user_id: user.id, task_role: 'debtee')
       3.times { create(:label) }
       visit group_tasks_path(@group.id)
-      find(:xpath, "//table[@class='table is-striped is-fullwidth']/tbody[@class='tbody']/tr[@class='has-background-'][1]/td[10]/a[@class='button button-shape'][3]").click
+      find(:xpath, "//table[@class='table is-striped is-fullwidth table-sortable ui-sortable']/tbody[@class='tbody']/tr[@class='item ui-sortable-handle'][1]/td[10]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content t('messages.flash.success.destroy', model: t('activerecord.models.task'))
       }.to change { Task.count }.by(-1)
-    end
-
-    scenario 'index page orders by created_at' do
-      5.times do |i| 
-        task = create(:task, name: "#{i}-name", group_id: @group.id)
-        task.user_tasks.create(user_id: user.id)
-      end
-      visit group_tasks_path(@group.id)
-      5.times { |i| expect(all('tbody tr')[i]).to have_content "#{4 - i}-name" }
     end
 
     scenario 'index page orders by deadline' do

@@ -31,7 +31,7 @@
     methods: {
       updateReadDateStamp() {
         axios
-        .patch('tasks/' + this.taskId + '/read_datestamps')
+        .patch('/tasks/' + this.taskId + '/read_datestamps')
         .then(() => {
           this.isDeleted = true
         })

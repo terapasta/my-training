@@ -58,8 +58,8 @@
                 td 
                   = render 'tasks/shared/links/show', group_id: task.group.id ,task_id: task.id
                   - if current_user.user_task_debtee?(task.id)
-                    = render 'tasks/shared/links/edit', group_id: task.group.id, task_id: task.id
-                    = render 'tasks/shared/links/destroy', group_id: task.group.id, task_id: task.id
+                    = render 'tasks/shared/links/edit', task_id: task.id
+                    = render 'tasks/shared/links/destroy', task_id: task.id
         div data-turbolinks="false"
           = paginate @tasks
   .column.is-2-desktop

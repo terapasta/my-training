@@ -55,7 +55,7 @@ RSpec.describe 'Tasks', type: :system do
       3.times { create(:label) }
     end
     scenario 'succeed in updating task' do
-      visit edit_group_task_path(group_id: @group.id, id: @task.id)
+      visit edit_task_path(id: @task.id)
 
       name = 'name更新テスト'
       description = 'description更新テスト'
@@ -90,7 +90,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     scenario 'fail updating task' do
-      visit edit_group_task_path(group_id: @group.id, id: @task.id)
+      visit edit_task_path(id: @task.id)
 
       fill_in t('activerecord.attributes.task.name'), with: nil
       fill_in t('activerecord.attributes.task.deadline'), with: nil

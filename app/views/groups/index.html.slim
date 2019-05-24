@@ -15,7 +15,7 @@
               p 
                 ul 
                   - tasks.each do |task|
-                    li = link_to "#{task.amount.to_s(:delimited)}円", group_task_path(group_id: task.group.id, id: task.id)
+                    li = link_to "#{task.amount.to_s(:delimited)}円", task_path(id: task.id)
     div
       = render 'shared/links_area'
       .card-background

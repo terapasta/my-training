@@ -1,6 +1,6 @@
 = javascript_pack_tag 'form_helper'
 #form-area.form
-  = form_with model: task, url: "#{task.id ? group_task_path(group_id: group.id, id: task.id) : group_tasks_path(group_id: group.id)}", local: true, :builder => CustomFormBuilder do |f|
+  = form_with model: task, url: "#{task.id ? task_path(id: task.id) : group_tasks_path(group_id: group.id)}", local: true, :builder => CustomFormBuilder do |f|
     = render 'shared/forms/text_field', form: f, attr: 'name', label: ''
     = render 'shared/forms/date_field', form: f, attr: 'deadline', label: ''
     = render 'shared/forms/text_field', form: f, attr: 'amount', label: ''

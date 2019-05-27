@@ -4,7 +4,7 @@
     h1.is-size-3 = t('tasks.show.title', task_name: @task.name)
     hr
     div
-      = render 'shared/links_area', group_id: @group.id, task_id: @task.id
+      = render 'shared/links_area', group_id: @task.group.id, task_id: @task.id
       .card-background
         table.table.is-striped.is-fullwidth
           tbody.tbody

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  resources :groups do
+  resources :groups, shallow: true do
     resources :tasks do
       put :sort
       patch 'statuses', to: 'tasks/statuses#update'

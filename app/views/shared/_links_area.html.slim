@@ -20,10 +20,10 @@ nav.level
           = get_link(prefix, 'index', group_id: group_id)
         .level-item
           - if show_task_item?(current_user, task_id)
-            = get_link(prefix, 'edit', group_id: group_id, task_id: task_id, user_id: user_id)
+            = get_link(prefix, 'edit', task_id: task_id)
         .level-item
           - if show_task_item?(current_user, task_id)
-            = get_link(prefix, 'destroy', group_id: group_id, task_id: task_id, user_id: user_id)
+            = get_link(prefix, 'destroy', task_id: task_id)
       - if render_from_this_action?('index')
         .level-item
           = get_link(prefix, 'new', group_id: group_id, task_id: task_id)

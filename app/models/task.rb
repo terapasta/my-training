@@ -17,7 +17,7 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true, inclusion: { in: Task.statuses.keys }
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
-  validates :amount, presence: true, numericality: { greater_than: 1 }
+  validates :amount, presence: true, numericality: { greater_than: 0 }
 
   scope :default_order, -> { order(created_at: :desc) }
   scope :where_like_name, -> (name) { where('tasks.name like ?', "%#{name}%") }

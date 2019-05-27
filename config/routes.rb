@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'labels', to: 'labels#index'
+
   get 'users/mypage', to: 'users#show'
   get 'users/edit', to: 'users#edit'
   patch 'users/edit', to: 'users#update'

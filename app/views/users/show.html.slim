@@ -1,5 +1,6 @@
+= javascript_pack_tag 'mypage'
 - content_for(:html_title) { t('users.show.title', user_name: current_user.name) }
-.columns.is-centered
+#mypage.columns.is-centered
   .column.is-8-desktop
     h1.is-size-3 = t('users.show.title', user_name: current_user.name)
     hr
@@ -32,3 +33,4 @@
                   td = "#{@user.count_tasks_by_role('debtor')}個"
         footer.card-footer
           = link_to t('links.users.edit'), users_edit_path, class: 'card-footer-item has-background-white-ter has-text-black'
+      <label-bar-chart></label-bar-chart>

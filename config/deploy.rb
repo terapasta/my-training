@@ -34,7 +34,7 @@ namespace :deploy do
     on roles(:app) do
       with rails_env: fetch(:rails_env) do
         within current_path do
-          excute :bundle, :exec :rake, 'db:create'
+          excute :bundle, :exec, :rake, 'db:create'
         end
       end
     end
@@ -43,7 +43,7 @@ namespace :deploy do
   after :publishing, :restart
 
   after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3. wait: 10 do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
     end
   end
 end

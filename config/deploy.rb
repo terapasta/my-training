@@ -24,7 +24,7 @@ namespace :deploy do
     on roles(:db) do |host|
       with rails_env: fetch(:rails_env) do
         within current_path do
-          excute :bundle, :exec, :rake, 'db:create'
+          execute :bundle, :exec, :rake, 'db:create'
         end
       end
     end
@@ -35,7 +35,7 @@ namespace :deploy do
     on roles(:app) do
       with rails_env: fetch(:rails_env) do
         within current_path do
-          excute :bundle, :exec, :rake, 'db:create'
+          execute :bundle, :exec, :rake, 'db:create'
         end
       end
     end

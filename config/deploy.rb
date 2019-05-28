@@ -6,7 +6,7 @@ set :repo_url, "git@github.com:terapasta/my-training.git"
 #TODO: masterにする
 set :repo_url, 'add-capistrano'
 set :deploy_to, '/var/www/my-training'
-set :linked_files, fethc(:linked_files, []).push('config/settings.yml')
+set :linked_files, fetch(:linked_files, []).push('config/settings.yml')
 set :linked_dirs, fetch(:linked_dirs, [].push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'publick/system'))
 set :keep_releases, 5
 set :rbenv_rubym, '2.6.1'

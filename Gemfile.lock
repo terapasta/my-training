@@ -60,6 +60,7 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (9.0.0)
     bcrypt (3.1.12)
+    bcrypt_pbkdf (1.0.1)
     bindex (0.7.0)
     bootsnap (1.4.3)
       msgpack (~> 1.0)
@@ -119,6 +120,7 @@ GEM
     dotenv-rails (2.7.2)
       dotenv (= 2.7.2)
       railties (>= 3.2, < 6.1)
+    ed25519 (1.2.4)
     email_spec (2.2.0)
       htmlentities (~> 4.3.3)
       launchy (~> 2.1)
@@ -362,6 +364,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  bcrypt_pbkdf
   bootsnap (>= 1.1.0)
   bullet
   bulma-rails
@@ -375,6 +378,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   counter_culture
   dotenv-rails
+  ed25519
   email_spec
   enum_help
   factory_bot_rails

@@ -23,6 +23,7 @@ before_fork do |server, worker|
       Process.kill "QUIT", File.read(old_pid).to_i
     rescue Errno::ENOENT, Errno::ESRCH
     end
+  end
 end
 
 after_fork do |server, worker|

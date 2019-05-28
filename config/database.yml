@@ -84,4 +84,6 @@ test:
 production:
   <<: *default
   database: my-training_production
-  host: <%= ENV['DB_HOST'] %>
+  username: root
+  password:
+  socket: tmp/sockets

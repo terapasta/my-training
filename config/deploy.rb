@@ -22,7 +22,7 @@ namespace :deploy do
   desc 'Create database'
   task :db_create do
     on roles(:db) do |host|
-      with rails_env: fetch(:ralis_env) do
+      with rails_env: fetch(:rails_env) do
         within current_path do
           excute :bundle, :exec, :rake, 'db:create'
         end

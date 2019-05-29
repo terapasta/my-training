@@ -27,6 +27,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = current_user.groups.page(params[:page])
+    @tasks = current_user.tasks.merge(UserTask.where(task_role: 'debtor'))
   end
 
   def show

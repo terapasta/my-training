@@ -24,4 +24,4 @@
               td
                 - @group.tasks.each_with_index do |task, i|
                   = "#{', ' unless i == 0}"
-                  = link_to task.name, group_task_path(group_id: @group.id, id: task.id)
+                  = link_to task.name, task_path(id: task.id)

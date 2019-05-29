@@ -17,6 +17,7 @@
               th = t('activerecord.attributes.task.id')
               th = t('activerecord.attributes.task.name')
               th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline', @group.id)
+              th = t('activerecord.attributes.task.amount')
               th = t('activerecord.attributes.task.status')
               th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority', @group.id)
               th = t('activerecord.attributes.label.name')
@@ -30,6 +31,7 @@
                 td = task.id
                 td = task.name
                 td = format_short_date_with_wday(task.deadline)
+                td = "#{task.amount.to_s(:delimited)}円"
                 td
                   - if current_user.user_task_debtee?(task.id)
                     <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
@@ -56,8 +58,8 @@
                 td 
                   = render 'tasks/shared/links/show', group_id: task.group.id ,task_id: task.id
                   - if current_user.user_task_debtee?(task.id)
-                    = render 'tasks/shared/links/edit', group_id: task.group.id, task_id: task.id
-                    = render 'tasks/shared/links/destroy', group_id: task.group.id, task_id: task.id
+                    = render 'tasks/shared/links/edit', task_id: task.id
+                    = render 'tasks/shared/links/destroy', task_id: task.id
         div data-turbolinks="false"
           = paginate @tasks
   .column.is-2-desktop

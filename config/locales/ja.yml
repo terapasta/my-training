@@ -19,6 +19,7 @@ ja:
         debtor: 借り手
         debtee: 貸し手
         image: 添付画像
+        amount: 金額
       user:
         id: ID
         name: ユーザー名
@@ -72,6 +73,7 @@ ja:
       title: グループ作成
     index:
       title: グループ一覧
+      calendar: 借りタスクカレンダー
     show:
       title: '%{group_name}'
     edit:

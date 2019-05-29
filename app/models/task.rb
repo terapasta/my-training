@@ -14,6 +14,7 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validates :status, presence: true, inclusion: { in: Task.statuses.keys }
   validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
+  validates :amount, presence: true, numericality: { greater_than: 0 }
 
   scope :default_order, -> { order(created_at: :desc) }
   scope :where_like_name, -> (name) { where('tasks.name like ?', "%#{name}%") }
@@ -25,6 +26,10 @@ class Task < ApplicationRecord
   scope :only_related_with_user, -> (user_id) { where(user_id: user_id) }
 
   mount_uploader :image, ImageUploader
+
+  def start_time
+    self.deadline
+  end
 
   def create_labels(new_labels)
     new_labels.each do |label|

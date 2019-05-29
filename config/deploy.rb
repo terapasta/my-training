@@ -4,7 +4,7 @@ lock "~> 3.11.0"
 set :application, "my-training"
 set :repo_url, "git@github.com:terapasta/my-training.git"
 #TODO: masterにする
-set :branch, 'add-capistrano'
+set :branch, 'deploy-by-capistrano'
 set :deploy_to, '/var/www/rails/my-training'
 set :linked_files, fetch(:linked_files, []).push('config/settings.yml')
 set :linked_files, fetch(:linked_files, []).push('config/master.key')

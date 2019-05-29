@@ -6,7 +6,7 @@
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-server '00.00.000.000', user: 'hiro', roles: %w{app db web}
+server '52.193.202.168', user: 'hiro', roles: %w{app db web}
 
 
 
@@ -47,7 +47,7 @@ server '00.00.000.000', user: 'hiro', roles: %w{app db web}
 #    forward_agent: false,
 #    auth_methods: %w(password)
 #  }
-set :ssh_options, keys: '~/.ssh/practice_aws_rsa'
+set :ssh_options, keys: '~/.ssh/practice_key_rsa'
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------

@@ -10,7 +10,7 @@ nav.navbar.header-background
           = render 'shared/links/button', name: t('links.sessions.new'), path: login_path
     - if current_user.present?
       .navbar-item
-        = link_to users_mypage_path, class: "button button-shape"
+        = link_to users_mypage_path, class: "button button-shape", data: { "turbolinks" => false }
           - if current_user.image.present?
             = image_tag current_user.image.url
           - else

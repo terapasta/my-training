@@ -19,18 +19,10 @@
     },
     computed: {
       labels() {
-        const labels = Object.keys(this.resData).map((value, index) => {
-          return value
-        })
-        return labels
+        return Object.keys(this.resData).map((value, index) => value)
       },
       dataCollection() {
-        const obj = this.resData
-        const dataCollection = []
-        Object.keys(obj).forEach(function(key) {
-          dataCollection.push(obj[key])
-        })
-        return dataCollection
+        return Object.keys(this.resData).map((value, index) => this.resData[value])
       }
     },
     methods: {

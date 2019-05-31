@@ -92,6 +92,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
+    connection_pool (2.2.2)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     counter_culture (2.2.2)
@@ -180,6 +181,7 @@ GEM
     minitest (5.11.3)
     msgpack (1.2.9)
     multi_json (1.13.1)
+    mustermann (1.0.3)
     net_http_ssl_fix (0.0.10)
     nio4r (2.3.1)
     nokogiri (1.10.2)
@@ -198,6 +200,8 @@ GEM
     public_suffix (3.0.3)
     puma (3.12.1)
     rack (2.0.7)
+    rack-protection (2.0.5)
+      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -239,6 +243,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    redis (4.1.2)
     regexp_parser (1.4.0)
     rmagick (3.1.0)
     rspec-core (3.8.0)
@@ -279,8 +284,18 @@ GEM
     selenium-webdriver (3.141.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2, >= 1.2.2)
+    sidekiq (5.2.7)
+      connection_pool (~> 2.2, >= 2.2.2)
+      rack (>= 1.5.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 5)
     simple_calendar (2.3.0)
       rails (>= 3.0)
+    sinatra (2.0.5)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.5)
+      tilt (~> 2.0)
     slim (4.0.1)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -371,7 +386,9 @@ DEPENDENCIES
   rspec_junit_formatter
   sassc-rails
   selenium-webdriver (= 3.141.0)
+  sidekiq
   simple_calendar (~> 2.0)
+  sinatra
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)

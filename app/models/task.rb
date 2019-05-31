@@ -99,7 +99,7 @@ class Task < ApplicationRecord
     today = Time.zone.today
     user_tasks = UserTask.where(task_role: 'debtor').joins(:task).merge(Task.where.not(status: 'completed').where(deadline: today..today.since(3.days)))
     user_tasks.each do |user_task|
-      TaskMailer.remind_task(user_task.user, user_task.task).deliver_now
+      TaskMailer.remind_task(user_task.user, user_task.task).deliver_later
     end
   end
 

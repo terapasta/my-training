@@ -1,5 +1,8 @@
 class Task < ApplicationRecord
 
+  include RankedModel
+  ranks :row_order, with_same: :group_id
+
   attr_accessor :debtor_id
 
   enum status: { waiting: 0, working: 1, completed: 2 }

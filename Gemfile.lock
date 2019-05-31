@@ -244,6 +244,8 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     redis (4.1.2)
+    redis-namespace (1.6.0)
+      redis (>= 3.0.4)
     regexp_parser (1.4.0)
     rmagick (3.1.0)
     rspec-core (3.8.0)
@@ -381,6 +383,8 @@ DEPENDENCIES
   rails-controller-testing
   rails-i18n (~> 5.1)
   ranked-model
+  redis (~> 4.0)
+  redis-namespace
   rmagick
   rspec-rails
   rspec_junit_formatter

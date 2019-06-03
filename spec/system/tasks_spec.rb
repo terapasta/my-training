@@ -115,7 +115,7 @@ RSpec.describe 'Tasks', type: :system do
       task.user_tasks.create(user_id: user.id, task_role: 'debtee')
       3.times { create(:label) }
       visit group_tasks_path(@group.id)
-      find(:xpath, "//table[@class='table is-striped is-fullwidth table-sortable']/tbody[@class='tbody']/tr[@class='item']/td[10]/a[@class='button button-shape'][3]").click
+      find(:xpath, "//tr[@class='item']/td[10]/a[@class='button button-shape'][3]").click
       expect(page.driver.browser.switch_to.alert.text).to eq t('messages.confirmation.destroy')
       expect {
         page.driver.browser.switch_to.alert.accept

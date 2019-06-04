@@ -13,16 +13,32 @@
           <td>{{ data.name }}</td>
           <td>{{ data.deadline }}</td>
           <td>{{ data.amount }}</td>
-          <td>{{ translateStatus(data.status) }}</td>
-          <td>{{ translatePriority(data.priority) }}</td>
-          <td v-if="data.labels.length > 0">
-            <span v-for="label in data.labels" :key="label.id" 
-                  class="tags-input-badge tags-input-badge-pill tags-input-badge-selected-default is-info">
-              {{ label.name }}
+          <td>
+            <span v-if="data.role == 'debtee'">
+              <status-selector :task-id="data.id" :task-status="data.status"></status-selector>
+            </span>
+            <span v-else>
+              {{ translateStatus(data.status) }}
             </span>
           </td>
-          <td v-else>
-            <span>-</span>
+          <td>
+            <span v-if="data.role == 'debtee'">
+              <priority-selector :task-id="data.id" :task-priority="data.priority"></priority-selector>
+            </span>
+            <span v-else>
+              {{ translatePriority(data.priority) }}
+            </span>
+          </td>
+          <td>
+            <span v-if="data.labels.length > 0">
+              <span v-for="label in data.labels" :key="label.id" 
+                    class="tags-input-badge tags-input-badge-pill tags-input-badge-selected-default is-info">
+                {{ label.name }}
+              </span>
+            </span>
+            <span v-else>
+              <span>-</span>
+            </span>
           </td>
           <td>{{ data.group.name }}</td>
           <td>{{ translateRole(data.role) }}</td>
@@ -34,8 +50,11 @@
 
 <script>
   import enums from '../../shared/enums'
+  import StatusSelector from '../StatusSelector'
+  import PrioritySelector from '../PrioritySelector'
 
   export default {
+    components: { StatusSelector, PrioritySelector },
     props: {
       dataset: Array,
       headDataset: Object,

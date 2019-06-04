@@ -7,13 +7,14 @@
 </template>
 <script>
   import axios from '../shared/axios'
+  import enums from '../shared/enums'
   import VSelector from './VSelector'
   import VMessage from './VMessage'
 
   export default {
     components: { VSelector, VMessage },
     props: { 
-      taskId: String, 
+      taskId: Number, 
       taskStatus: String,
     },
     data() {
@@ -21,26 +22,17 @@
         selected:'',
         message: '',
         hasError: false,
-        options: [
-          {
-            name: '未着手',
-            value: 'waiting'
-          },
-          {
-            name: '着手',
-            value: 'working'
-          },
-          {
-            name: '完了',
-            value: 'completed'
-          }
-        ]
+      }
+    },
+    computed: {
+      options() {
+        return enums.task.statuses
       }
     },
     methods: {
       updateStatus(status) {
         axios
-        .patch('tasks/' + this.taskId + '/statuses', { status: status })
+        .patch('/tasks/' + this.taskId + '/statuses', { status: status })
         .then(() => {
           this.selected = status
           this.message = '更新しました'

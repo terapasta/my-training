@@ -1,7 +1,7 @@
 <template>
   <div class="select">
     <select :value="selected" @change="onChange">
-      <option v-for="(option) in options" :key="option['value']" :value="option['value']">{{option['name']}}</option>
+      <option v-for="(value, key) in options" :key="key" :value="key">{{ value }}</option>
     </select>
   </div>
 </template>
@@ -9,7 +9,7 @@
   export default {
     props: { 
       selected: String,
-      options: Array,
+      options: Object,
     },
     methods: {
       onChange(event) {

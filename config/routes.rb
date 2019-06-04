@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   patch 'users/edit', to: 'users#update'
 
   namespace :api, { format: 'json' }  do
-    resources :tasks, only: [:index]
+    resources :tasks, only: [:index, :create]
   end
 
   namespace :admin do

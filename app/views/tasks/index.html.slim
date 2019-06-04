@@ -2,7 +2,7 @@
 - content_for(:html_title) { t('tasks.index.title', group_name: @group.name) }
 / #task-index.columns.is-centered
 #task-index
-  <task-index></task-index>
+  <task-index group-id="#{params[:group_id]}"></task-index>
   / .column.is-10-desktop
   /   h1.is-size-3 = t('tasks.index.title', group_name: @group.name)
   /   hr

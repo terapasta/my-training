@@ -2,6 +2,8 @@
   <div class="is-centered">
     <h1 class="is-size-3">タスク一覧</h1>
     <hr>
+    <v-new :group-id="groupId"></v-new>
+    <hr>
     <v-table v-if="showTableFlag" :dataset="dataset" :head-dataset="headDataset"></v-table>
   </div>
 </template>
@@ -9,9 +11,13 @@
 <script>
 import axios from '../../shared/axios'
 import VTable from './Vtable'
+import VNew from './VNew'
 
 export default {
-  components: { VTable },
+  components: { VTable, VNew },
+  props: {
+    groupId: String
+  },
   data() {
     return {
       dataset: [],

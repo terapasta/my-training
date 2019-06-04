@@ -5,19 +5,19 @@
         <div class="field column is-3-desktop">
           <label class="label">タスク名</label>
           <div class="control">
-            <input v-model="task.name" class="input" type="text">
+            <input v-model="task.name" class="input" type="text" required>
           </div>
         </div>
         <div class="field column is-3-desktop">
           <label class="label">締切期限</label>
           <div class="control">
-            <input v-model="task.deadline" class="input" type="date">
+            <input v-model="task.deadline" class="input" type="date" required>
           </div>
         </div>
         <div class="field column is-3-desktop">
           <label class="label">金額</label>
           <div class="control">
-            <input v-model="task.amount" class="input" type="number">
+            <input v-model="task.amount" class="input" type="number" required>
           </div>
         </div>
         <div class="field column is-2-desktop">

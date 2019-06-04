@@ -1,74 +1,76 @@
 = javascript_pack_tag 'task_index'
 - content_for(:html_title) { t('tasks.index.title', group_name: @group.name) }
-#task-index.columns.is-centered
-  .column.is-10-desktop
-    h1.is-size-3 = t('tasks.index.title', group_name: @group.name)
-    hr
-    - if @notice_tasks.present?
-      - @notice_tasks.each do |notice_task|
-        - type = get_notice_type(notice_task.deadline)
-        <notification-area task-id="#{notice_task.id}" type="#{type}">#{get_notice_message(notice_task.name, type, get_diff_from_today(notice_task.deadline))}</notification-area>
-    div
-      = render 'shared/links_area'
-      .card-background
-        table.table.is-striped.is-fullwidth.table-sortable
-          thead.thead
-            tr
-              th = t('activerecord.attributes.task.id')
-              th = t('activerecord.attributes.task.name')
-              th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline', @group.id)
-              th = t('activerecord.attributes.task.amount')
-              th = t('activerecord.attributes.task.status')
-              th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority', @group.id)
-              th = t('activerecord.attributes.label.name')
-              th = t('activerecord.attributes.task.group_id')
-              th = t('activerecord.attributes.user_task.task_role')
-              th
-          tbody.tbody
-            - @tasks.each do |task|
-              - type = task.status != 'completed' ? get_notice_type(task.deadline) : ''
-              tr.item(data = { model_name: task.class.name.underscore, update_url: task_sort_path(task_id: task.id) } )
-                td = task.id
-                td = task.name
-                td = format_short_date_with_wday(task.deadline)
-                td = "#{task.amount.to_s(:delimited)}円"
-                td
-                  - if current_user.user_task_debtee?(task.id)
-                    <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
-                  - else
-                    = task.status_i18n
-                td
-                  - if current_user.user_task_debtee?(task.id)
-                    <priority-selector task-id="#{task.id}" task-priority="#{task.priority}"></priority-selector>
-                  - else
-                    = task.priority_i18n
-                td
-                  - if task.labels.present?
-                    - task.labels.each do |label|
-                      span.tags-input-badge.tags-input-badge-pill.tags-input-badge-selected-default.is-info = label.name
-                  - else
-                    span -
-                td
-                  - if task.group.present?
-                    = link_to task.group.name, group_path(task.group.id), data: { "turbolinks" => false }
-                  - else
-                    span -
-                td
-                  = task.user_tasks.find_by(user_id: current_user.id).task_role_i18n
-                td 
-                  = render 'tasks/shared/links/show', group_id: task.group.id ,task_id: task.id
-                  - if current_user.user_task_debtee?(task.id)
-                    = render 'tasks/shared/links/edit', task_id: task.id
-                    = render 'tasks/shared/links/destroy', task_id: task.id
-        div data-turbolinks="false"
-          = paginate @tasks
-  .column.is-2-desktop
-    .card-background
-      .form
-        = form_with model: @search_form, scope: :q, url: group_tasks_path(group_id: @group.id), method: :get, local: true do |f|
-          = render 'shared/forms/text_field', form: f, attr: 'name', label: t('activerecord.attributes.task.name')
-          = render 'shared/forms/select', form: f, attr: 'status', list: array_with_blank(t('forms.select.unselected'), Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}), label: t('activerecord.attributes.task.status')
-          = render 'shared/forms/select', form: f, attr: 'priority', list: array_with_blank(t('forms.select.unselected'), Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}), label: t('activerecord.attributes.task.priority')
-          = render 'shared/forms/select', form: f, attr: 'task_role', list: array_with_blank(t('forms.select.unselected'), UserTask.task_roles.keys.map {|k| [t("enums.user_task.task_role.#{k}"), k]}), label: t('activerecord.attributes.user_task.task_role')
-          = render 'shared/forms/collection_check_boxes', form: f, ids: 'label_ids', list: current_user.tasks.map{|task| task.labels}.flatten, label: t('activerecord.attributes.task.label')
-          = render 'shared/forms/submit', form: f, name: t('buttons.search')
+/ #task-index.columns.is-centered
+#task-index
+  <task-index></task-index>
+  / .column.is-10-desktop
+  /   h1.is-size-3 = t('tasks.index.title', group_name: @group.name)
+  /   hr
+  /   - if @notice_tasks.present?
+  /     - @notice_tasks.each do |notice_task|
+  /       - type = get_notice_type(notice_task.deadline)
+  /       <notification-area task-id="#{notice_task.id}" type="#{type}">#{get_notice_message(notice_task.name, type, get_diff_from_today(notice_task.deadline))}</notification-area>
+  /   div
+  /     = render 'shared/links_area'
+  /     .card-background
+  /       table.table.is-striped.is-fullwidth.table-sortable
+  /         thead.thead
+  /           tr
+  /             th = t('activerecord.attributes.task.id')
+  /             th = t('activerecord.attributes.task.name')
+  /             th = link_to_sort_tasks(t('activerecord.attributes.task.deadline'), 'deadline', @group.id)
+  /             th = t('activerecord.attributes.task.amount')
+  /             th = t('activerecord.attributes.task.status')
+  /             th = link_to_sort_tasks(t('activerecord.attributes.task.priority'), 'priority', @group.id)
+  /             th = t('activerecord.attributes.label.name')
+  /             th = t('activerecord.attributes.task.group_id')
+  /             th = t('activerecord.attributes.user_task.task_role')
+  /             th
+  /         tbody.tbody
+  /           - @tasks.each do |task|
+  /             - type = task.status != 'completed' ? get_notice_type(task.deadline) : ''
+  /             tr.item(data = { model_name: task.class.name.underscore, update_url: task_sort_path(task_id: task.id) } )
+  /               td = task.id
+  /               td = task.name
+  /               td = format_short_date_with_wday(task.deadline)
+  /               td = "#{task.amount.to_s(:delimited)}円"
+  /               td
+  /                 - if current_user.user_task_debtee?(task.id)
+  /                   <status-selector task-id="#{task.id}" task-status="#{task.status}"></status-selector>
+  /                 - else
+  /                   = task.status_i18n
+  /               td
+  /                 - if current_user.user_task_debtee?(task.id)
+  /                   <priority-selector task-id="#{task.id}" task-priority="#{task.priority}"></priority-selector>
+  /                 - else
+  /                   = task.priority_i18n
+  /               td
+  /                 - if task.labels.present?
+  /                   - task.labels.each do |label|
+  /                     span.tags-input-badge.tags-input-badge-pill.tags-input-badge-selected-default.is-info = label.name
+  /                 - else
+  /                   span -
+  /               td
+  /                 - if task.group.present?
+  /                   = link_to task.group.name, group_path(task.group.id), data: { "turbolinks" => false }
+  /                 - else
+  /                   span -
+  /               td
+  /                 = task.user_tasks.find_by(user_id: current_user.id).task_role_i18n
+  /               td 
+  /                 = render 'tasks/shared/links/show', group_id: task.group.id ,task_id: task.id
+  /                 - if current_user.user_task_debtee?(task.id)
+  /                   = render 'tasks/shared/links/edit', task_id: task.id
+  /                   = render 'tasks/shared/links/destroy', task_id: task.id
+  /       div data-turbolinks="false"
+  /         = paginate @tasks
+  / .column.is-2-desktop
+  /   .card-background
+  /     .form
+  /       = form_with model: @search_form, scope: :q, url: group_tasks_path(group_id: @group.id), method: :get, local: true do |f|
+  /         = render 'shared/forms/text_field', form: f, attr: 'name', label: t('activerecord.attributes.task.name')
+  /         = render 'shared/forms/select', form: f, attr: 'status', list: array_with_blank(t('forms.select.unselected'), Task.statuses.keys.map {|k| [t("enums.task.status.#{k}"), k]}), label: t('activerecord.attributes.task.status')
+  /         = render 'shared/forms/select', form: f, attr: 'priority', list: array_with_blank(t('forms.select.unselected'), Task.priorities.keys.map {|k| [t("enums.task.priority.#{k}"), k]}), label: t('activerecord.attributes.task.priority')
+  /         = render 'shared/forms/select', form: f, attr: 'task_role', list: array_with_blank(t('forms.select.unselected'), UserTask.task_roles.keys.map {|k| [t("enums.user_task.task_role.#{k}"), k]}), label: t('activerecord.attributes.user_task.task_role')
+  /         = render 'shared/forms/collection_check_boxes', form: f, ids: 'label_ids', list: current_user.tasks.map{|task| task.labels}.flatten, label: t('activerecord.attributes.task.label')
+  /         = render 'shared/forms/submit', form: f, name: t('buttons.search')

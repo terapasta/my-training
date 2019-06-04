@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   get 'users/mypage', to: 'users#show'
   get 'users/edit', to: 'users#edit'
   patch 'users/edit', to: 'users#update'
-    
+
+  namespace :api, { format: 'json' }  do
+    resources :tasks, only: [:index]
+  end
 
   namespace :admin do
     resources :users

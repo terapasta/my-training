@@ -16,7 +16,7 @@ class Api::TasksController < ApplicationController
   end
 
   def index
-    @tasks = current_user.tasks.includes(:group, :labels)
+    @tasks = current_user.tasks.includes(:group, :labels).order("created_at desc")
     render 'index', status: '200', formats: 'json', handlers: 'jbuilder'
   end
 

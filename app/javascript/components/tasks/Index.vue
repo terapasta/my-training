@@ -3,7 +3,7 @@
     <h1 class="is-size-3">タスク一覧</h1>
     <hr>
     <message v-if="message" :message="message" :notification-type="notificationType"></message>
-    <v-new :group-id="groupId" @set-message="setMessage"></v-new>
+    <v-new :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
     <hr>
     <v-table v-if="showTableFlag" :dataset="dataset" :head-dataset="headDataset"></v-table>
   </div>
@@ -61,6 +61,9 @@
       },
       setMessage(params) {
         this.messageParams = params
+      },
+      addTask(task) {
+        this.dataset.unshift(task)
       }
     },
     created() {

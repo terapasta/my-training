@@ -119,8 +119,10 @@
       exec() {
         axios
         .post('/api/tasks', { task: this.task })
-        .then(() => {
+        .then((res) => {
+          console.log(res.data)
           this.$emit('set-message', { msg: 'タスクを追加しました', type: 'success' })
+          this.$emit('add-task', res.data)
         })
         .catch((err) => {
           this.$emit('set-message', { msg: 'タスクを追加できませんでした', type: 'danger' })

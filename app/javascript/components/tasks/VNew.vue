@@ -2,22 +2,33 @@
   <div class="card-background">
     <form @submit.prevent="exec()">
       <div class="columns">
-        <div class="field column is-3-desktop">
+        <div class="field column is-2-desktop">
           <label class="label">タスク名</label>
           <div class="control">
             <input v-model="task.name" class="input" type="text" required>
           </div>
         </div>
-        <div class="field column is-3-desktop">
+        <div class="field column is-2-desktop">
           <label class="label">締切期限</label>
           <div class="control">
             <input v-model="task.deadline" class="input" type="date" required>
           </div>
         </div>
-        <div class="field column is-3-desktop">
+        <div class="field column is-2-desktop">
           <label class="label">金額</label>
           <div class="control">
             <input v-model="task.amount" class="input" type="number" required>
+          </div>
+        </div>
+        <div class="field column is-2-desktop">
+          <label class="label">借り手</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="task.debtor_id" required>
+                <option disabled value="">未選択</option>
+                <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="field column is-2-desktop">
@@ -86,7 +97,8 @@
           label: '',
           image: '',
           group_id: '',
-        }
+        },
+        users: [],
       }
     },
     computed: {
@@ -118,6 +130,15 @@
     },
     created() {
       this.task.group_id = this.groupId
+      axios
+      .get('/api/users', { 
+        params: {
+          group_id: this.groupId
+        }
+      })
+      .then((res) => {
+        this.users = res.data
+      })
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card-background">
+  <div>
     <form @submit.prevent="exec()">
       <div class="columns">
         <div class="field column is-2-desktop">

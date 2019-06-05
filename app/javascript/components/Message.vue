@@ -20,7 +20,17 @@
           return 'is-info'
         }
       }
+    },
+    mounted() {
+      setTimeout(() => this.$emit('delete-message'), 5000)
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .notification {
+    width: 100%;
+  }
+</style>
+
 

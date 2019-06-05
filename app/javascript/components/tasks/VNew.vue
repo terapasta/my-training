@@ -116,13 +116,24 @@
       translatePriority(priority) {
         return enums.translatePriority(priority)
       },
+      resetForm() {
+        Object.keys(this.task).forEach((key, i) => {
+          let value = ''
+          if(key == 'status') {
+            value = 'waitnig'
+          } else if(key == 'priority') {
+            value = 'middle'
+          }
+          this.task[key] = value
+        })
+      },
       exec() {
         axios
         .post('/api/tasks', { task: this.task })
         .then((res) => {
-          console.log(res.data)
           this.$emit('set-message', { msg: 'タスクを追加しました', type: 'success' })
           this.$emit('add-task', res.data)
+          this.resetForm()
         })
         .catch((err) => {
           this.$emit('set-message', { msg: 'タスクを追加できませんでした', type: 'danger' })

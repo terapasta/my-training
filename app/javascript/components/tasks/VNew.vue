@@ -65,7 +65,6 @@
 </template>
 
 <script>
-  import VueRouter from 'vue-router'
   import axios from '../../shared/axios'
   import enums from '../../shared/enums'
   import TagsInput from '../TagsInput'
@@ -83,7 +82,7 @@
           status: 'waiting',
           priority: 'middle',
           description: '',
-          debtor_id: '2',
+          debtor_id: '',
           label: '',
           image: '',
           group_id: '',
@@ -109,10 +108,11 @@
         axios
         .post('/api/tasks', { task: this.task })
         .then(() => {
-          console.log('成功')
+          this.$emit('set-message', { msg: 'タスクを追加しました', type: 'success' })
         })
         .catch((err) => {
-          console.log('失敗')
+          this.$emit('set-message', { msg: 'タスクを追加できませんでした', type: 'danger' })
+          console.log(err)
         })
       }
     },

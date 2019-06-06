@@ -65,16 +65,6 @@ import { setTimeout } from 'timers';
       }
     },
     methods: {
-      getTasks() {
-        axios
-        .get('/api/tasks/')
-        .then((res) => {
-          this.dataset = res.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      },
       setMessage(params) {
         this.messageParams = params
       },
@@ -89,8 +79,16 @@ import { setTimeout } from 'timers';
       }
     },
     created() {
-      this.getTasks()
-    }
+      // 一覧データ取得
+      axios
+      .get('/api/tasks/')
+      .then((res) => {
+        this.dataset = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
   }
 </script>
 

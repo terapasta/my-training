@@ -3,7 +3,8 @@
     <table class="table is-striped is-fullwidth">
       <thead class="thead">
         <tr>
-          <td v-for="(headData, i) in headDataset" :key="i">{{ headData }}</td>
+          <th v-for="(headData, i) in headDataset" :key="i">{{ headData }}</th>
+          <th></th>
         </tr>
       </thead>
 
@@ -42,6 +43,9 @@
           </td>
           <td>{{ data.group.name }}</td>
           <td>{{ translateRole(data.role) }}</td>
+          <td>
+            
+          </td>
         </tr>
       </tbody>
     </table>
@@ -68,7 +72,7 @@
       },
       translateRole(role) {
         return enums.translateRole(role)
-      }
+      },
     }
   }
 </script>

@@ -1,17 +1,19 @@
 <template>
-  <div class="v-modal" :class="{'is-open': isModalActive}" @click.self="closeModal">
-    <div class="container modal-background">
-      <div class="message">
-        <div class="message-header">
-          <slot name="header"></slot>
-          <button class="delete" @click="closeModal()"></button>
-        </div>
-        <div class="message-body">
-          <slot/>
+  <transition name="modal" appear>
+    <div class="v-modal" :class="{'is-open': isModalActive}" @click.self="closeModal">
+      <div class="container modal-background modal-window">
+        <div class="message">
+          <div class="message-header">
+            <slot name="header"></slot>
+            <button class="delete" @click="closeModal()"></button>
+          </div>
+          <div class="message-body">
+            <slot/>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -49,5 +51,21 @@
   }
   .modal-background {
     top: 10%;
+  }
+  .modal-enter-active, .modal-leave-active {
+    transition: opacity 0.4s;
+    .modal-window {
+      transition: opacity 0.4s, transform 0.4s;
+    }
+  }
+  .modal-leave-active {
+    transition: opacity 0.6s ease 0.4s;
+  }
+  .modal-enter, .modal-leave-to {
+    opacity: 0;
+    .modal-window {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
   }
 </style>

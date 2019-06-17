@@ -10,6 +10,7 @@
         </a>
       </div>
     </div>
+    <v-search v-if="dataset.length > 0" :all-data="dataset" @set-filtered-data="setFilteredData"></v-search>
     <v-modal v-if="isModalActive" :isModalActive="isModalActive"
              @toggle-modal="toggleModal">
       <template slot="header">タスク作成</template>
@@ -18,7 +19,7 @@
       <v-new :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
     </v-modal>
     <hr>
-    <v-table v-if="showTableFlag" :dataset="dataset" :head-dataset="headDataset"></v-table>
+    <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"></v-table>
   </div>
 </template>
 
@@ -28,16 +29,22 @@
   import VNew from './VNew'
   import Message from '../Message'
   import VModal from '../VModal'
-import { setTimeout } from 'timers';
+  import VSearch from '../VSearch'
 
   export default {
-    components: { VTable, VNew, Message, VModal },
+    components: { VTable, VNew, Message, VModal, VSearch },
     props: {
       groupId: String
     },
     data() {
       return {
+        q: {
+          name: '',
+          status: '',
+          proority: '',
+        },
         dataset: [],
+        filteredData: [],
         headDataset: {
           id: 'ID',
           name: 'タスク名',
@@ -46,7 +53,6 @@ import { setTimeout } from 'timers';
           status: 'ステータス',
           priority: '優先度',
           label: 'ラベル',
-          group: 'グループ',
           role: '貸借',
         },
         messageParams: '',
@@ -62,9 +68,12 @@ import { setTimeout } from 'timers';
       },
       notificationType() {
         return this.messageParams.type
-      }
+      },
     },
     methods: {
+      setFilteredData(data) {
+        this.filteredData = data
+      },
       setMessage(params) {
         this.messageParams = params
       },

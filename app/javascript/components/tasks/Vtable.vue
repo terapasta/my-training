@@ -41,7 +41,6 @@
               <span>-</span>
             </span>
           </td>
-          <td>{{ data.group.name }}</td>
           <td>{{ translateRole(data.role) }}</td>
           <td>
             

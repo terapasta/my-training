@@ -4,7 +4,7 @@
       <div class="container modal-background modal-window">
         <div class="message">
           <div class="message-header">
-            <slot name="header"></slot>
+            <slot name="header"/>
             <button class="delete" @click="closeModal()"></button>
           </div>
           <div class="message-body">
@@ -23,7 +23,7 @@
     },
     methods: {
       closeModal () {
-        this.$emit('toggle-modal')
+        this.$emit('close-modal')
       },
     }
   }

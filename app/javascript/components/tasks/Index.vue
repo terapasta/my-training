@@ -5,21 +5,23 @@
     <div class="level">
       <div class="level-left"></div>
       <div class="level-right">
-        <a class="level-item button is-danger is-rounded has-text-weight-semibold" @click="toggleModal()">
+        <a class="level-item button is-danger is-rounded has-text-weight-semibold" @click="openModal()">
           <i class="fas fa-plus"></i>タスク追加
         </a>
       </div>
     </div>
     <v-search v-if="dataset.length > 0" :all-data="dataset" @set-filtered-data="setFilteredData"></v-search>
     <v-modal v-if="isModalActive" :isModalActive="isModalActive"
-             @toggle-modal="toggleModal">
-      <template slot="header">タスク作成</template>
+             @close-modal="closeModal">
+      <template slot="header">{{ selectedData ? 'タスク編集' : 'タスク作成' }}</template>
       <message v-if="message" :message="message" :notification-type="notificationType"
                 @delete-message="deleteMessage"></message>
-      <v-new :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
+      <v-edit v-if="selectedData" :default-task="selectedData" @set-message="setMessage" @add-task="addTask"></v-edit>
+      <v-new v-else :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
     </v-modal>
     <hr>
-    <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"></v-table>
+    <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"
+              @open-edit-modal="openEditModal"></v-table>
   </div>
 </template>
 
@@ -27,22 +29,18 @@
   import axios from '../../shared/axios'
   import VTable from './Vtable'
   import VNew from './VNew'
+  import VEdit from './VEdit'
   import Message from '../Message'
   import VModal from '../VModal'
   import VSearch from '../VSearch'
 
   export default {
-    components: { VTable, VNew, Message, VModal, VSearch },
+    components: { VTable, VNew, VEdit, Message, VModal, VSearch },
     props: {
       groupId: String
     },
     data() {
       return {
-        q: {
-          name: '',
-          status: '',
-          proority: '',
-        },
         dataset: [],
         filteredData: [],
         headDataset: {
@@ -57,6 +55,7 @@
         },
         messageParams: '',
         isModalActive: false,
+        selectedData: ''
       }
     },
     computed: {
@@ -80,11 +79,24 @@
       addTask(task) {
         this.dataset.unshift(task)
       },
-      toggleModal() {
-        this.isModalActive = !this.isModalActive
+      openModal() {
+        this.isModalActive = true
+      },
+      closeModal() {
+        this.isModalActive = false
+        this.selectedData = ''
       },
       deleteMessage() {
         this.messageParams = ''
+      },
+      openEditModal(id) {
+        this.filteredData.forEach(value => {
+          if(value.id == id) {
+            this.selectedData = value
+            this.selectedData.group_id = this.selectedData.group.id
+          }
+        })
+        this.openModal()
       }
     },
     created() {

@@ -69,7 +69,9 @@
         </div>
       </div>
       <div class="field">
-        <button type="submit" class="button is-medium is-fullwidth is-primary has-text-weight-bold">追加</button>
+        <button type="submit" class="button is-medium is-fullwidth is-primary has-text-weight-bold">
+          <slot name="btn"/>
+        </button>
       </div>
     </form>
   </div>
@@ -82,24 +84,12 @@
   export default {
     components: { TagsInput },
     props: {
-      groupId: String,
       defaultTask: Object,
+      users: Array,
     },
     data() {
       return {
-        task: {
-          name: '',
-          deadline: '',
-          amount: '',
-          status: '',
-          priority: '',
-          description: '',
-          debtor_id: '',
-          label: '',
-          image: '',
-          group_id: '',
-        },
-        users: [],
+        task: '',
       }
     },
     computed: {
@@ -117,42 +107,12 @@
       translatePriority(priority) {
         return enums.translatePriority(priority)
       },
-      resetForm() {
-        Object.keys(this.task).forEach((key, i) => {
-          let value = ''
-          if(key == 'status') {
-            value = 'waitnig'
-          } else if(key == 'priority') {
-            value = 'middle'
-          }
-          this.task[key] = value
-        })
-      },
       exec() {
-        axios
-        .post('/api/tasks', { task: this.task })
-        .then((res) => {
-          this.$emit('set-type', { type: 'success' })
-          this.$emit('add-task', res.data)
-          this.resetForm()
-        })
-        .catch((err) => {
-          this.$emit('set-type', { type: 'danger' })
-          console.log(err)
-        })
+        this.$emit('exec', this.task)
       }
     },
     created() {
-      this.task.group_id = this.groupId
-      // グループ内のユーザーを取得
-      axios
-      .get('/api/users', { params: { group_id: this.groupId } } )
-      .then((res) => { this.users = res.data } )
-      .catch((err) => { console.log(err) } )
-      // taskにデフォルト値を設定
-      Object.keys(this.defaultTask).forEach((key, i) => {
-        this.task[key] = this.defaultTask[key]
-      })
+      this.task = this.defaultTask
     }
   }
 </script>

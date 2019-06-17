@@ -9,7 +9,7 @@
       </thead>
 
       <tbody class="tbody">
-        <tr v-for="data in dataset" :key="data.id">
+        <tr v-for="data in dataset" :key="data.id" @click=openEditModal(data.id)>
           <td>{{ data.id }}</td>
           <td>{{ data.name }}</td>
           <td>{{ data.deadline }}</td>
@@ -72,6 +72,9 @@
       translateRole(role) {
         return enums.translateRole(role)
       },
+      openEditModal(id) {
+        this.$emit('open-edit-modal', id)
+      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 class Api::TasksController < ApplicationController
   skip_before_action :require_admin
-  before_action :set_group, only: [:create]
+  before_action :set_group, only: [:create, :update]
 
   def create
     @task = @group.tasks.build(task_params)
@@ -11,7 +11,7 @@ class Api::TasksController < ApplicationController
       end
       render 'create', status: '201', formats: 'json', handler: 'jbuilder'
     else
-      render :new
+      render 'errors', status: '409', formats: 'json', handler: 'jbuilder'
     end
   end
 
@@ -20,10 +20,19 @@ class Api::TasksController < ApplicationController
     render 'index', status: '200', formats: 'json', handlers: 'jbuilder'
   end
 
+  def update
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      render 'update', status: '204', formats: 'json', handers: 'jbuilder'
+    else
+      render 'errors', status: '409', formats: 'json', handers: 'jbuilder'
+    end
+  end
+
   private
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status, :priority, 
-        :group_id, :debtor_id, :image, :amount).merge(group_id: @group.id)
+      params.require(:task).permit(:id, :name, :description, :deadline, :status, :priority, 
+        :group_id, :debtor_id, :labels, :image, :amount).merge(group_id: @group.id)
     end
     
     def set_group

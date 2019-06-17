@@ -84,6 +84,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'launchy'
   gem 'email_spec'
+  gem 'ruby-debug-ide'
+  gem 'debase'
 end
 
 group :development do

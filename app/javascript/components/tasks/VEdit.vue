@@ -27,6 +27,7 @@
         .then((res) => {
           this.$emit('set-message', { msg: 'タスクを更新しました', type: 'success' })
           this.$emit('add-task', res.data)
+          this.$emit('open-show-modal', res.data.id)
         })
         .catch((err) => {
           this.$emit('set-message', { msg: 'タスクを更新できませんでした', type: 'danger' })

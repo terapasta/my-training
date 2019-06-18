@@ -22,7 +22,8 @@
                 @delete-message="deleteMessage"></message>
       <v-new v-if="modalContent == 'new'" :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
       <v-show v-else-if="modalContent == 'show'" :task="selectedData" @open-edit-modal="openEditModal"></v-show>
-      <v-edit v-else-if="modalContent == 'edit'" :default-task="selectedData" @set-message="setMessage" @add-task="addTask"></v-edit>
+      <v-edit v-else-if="modalContent == 'edit'" :default-task="selectedData" 
+              @set-message="setMessage" @add-task="addTask" @open-show-modal="openShowModal"></v-edit>
     </v-modal>
     <hr>
     <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"
@@ -124,4 +125,3 @@
     },
   }
 </script>
-

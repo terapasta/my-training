@@ -26,7 +26,8 @@
               @set-message="setMessage" @add-task="addTask" @open-show-modal="openShowModal"></v-edit>
     </v-modal>
     <hr>
-    <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"
+    <v-pagination v-if="pagingData.length > 0" :data="pagingData" @paging="paging"></v-pagination>
+    <v-table v-if="showTableFlag" :dataset="displayData" :head-dataset="headDataset"
               @open-show-modal="openShowModal"></v-table>
   </div>
 </template>
@@ -40,9 +41,10 @@
   import Message from '../Message'
   import VModal from '../VModal'
   import VSearch from '../VSearch'
+  import VPagination from '../VPagination'
 
   export default {
-    components: { VTable, VNew, VEdit, VShow, Message, VModal, VSearch },
+    components: { VTable, VNew, VEdit, VShow, Message, VModal, VSearch, VPagination },
     props: {
       groupId: String
     },
@@ -50,6 +52,7 @@
       return {
         dataset: [],
         filteredData: [],
+        displayData: [],
         headDataset: {
           id: 'ID',
           name: 'タスク名',
@@ -76,6 +79,9 @@
       notificationType() {
         return this.messageParams.type
       },
+      pagingData() {
+        return this.filteredData
+      }
     },
     methods: {
       setFilteredData(data) {
@@ -110,6 +116,9 @@
       },
       openEditModal() {
         this.modalContent = 'edit'
+      },
+      paging(data) {
+        this.displayData = data
       }
     },
     created() {

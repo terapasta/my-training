@@ -13,15 +13,20 @@
     <v-search v-if="dataset.length > 0" :all-data="dataset" @set-filtered-data="setFilteredData"></v-search>
     <v-modal v-if="isModalActive" :isModalActive="isModalActive"
              @close-modal="closeModal">
-      <template slot="header">{{ selectedData ? 'タスク編集' : 'タスク作成' }}</template>
+      <template slot="header">
+        <span v-if="modalContent == 'new'">タスク作成</span>
+        <span v-else-if="modalContent == 'show'">タスク詳細</span>
+        <span v-else-if="modalContent == 'edit'">タスク編集</span>
+      </template>
       <message v-if="message" :message="message" :notification-type="notificationType"
                 @delete-message="deleteMessage"></message>
-      <v-edit v-if="selectedData" :default-task="selectedData" @set-message="setMessage" @add-task="addTask"></v-edit>
-      <v-new v-else :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
+      <v-new v-if="modalContent == 'new'" :group-id="groupId" @set-message="setMessage" @add-task="addTask"></v-new>
+      <v-show v-else-if="modalContent == 'show'" :task="selectedData" @open-edit-modal="openEditModal"></v-show>
+      <v-edit v-else-if="modalContent == 'edit'" :default-task="selectedData" @set-message="setMessage" @add-task="addTask"></v-edit>
     </v-modal>
     <hr>
     <v-table v-if="showTableFlag" :dataset="filteredData" :head-dataset="headDataset"
-              @open-edit-modal="openEditModal"></v-table>
+              @open-show-modal="openShowModal"></v-table>
   </div>
 </template>
 
@@ -30,12 +35,13 @@
   import VTable from './Vtable'
   import VNew from './VNew'
   import VEdit from './VEdit'
+  import VShow from './VShow'
   import Message from '../Message'
   import VModal from '../VModal'
   import VSearch from '../VSearch'
 
   export default {
-    components: { VTable, VNew, VEdit, Message, VModal, VSearch },
+    components: { VTable, VNew, VEdit, VShow, Message, VModal, VSearch },
     props: {
       groupId: String
     },
@@ -55,7 +61,8 @@
         },
         messageParams: '',
         isModalActive: false,
-        selectedData: ''
+        selectedData: '',
+        modalContent: 'new',
       }
     },
     computed: {
@@ -85,18 +92,23 @@
       closeModal() {
         this.isModalActive = false
         this.selectedData = ''
+        this.modalContent = 'new'
       },
       deleteMessage() {
         this.messageParams = ''
       },
-      openEditModal(id) {
+      openShowModal(id) {
         this.filteredData.forEach(value => {
           if(value.id == id) {
             this.selectedData = value
             this.selectedData.group_id = this.selectedData.group.id
           }
         })
+        this.modalContent = 'show'
         this.openModal()
+      },
+      openEditModal() {
+        this.modalContent = 'edit'
       }
     },
     created() {
